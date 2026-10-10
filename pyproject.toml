@@ -58,3 +58,4 @@ ignore_missing_imports = true
 
 [tool.ruff.lint.per-file-ignores]
 "canirunit/hardware/windows.py" = ["E501"]
+"tests/*" = ["E501"]

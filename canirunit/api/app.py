@@ -1,19 +1,58 @@
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
+import httpx
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from canirunit import __version__
 from canirunit.config import Settings, get_settings
 from canirunit.hardware.base import HardwareDetector, HardwareProfile
+from canirunit.llm.client import LLMError
+from canirunit.parsing.schemas import GameDetails, SearchResult
 from canirunit.resources import resource_dir
+from canirunit.sources.service import GameService
+from canirunit.sources.steam import GameNotFound, SteamError, SteamRateLimited
 
 
-def create_app(detector: HardwareDetector, settings: Settings | None = None) -> FastAPI:
+def create_app(
+    detector: HardwareDetector,
+    settings: Settings | None = None,
+    games: GameService | None = None,
+) -> FastAPI:
     settings = settings or get_settings()
-    app = FastAPI(title="CanIRunIt", version=__version__)
+    http_holder: dict[str, httpx.AsyncClient] = {}
+    service_holder: dict[str, GameService] = {"svc": games} if games else {}
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        yield
+        if "http" in http_holder:
+            await http_holder["http"].aclose()
+
+    def get_games() -> GameService:
+        if "svc" not in service_holder:
+            http_holder["http"] = httpx.AsyncClient(follow_redirects=True)
+            service_holder["svc"] = GameService.create(settings, http_holder["http"])
+        return service_holder["svc"]
+
+    app = FastAPI(title="CanIRunIt", version=__version__, lifespan=lifespan)
     state: dict[str, HardwareProfile] = {}
+
+    @app.exception_handler(SteamError)
+    async def steam_error(_: Request, exc: SteamError) -> JSONResponse:
+        status = 404 if isinstance(exc, GameNotFound) else 429 if isinstance(
+            exc, SteamRateLimited
+        ) else 503
+        return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=status)
+
+    @app.exception_handler(LLMError)
+    async def llm_error(_: Request, exc: LLMError) -> JSONResponse:
+        status = 429 if exc.code == "llm_rate_limited" else 503
+        return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=status)
 
     def scan() -> HardwareProfile:
         try:
@@ -34,6 +73,14 @@ def create_app(detector: HardwareDetector, settings: Settings | None = None) -> 
     @app.post("/api/hardware/rescan")
     def rescan() -> HardwareProfile:
         return scan()
+
+    @app.get("/api/search")
+    async def search(q: str = Query(min_length=1, max_length=100)) -> list[SearchResult]:
+        return await get_games().search(q)
+
+    @app.get("/api/game/{appid}")
+    async def game(appid: int) -> GameDetails:
+        return await get_games().game(appid)
 
     ui_dir = resource_dir("ui")
 
