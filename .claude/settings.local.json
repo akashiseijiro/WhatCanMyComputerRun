@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(uv --version)",
-      "Bash(git --version)"
+      "Bash(git --version)",
+      "Bash(python3 -)",
+      "Bash(mkdir -p tests/fixtures/windows_raw)"
     ]
   }
 }

@@ -1,0 +1,110 @@
+{
+ "wmi": {
+  "cpu": [
+   {
+    "Name": "AMD Ryzen 5 5600X 6-Core Processor   ",
+    "NumberOfCores": 6,
+    "NumberOfLogicalProcessors": 12,
+    "MaxClockSpeed": 3701
+   }
+  ],
+  "gpu": [
+   {
+    "Name": "NVIDIA GeForce RTX 3060",
+    "AdapterCompatibility": "NVIDIA",
+    "DriverVersion": "32.0.15.6094",
+    "AdapterRAM": 4293918720,
+    "PNPDeviceID": "PCI\\VEN_10DE&DEV_2503&SUBSYS_397A1462&REV_A1\\4&2A6B1A33&0&0019",
+    "CurrentHorizontalResolution": 2560,
+    "CurrentVerticalResolution": 1440,
+    "CurrentRefreshRate": 144
+   },
+   {
+    "Name": "AMD Radeon(TM) Graphics",
+    "AdapterCompatibility": "Advanced Micro Devices, Inc.",
+    "DriverVersion": "32.0.12033.1030",
+    "AdapterRAM": 536870912,
+    "PNPDeviceID": "PCI\\VEN_1002&DEV_164E&SUBSYS_88771043&REV_C1\\4&1&0&0",
+    "CurrentHorizontalResolution": null,
+    "CurrentVerticalResolution": null,
+    "CurrentRefreshRate": null
+   }
+  ],
+  "ram_modules": [
+   {
+    "Capacity": 8589934592,
+    "Speed": 3200,
+    "ConfiguredClockSpeed": 3200
+   },
+   {
+    "Capacity": 8589934592,
+    "Speed": 3200,
+    "ConfiguredClockSpeed": 3200
+   }
+  ],
+  "computer_system": {
+   "Manufacturer": "Micro-Star International Co., Ltd.",
+   "Model": "MS-7C95",
+   "TotalPhysicalMemory": 17072495001,
+   "PCSystemType": 1
+  },
+  "os": {
+   "Caption": "Microsoft Windows 11 Pro",
+   "Version": "10.0.26100",
+   "BuildNumber": "26100"
+  },
+  "enclosure": {
+   "ChassisTypes": [
+    3
+   ]
+  },
+  "battery": [],
+  "logical_disks": [
+   {
+    "DeviceID": "C:",
+    "Size": 999653638144,
+    "FreeSpace": 268435456000
+   },
+   {
+    "DeviceID": "D:",
+    "Size": 2000381018112,
+    "FreeSpace": 644245094400
+   }
+  ],
+  "partitions": [
+   {
+    "DriveLetter": "C",
+    "DiskNumber": 0
+   },
+   {
+    "DriveLetter": "D",
+    "DiskNumber": 1
+   }
+  ],
+  "physical_disks": [
+   {
+    "DeviceId": 0,
+    "MediaType": "SSD",
+    "BusType": "NVMe"
+   },
+   {
+    "DeviceId": 1,
+    "MediaType": "HDD",
+    "BusType": "SATA"
+   }
+  ]
+ },
+ "registry": [
+  {
+   "driver_desc": "NVIDIA GeForce RTX 3060",
+   "matching_device_id": "pci\\ven_10de&dev_2503",
+   "memory_bytes": 12884901888
+  },
+  {
+   "driver_desc": "AMD Radeon(TM) Graphics",
+   "matching_device_id": "pci\\ven_1002&dev_164e",
+   "memory_bytes": 536870912
+  }
+ ],
+ "dxgi": []
+}

@@ -1,0 +1,43 @@
+{
+ "wmi": {
+  "cpu": {
+   "Name": "AMD EPYC 7763 64-Core Processor",
+   "NumberOfCores": 2,
+   "NumberOfLogicalProcessors": 4,
+   "MaxClockSpeed": 2445
+  },
+  "gpu": {
+   "Name": "Microsoft Hyper-V Video",
+   "AdapterCompatibility": "Microsoft",
+   "DriverVersion": "10.0.26100.1",
+   "AdapterRAM": null,
+   "PNPDeviceID": "VMBUS\\{5620E0C7}",
+   "CurrentHorizontalResolution": 1024,
+   "CurrentVerticalResolution": 768,
+   "CurrentRefreshRate": 60
+  },
+  "ram_modules": null,
+  "computer_system": {
+   "Manufacturer": "Microsoft Corporation",
+   "Model": "Virtual Machine",
+   "TotalPhysicalMemory": 17179869184,
+   "PCSystemType": 1
+  },
+  "os": {
+   "Caption": "Microsoft Windows Server 2025 Datacenter",
+   "Version": "10.0.26100",
+   "BuildNumber": "26100"
+  },
+  "enclosure": null,
+  "battery": null,
+  "logical_disks": {
+   "DeviceID": "C:",
+   "Size": 274877906944,
+   "FreeSpace": 107374182400
+  },
+  "partitions": null,
+  "physical_disks": null
+ },
+ "registry": [],
+ "dxgi": []
+}

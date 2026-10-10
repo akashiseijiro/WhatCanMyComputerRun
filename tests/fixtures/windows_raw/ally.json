@@ -1,0 +1,84 @@
+{
+ "wmi": {
+  "cpu": {
+   "Name": "AMD Ryzen Z1 Extreme",
+   "NumberOfCores": 8,
+   "NumberOfLogicalProcessors": 16,
+   "MaxClockSpeed": 3300
+  },
+  "gpu": {
+   "Name": "AMD Radeon(TM) Graphics",
+   "AdapterCompatibility": "Advanced Micro Devices, Inc.",
+   "DriverVersion": "32.0.12011.1036",
+   "AdapterRAM": 536870912,
+   "PNPDeviceID": "PCI\\VEN_1002&DEV_15BF&SUBSYS_16E21043&REV_C1\\4&1C6A2D8E&0&0041",
+   "CurrentHorizontalResolution": 1920,
+   "CurrentVerticalResolution": 1080,
+   "CurrentRefreshRate": 120
+  },
+  "ram_modules": [
+   {
+    "Capacity": 8589934592,
+    "Speed": 6400,
+    "ConfiguredClockSpeed": 6400
+   },
+   {
+    "Capacity": 8589934592,
+    "Speed": 6400,
+    "ConfiguredClockSpeed": 6400
+   }
+  ],
+  "computer_system": {
+   "Manufacturer": "ASUSTeK COMPUTER INC.",
+   "Model": "ROG Ally RC71L_RC71L",
+   "TotalPhysicalMemory": 16428249907,
+   "PCSystemType": 2
+  },
+  "os": {
+   "Caption": "Microsoft Windows 11 Home",
+   "Version": "10.0.26100",
+   "BuildNumber": "26100"
+  },
+  "enclosure": {
+   "ChassisTypes": [
+    10
+   ]
+  },
+  "battery": {
+   "Name": "ASUS Battery"
+  },
+  "logical_disks": {
+   "DeviceID": "C:",
+   "Size": 511101108224,
+   "FreeSpace": 193273528320
+  },
+  "partitions": [
+   {
+    "DriveLetter": "C",
+    "DiskNumber": 0
+   }
+  ],
+  "physical_disks": {
+   "DeviceId": 0,
+   "MediaType": "SSD",
+   "BusType": "NVMe"
+  }
+ },
+ "registry": [
+  {
+   "driver_desc": "AMD Radeon(TM) Graphics",
+   "matching_device_id": "pci\\ven_1002&dev_15bf",
+   "memory_bytes": 4294967296
+  }
+ ],
+ "dxgi": [
+  {
+   "name": "AMD Radeon(TM) Graphics",
+   "vendor_id": 4098,
+   "device_id": 5567,
+   "dedicated_bytes": 4294967296,
+   "shared_bytes": 8589934592,
+   "software": false
+  }
+ ]
+}
