@@ -1,0 +1,61 @@
+{
+  "cpu": {
+    "model": "AMD Ryzen 9 7950X3D 16-Core Processor",
+    "cores": 16,
+    "threads": 32,
+    "base_clock_mhz": 4200,
+    "boost_clock_mhz": 5700
+  },
+  "gpus": [
+    {
+      "name": "NVIDIA GeForce RTX 4090",
+      "vendor": "nvidia",
+      "kind": "discrete",
+      "vram_mb": 24576,
+      "vram_shared": false,
+      "driver_version": "32.0.15.6094",
+      "vram_source": "fixture"
+    },
+    {
+      "name": "AMD Radeon(TM) Graphics",
+      "vendor": "amd",
+      "kind": "integrated",
+      "vram_mb": 512,
+      "vram_shared": true,
+      "driver_version": "32.0.12033.1030",
+      "vram_source": "fixture"
+    }
+  ],
+  "ram": {
+    "total_gb": 64,
+    "speed_mhz": 6000
+  },
+  "storage": [
+    {
+      "letter": "C:",
+      "free_gb": 1200,
+      "total_gb": 1863,
+      "media_type": "ssd"
+    },
+    {
+      "letter": "D:",
+      "free_gb": 3000,
+      "total_gb": 3726,
+      "media_type": "ssd"
+    }
+  ],
+  "os": {
+    "name": "Microsoft Windows 11 Home",
+    "version": "10.0.26100",
+    "build": "26100",
+    "directx": "DirectX 12"
+  },
+  "display": {
+    "width": 3840,
+    "height": 2160,
+    "refresh_hz": 144
+  },
+  "device_type": "desktop",
+  "manufacturer": "ASUS",
+  "model": "System Product Name"
+}

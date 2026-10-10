@@ -1,0 +1,52 @@
+{
+  "cpu": {
+    "model": "AMD Ryzen 5 5600X 6-Core Processor",
+    "cores": 6,
+    "threads": 12,
+    "base_clock_mhz": 3700,
+    "boost_clock_mhz": 4600
+  },
+  "gpus": [
+    {
+      "name": "NVIDIA GeForce RTX 3060",
+      "vendor": "nvidia",
+      "kind": "discrete",
+      "vram_mb": 12288,
+      "vram_shared": false,
+      "driver_version": "32.0.15.6094",
+      "vram_source": "fixture"
+    }
+  ],
+  "ram": {
+    "total_gb": 16,
+    "speed_mhz": 3200
+  },
+  "storage": [
+    {
+      "letter": "C:",
+      "free_gb": 250,
+      "total_gb": 931,
+      "media_type": "ssd"
+    },
+    {
+      "letter": "D:",
+      "free_gb": 600,
+      "total_gb": 1863,
+      "media_type": "hdd"
+    }
+  ],
+  "os": {
+    "name": "Microsoft Windows 11 Home",
+    "version": "10.0.26100",
+    "build": "26100",
+    "directx": "DirectX 12"
+  },
+  "display": {
+    "width": 2560,
+    "height": 1440,
+    "refresh_hz": 144
+  },
+  "device_type": "desktop",
+  "manufacturer": "Micro-Star International Co., Ltd.",
+  "model": "MS-7C95"
+}

@@ -1,0 +1,46 @@
+{
+  "cpu": {
+    "model": "Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
+    "cores": 2,
+    "threads": 4,
+    "base_clock_mhz": 3000,
+    "boost_clock_mhz": 4100
+  },
+  "gpus": [
+    {
+      "name": "Intel(R) UHD Graphics",
+      "vendor": "intel",
+      "kind": "integrated",
+      "vram_mb": 128,
+      "vram_shared": true,
+      "driver_version": "31.0.101.4502",
+      "vram_source": "fixture"
+    }
+  ],
+  "ram": {
+    "total_gb": 8,
+    "speed_mhz": 3200
+  },
+  "storage": [
+    {
+      "letter": "C:",
+      "free_gb": 60,
+      "total_gb": 238,
+      "media_type": "ssd"
+    }
+  ],
+  "os": {
+    "name": "Microsoft Windows 11 Home",
+    "version": "10.0.26100",
+    "build": "22631",
+    "directx": "DirectX 12"
+  },
+  "display": {
+    "width": 1366,
+    "height": 768,
+    "refresh_hz": 60
+  },
+  "device_type": "laptop",
+  "manufacturer": "Acer",
+  "model": "Aspire A315-58"
+}
