@@ -9,11 +9,15 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from canirunit import __version__
+from canirunit.compare.engine import build_report
+from canirunit.compare.models import Report
+from canirunit.compare.resolver import ClaudeResolver, PerformanceResolver
 from canirunit.config import Settings, get_settings
 from canirunit.hardware.base import HardwareDetector, HardwareProfile
-from canirunit.llm.client import LLMError
+from canirunit.llm.client import LLMClient, LLMError
 from canirunit.parsing.schemas import GameDetails, SearchResult
 from canirunit.resources import resource_dir
+from canirunit.sources.cache import TTLCache
 from canirunit.sources.service import GameService
 from canirunit.sources.steam import GameNotFound, SteamError, SteamRateLimited
 
@@ -22,9 +26,11 @@ def create_app(
     detector: HardwareDetector,
     settings: Settings | None = None,
     games: GameService | None = None,
+    resolver: PerformanceResolver | None = None,
 ) -> FastAPI:
     settings = settings or get_settings()
     http_holder: dict[str, httpx.AsyncClient] = {}
+    service_holder_r: dict[str, PerformanceResolver] = {}
     service_holder: dict[str, GameService] = {"svc": games} if games else {}
 
     @asynccontextmanager
@@ -39,14 +45,28 @@ def create_app(
             service_holder["svc"] = GameService.create(settings, http_holder["http"])
         return service_holder["svc"]
 
+    def get_resolver() -> PerformanceResolver:
+        if resolver is not None:
+            return resolver
+        if "resolver" not in service_holder_r:
+            cache = TTLCache(settings.cache_dir, settings.canirunit_cache_ttl_hours)
+            service_holder_r["resolver"] = ClaudeResolver(
+                LLMClient(settings), settings.canirunit_resolver_model, cache
+            )
+        return service_holder_r["resolver"]
+
     app = FastAPI(title="CanIRunIt", version=__version__, lifespan=lifespan)
     state: dict[str, HardwareProfile] = {}
 
     @app.exception_handler(SteamError)
     async def steam_error(_: Request, exc: SteamError) -> JSONResponse:
-        status = 404 if isinstance(exc, GameNotFound) else 429 if isinstance(
-            exc, SteamRateLimited
-        ) else 503
+        status = (
+            404
+            if isinstance(exc, GameNotFound)
+            else 429
+            if isinstance(exc, SteamRateLimited)
+            else 503
+        )
         return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=status)
 
     @app.exception_handler(LLMError)
@@ -81,6 +101,12 @@ def create_app(
     @app.get("/api/game/{appid}")
     async def game(appid: int) -> GameDetails:
         return await get_games().game(appid)
+
+    @app.get("/api/report/{appid}")
+    async def report(appid: int) -> Report:
+        hw = state.get("hw") or scan()
+        game = await get_games().game(appid)
+        return await build_report(hw, game, get_resolver())
 
     ui_dir = resource_dir("ui")
 
