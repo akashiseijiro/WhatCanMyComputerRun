@@ -136,22 +136,29 @@ class ClaudeResolver:
             return out
 
         items = list(pending.values())
+        for _attempt in range(2):  # the model sometimes skips items in a big batch; retry once
+            if not items:
+                break
+            try:
+                await self._score_batch(items, out)
+            except LLMError as exc:
+                out.warnings.append(f"Performance lookup failed: {exc}")
+                break
+            items = [q for q in items if out.get(q) is None]
+        return out
+
+    async def _score_batch(self, items: list[ComponentQuery], out: ResolveResult) -> None:
         lines = []
         for i, q in enumerate(items):
             hint = f' | hint: built into "{q.hint}"' if q.hint and q.kind == "gpu" else ""
             lines.append(f'{i}. {q.kind.upper()}: "{q.name}"{hint}')
-        try:
-            batch = await self.llm.parse(
-                model=self.model,
-                system=SYSTEM,
-                user="\n".join(lines),
-                schema=LLMScoreBatch,
-                max_tokens=4096,
-            )
-        except LLMError as exc:
-            out.warnings.append(f"Performance lookup failed: {exc}")
-            return out
-
+        batch = await self.llm.parse(
+            model=self.model,
+            system=SYSTEM,
+            user="\n".join(lines),
+            schema=LLMScoreBatch,
+            max_tokens=4096,
+        )
         for r in batch.results:
             if not 0 <= r.id < len(items):
                 continue
@@ -166,5 +173,5 @@ class ClaudeResolver:
                 notes=r.notes,
             )
             out.scores[q.key] = result
-            self.cache.set(self._cache_key(q), result.model_dump(mode="json"))
-        return out
+            if score is not None:  # never cache a failed lookup
+                self.cache.set(self._cache_key(q), result.model_dump(mode="json"))
