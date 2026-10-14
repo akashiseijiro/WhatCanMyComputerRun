@@ -71,7 +71,10 @@ class StubMessages:
         self.calls.append(kw)
         if self.error:
             raise self.error
-        return type("R", (), {"parsed_output": self.batch})()
+        batch = self.batch
+        if len(self.calls) > 1:  # retry call: only the unresolved item, still unscoreable
+            batch = LLMScoreBatch(results=[LLMComponentScore(id=0, score=None)])
+        return type("R", (), {"parsed_output": batch})()
 
 
 def make(tmp_path, batch=None, error=None, key="k"):
