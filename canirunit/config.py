@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     canirunit_parser_model: str = "claude-haiku-4-5"
     canirunit_resolver_model: str = "claude-haiku-4-5"
     canirunit_search_model: str = "claude-sonnet-4-6"
+    canirunit_tips_model: str = "claude-haiku-4-5"
     canirunit_cache_ttl_hours: float = 24.0
     canirunit_cache_dir: str = ""
 

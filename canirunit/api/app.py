@@ -7,6 +7,7 @@ import httpx
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 from canirunit import __version__
 from canirunit.compare.engine import build_report
@@ -17,9 +18,17 @@ from canirunit.hardware.base import HardwareDetector, HardwareProfile
 from canirunit.llm.client import LLMClient, LLMError
 from canirunit.parsing.schemas import GameDetails, SearchResult
 from canirunit.resources import resource_dir
+from canirunit.settings.llm_tips import GameTipsProvider
+from canirunit.settings.models import GameTip
+from canirunit.settings.rules import recommend_settings
 from canirunit.sources.cache import TTLCache
 from canirunit.sources.service import GameService
 from canirunit.sources.steam import GameNotFound, SteamError, SteamRateLimited
+
+
+class TipsResponse(BaseModel):
+    tips: list[GameTip]
+    warning: str | None = None
 
 
 def create_app(
@@ -106,7 +115,26 @@ def create_app(
     async def report(appid: int) -> Report:
         hw = state.get("hw") or scan()
         game = await get_games().game(appid)
-        return await build_report(hw, game, get_resolver())
+        rep = await build_report(hw, game, get_resolver())
+        rep.settings = recommend_settings(hw, rep)
+        return rep
+
+    @app.get("/api/tips/{appid}")
+    async def tips(appid: int) -> TipsResponse:
+        hw = state.get("hw") or scan()
+        game = await get_games().game(appid)
+        rep = await build_report(hw, game, get_resolver())
+        rec = recommend_settings(hw, rep)
+        gpu = hw.primary_gpu
+        provider = GameTipsProvider(
+            LLMClient(settings),
+            settings.canirunit_tips_model,
+            TTLCache(settings.cache_dir, settings.canirunit_cache_ttl_hours),
+        )
+        items, warning = await provider.tips(
+            appid, game.name, rec, hw.device_type.value, gpu.name if gpu else "unknown"
+        )
+        return TipsResponse(tips=items, warning=warning)
 
     ui_dir = resource_dir("ui")
 

@@ -37,3 +37,44 @@ def match_handheld(manufacturer: str | None, model: str | None) -> str | None:
         if spec.manufacturer_contains in man and any(m.lower() in mod for m in spec.model_contains):
             return spec.name
     return None
+
+
+@dataclass(frozen=True)
+class PowerMode:
+    name: str
+    watts: int
+
+
+@dataclass(frozen=True)
+class HandheldPower:
+    modes: tuple[PowerMode, ...]  # ordered lowest to highest power
+    battery_wh: float
+
+
+# Power modes per handheld, keyed by the names in HANDHELDS. Extend to add devices.
+# Values are from public specs / memory and unverified on real hardware ("verify").
+HANDHELD_POWER: dict[str, HandheldPower] = {
+    "ASUS ROG Ally": HandheldPower(
+        (PowerMode("Silent", 9), PowerMode("Performance", 15), PowerMode("Turbo", 25)), 40
+    ),
+    "ASUS ROG Ally X": HandheldPower(  # verify
+        (PowerMode("Silent", 9), PowerMode("Performance", 17), PowerMode("Turbo", 25)), 80
+    ),
+    "Lenovo Legion Go": HandheldPower(  # verify
+        (PowerMode("Quiet", 8), PowerMode("Balanced", 15), PowerMode("Performance", 20)), 49
+    ),
+    "MSI Claw": HandheldPower(  # verify
+        (PowerMode("Battery saver", 15), PowerMode("Balanced", 20), PowerMode("Performance", 30)),
+        53,
+    ),
+}
+GENERIC_HANDHELD_POWER = HandheldPower(
+    (PowerMode("Low power", 9), PowerMode("Balanced", 15), PowerMode("High power", 25)), 40
+)
+
+
+def power_profile(handheld_name: str | None) -> tuple[HandheldPower, bool]:
+    """Return (power profile, known). Unknown devices get a generic 9/15/25 W profile."""
+    if handheld_name and handheld_name in HANDHELD_POWER:
+        return HANDHELD_POWER[handheld_name], True
+    return GENERIC_HANDHELD_POWER, False

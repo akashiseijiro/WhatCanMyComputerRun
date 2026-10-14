@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, computed_field
 
 from canirunit.parsing.schemas import GameDetails
+from canirunit.settings.models import SettingsRecommendation
 
 
 class Verdict(StrEnum):
@@ -98,3 +99,4 @@ class Report(BaseModel):
     confidence: Confidence
     bottleneck: str | None = None
     warnings: list[str] = Field(default_factory=list)
+    settings: SettingsRecommendation | None = None

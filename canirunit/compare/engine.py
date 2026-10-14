@@ -304,7 +304,9 @@ def _storage_row(
             border=1.0,
             can_exceed=False,
         )
-    best = max(drives, key=lambda d: d.free_gb or 0)
+    roomy = [d for d in drives if (d.free_gb or 0) >= (mn_v or 0)]
+    ssd_roomy = [d for d in roomy if d.media_type == MediaType.SSD]
+    best = max(ssd_roomy or drives, key=lambda d: d.free_gb or 0)
     media = "" if best.media_type == MediaType.UNKNOWN else f", {best.media_type.value.upper()}"
     yours = f"{best.free_gb:g} GB free on {best.letter}{media}"
     row = _numeric_row(
