@@ -113,11 +113,11 @@ class HardwareDetector(Protocol):
 def get_detector(mock_profile: str | None = None) -> HardwareDetector:
     """Pick a detector. Windows-only code is imported lazily so macOS never loads it."""
     if mock_profile:
-        from canirunit.hardware.mock import MockDetector
+        from whatcanmycomputerrun.hardware.mock import MockDetector
 
         return MockDetector(mock_profile)
     if sys.platform == "win32":
-        from canirunit.hardware.windows import WindowsDetector
+        from whatcanmycomputerrun.hardware.windows import WindowsDetector
 
         return WindowsDetector()
     raise RuntimeError(

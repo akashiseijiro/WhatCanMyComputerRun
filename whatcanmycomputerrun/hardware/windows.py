@@ -13,9 +13,9 @@ import subprocess
 import uuid
 from typing import Any
 
-from canirunit.hardware.base import HardwareProfile
-from canirunit.hardware.handhelds import apply_handheld_assumptions
-from canirunit.hardware.windows_parse import build_profile
+from whatcanmycomputerrun.hardware.base import HardwareProfile
+from whatcanmycomputerrun.hardware.handhelds import apply_handheld_assumptions
+from whatcanmycomputerrun.hardware.windows_parse import build_profile
 
 COLLECT_SCRIPT = r"""
 $ErrorActionPreference = 'SilentlyContinue'

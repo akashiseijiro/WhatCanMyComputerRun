@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import httpx
 
-from canirunit.config import Settings
-from canirunit.llm.client import LLMClient, LLMError
-from canirunit.parsing.llm_parser import LLMRequirementsParser
-from canirunit.parsing.requirements_parser import ParsedPcRequirements, parse_pc_requirements
-from canirunit.parsing.schemas import GameDetails, RequirementsSet, SearchResult
-from canirunit.sources.cache import TTLCache
-from canirunit.sources.steam import SteamClient
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.llm.client import LLMClient, LLMError
+from whatcanmycomputerrun.parsing.llm_parser import LLMRequirementsParser
+from whatcanmycomputerrun.parsing.requirements_parser import (
+    ParsedPcRequirements,
+    parse_pc_requirements,
+)
+from whatcanmycomputerrun.parsing.schemas import GameDetails, RequirementsSet, SearchResult
+from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.steam import SteamClient
 
 
 class GameService:
@@ -20,9 +23,9 @@ class GameService:
 
     @classmethod
     def create(cls, settings: Settings, http: httpx.AsyncClient) -> GameService:
-        cache = TTLCache(settings.cache_dir, settings.canirunit_cache_ttl_hours)
+        cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
         llm = LLMClient(settings)
-        parser = LLMRequirementsParser(llm, settings.canirunit_parser_model)
+        parser = LLMRequirementsParser(llm, settings.whatcanmycomputerrun_parser_model)
         return cls(SteamClient(http, cache), parser)
 
     async def search(self, term: str) -> list[SearchResult]:

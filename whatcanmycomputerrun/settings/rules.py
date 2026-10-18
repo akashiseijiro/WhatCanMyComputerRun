@@ -12,10 +12,15 @@ import math
 import re
 from dataclasses import dataclass
 
-from canirunit.compare.models import Confidence, Report, RowResult, Verdict
-from canirunit.hardware.base import DeviceType, GpuInfo, GpuVendor, HardwareProfile
-from canirunit.hardware.handhelds import HANDHELD_VRAM, HandheldPower, PowerMode, power_profile
-from canirunit.settings.models import (
+from whatcanmycomputerrun.compare.models import Confidence, Report, RowResult, Verdict
+from whatcanmycomputerrun.hardware.base import DeviceType, GpuInfo, GpuVendor, HardwareProfile
+from whatcanmycomputerrun.hardware.handhelds import (
+    HANDHELD_VRAM,
+    HandheldPower,
+    PowerMode,
+    power_profile,
+)
+from whatcanmycomputerrun.settings.models import (
     FpsEstimate,
     FrameGenAdvice,
     HandheldAdvice,

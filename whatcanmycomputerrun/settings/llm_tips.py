@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
-from canirunit.llm.client import LLMClient, LLMError
-from canirunit.settings.models import GameTip, SettingsRecommendation
-from canirunit.sources.cache import TTLCache
+from whatcanmycomputerrun.llm.client import LLMClient, LLMError
+from whatcanmycomputerrun.settings.models import GameTip, SettingsRecommendation
+from whatcanmycomputerrun.sources.cache import TTLCache
 
 TIPS_CACHE_TTL_HOURS = 24 * 30
 

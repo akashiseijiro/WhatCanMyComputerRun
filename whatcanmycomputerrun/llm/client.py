@@ -7,7 +7,7 @@ from typing import Any, TypeVar
 import anthropic
 from pydantic import BaseModel
 
-from canirunit.config import Settings
+from whatcanmycomputerrun.config import Settings
 
 T = TypeVar("T", bound=BaseModel)
 

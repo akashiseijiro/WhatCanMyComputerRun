@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from canirunit.hardware.base import HardwareProfile
-from canirunit.hardware.handhelds import apply_handheld_assumptions
+from whatcanmycomputerrun.hardware.base import HardwareProfile
+from whatcanmycomputerrun.hardware.handhelds import apply_handheld_assumptions
 
 PROFILES_DIR = Path(__file__).parent / "profiles"
 

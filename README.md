@@ -6,7 +6,7 @@ Game compatibility checker for Windows PCs and handhelds (ROG Ally etc.). Work i
 
 ```bash
 uv sync
-uv run python -m canirunit.main --mock-hardware ally_z1e --browser
+uv run python -m whatcanmycomputerrun.main --mock-hardware ally_z1e --browser
 uv run pytest
 ```
 

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from canirunit.parsing.requirements_parser import (
+from whatcanmycomputerrun.parsing.requirements_parser import (
     parse_pc_requirements,
     parse_size_gb,
     parse_tier,

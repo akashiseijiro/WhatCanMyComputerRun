@@ -31,7 +31,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["canirunit"]
+packages = ["whatcanmycomputerrun"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -50,13 +50,13 @@ python_version = "3.12"
 platform = "win32"
 strict = true
 plugins = ["pydantic.mypy"]
-files = ["canirunit"]
+files = ["whatcanmycomputerrun"]
 
 [[tool.mypy.overrides]]
 module = ["webview", "webview.*", "winreg"]
 ignore_missing_imports = true
 
 [tool.ruff.lint.per-file-ignores]
-"canirunit/hardware/windows.py" = ["E501"]
-"canirunit/compare/resolver.py" = ["E501"]
+"whatcanmycomputerrun/hardware/windows.py" = ["E501"]
+"whatcanmycomputerrun/compare/resolver.py" = ["E501"]
 "tests/*" = ["E501"]

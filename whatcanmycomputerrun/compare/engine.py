@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from canirunit.compare.models import (
+from whatcanmycomputerrun.compare.models import (
     CONFIDENCE_RANK,
     RECOMMENDATION_TEXT,
     VERDICT_RANK,
@@ -16,13 +16,13 @@ from canirunit.compare.models import (
     RowResult,
     Verdict,
 )
-from canirunit.compare.resolver import (
+from whatcanmycomputerrun.compare.resolver import (
     ComponentQuery,
     PerformanceResolver,
     ResolveResult,
 )
-from canirunit.hardware.base import GpuInfo, GpuKind, HardwareProfile, MediaType
-from canirunit.parsing.schemas import GameDetails, Requirements
+from whatcanmycomputerrun.hardware.base import GpuInfo, GpuKind, HardwareProfile, MediaType
+from whatcanmycomputerrun.parsing.schemas import GameDetails, Requirements
 
 # Scores come from an approximate source, so allow a small margin around each threshold.
 PERF_BORDER = 0.95

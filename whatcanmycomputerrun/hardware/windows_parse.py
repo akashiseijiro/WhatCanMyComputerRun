@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from canirunit.hardware.base import (
+from whatcanmycomputerrun.hardware.base import (
     CpuInfo,
     DeviceType,
     DisplayInfo,
@@ -22,7 +22,7 @@ from canirunit.hardware.base import (
     OsInfo,
     RamInfo,
 )
-from canirunit.hardware.handhelds import match_handheld
+from whatcanmycomputerrun.hardware.handhelds import match_handheld
 
 WMI_ADAPTER_RAM_CAP = 0xFFF00000  # AdapterRAM is uint32; cards with >= 4 GB report ~4293918720
 LAPTOP_CHASSIS = {8, 9, 10, 11, 12, 14, 18, 21, 30, 31, 32}

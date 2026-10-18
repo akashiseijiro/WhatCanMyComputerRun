@@ -1,17 +1,17 @@
 import pytest
 
-from canirunit.compare.models import Confidence
-from canirunit.compare.normalize import igpu_from_cpu, normalize_cpu, normalize_gpu
-from canirunit.compare.resolver import (
+from whatcanmycomputerrun.compare.models import Confidence
+from whatcanmycomputerrun.compare.normalize import igpu_from_cpu, normalize_cpu, normalize_gpu
+from whatcanmycomputerrun.compare.resolver import (
     ClaudeResolver,
     ComponentQuery,
     LLMComponentScore,
     LLMScoreBatch,
     StaticResolver,
 )
-from canirunit.config import Settings
-from canirunit.llm.client import LLMClient, LLMRateLimited
-from canirunit.sources.cache import TTLCache
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.llm.client import LLMClient, LLMRateLimited
+from whatcanmycomputerrun.sources.cache import TTLCache
 
 
 @pytest.mark.parametrize(
@@ -132,7 +132,7 @@ async def test_static_resolver_is_pluggable():
 
 
 def test_plausibility_guard_rejects_hallucinated_scores():
-    from canirunit.compare.resolver import plausible
+    from whatcanmycomputerrun.compare.resolver import plausible
 
     assert not plausible("gpu", "radeon 780m", 27896)  # an iGPU can't beat an RTX 3060
     assert plausible("gpu", "radeon 780m", 3500)

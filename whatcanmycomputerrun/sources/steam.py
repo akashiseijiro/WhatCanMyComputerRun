@@ -4,8 +4,8 @@ from typing import Any
 
 import httpx
 
-from canirunit.parsing.schemas import GameDetails, Price, SearchResult
-from canirunit.sources.cache import TTLCache
+from whatcanmycomputerrun.parsing.schemas import GameDetails, Price, SearchResult
+from whatcanmycomputerrun.sources.cache import TTLCache
 
 SEARCH_URL = "https://store.steampowered.com/api/storesearch/"
 DETAILS_URL = "https://store.steampowered.com/api/appdetails"

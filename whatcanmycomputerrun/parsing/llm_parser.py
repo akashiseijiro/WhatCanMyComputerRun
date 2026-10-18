@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from canirunit.llm.client import LLMClient
-from canirunit.parsing.requirements_parser import ParsedPcRequirements, vram_from_gpus
-from canirunit.parsing.schemas import LLMParsedRequirements, Requirements
+from whatcanmycomputerrun.llm.client import LLMClient
+from whatcanmycomputerrun.parsing.requirements_parser import ParsedPcRequirements, vram_from_gpus
+from whatcanmycomputerrun.parsing.schemas import LLMParsedRequirements, Requirements
 
 SYSTEM = """You extract PC game system requirements into a strict schema.
 Rules:

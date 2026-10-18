@@ -5,10 +5,10 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from canirunit.api.app import create_app
-from canirunit.hardware.base import DeviceType, GpuKind, get_detector
-from canirunit.hardware.handhelds import match_handheld
-from canirunit.hardware.mock import MockDetector, available_profiles
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.hardware.base import DeviceType, GpuKind, get_detector
+from whatcanmycomputerrun.hardware.handhelds import match_handheld
+from whatcanmycomputerrun.hardware.mock import MockDetector, available_profiles
 
 REQUIRED = {"ally_z1e", "ally_x", "desktop_rtx3060", "laptop_igpu_lowend", "desktop_high_end"}
 
@@ -61,7 +61,7 @@ def test_real_detector_unavailable_off_windows():
 
 
 def test_windows_module_not_imported_at_module_level():
-    root = Path(__file__).parent.parent / "canirunit"
+    root = Path(__file__).parent.parent / "whatcanmycomputerrun"
     offenders = []
     for path in root.rglob("*.py"):
         if path.name == "windows.py":

@@ -6,15 +6,15 @@ import pytest
 import respx
 from fastapi.testclient import TestClient
 
-from canirunit.api.app import create_app
-from canirunit.config import Settings
-from canirunit.hardware.mock import MockDetector
-from canirunit.llm.client import LLMClient, LLMRateLimited
-from canirunit.parsing.llm_parser import LLMRequirementsParser
-from canirunit.parsing.schemas import LLMParsedRequirements, Requirements
-from canirunit.sources.cache import TTLCache
-from canirunit.sources.service import GameService
-from canirunit.sources.steam import (
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.hardware.mock import MockDetector
+from whatcanmycomputerrun.llm.client import LLMClient, LLMRateLimited
+from whatcanmycomputerrun.parsing.llm_parser import LLMRequirementsParser
+from whatcanmycomputerrun.parsing.schemas import LLMParsedRequirements, Requirements
+from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.service import GameService
+from whatcanmycomputerrun.sources.steam import (
     DETAILS_URL,
     SEARCH_URL,
     GameNotFound,
@@ -186,7 +186,7 @@ async def test_no_pc_requirements_marks_missing(steam):
 
 @respx.mock
 def test_api_routes_and_errors(tmp_path):
-    settings = Settings(anthropic_api_key="", canirunit_cache_dir=str(tmp_path / "c"))
+    settings = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path / "c"))
     respx.get(SEARCH_URL).mock(return_value=httpx.Response(200, json=fx("search_cyberpunk.json")))
     respx.get(DETAILS_URL).mock(
         return_value=httpx.Response(200, json=fx("appdetails_1245620.json"))

@@ -8,15 +8,15 @@ from typing import Literal, Protocol
 
 from pydantic import BaseModel
 
-from canirunit.compare.models import Confidence, PerformanceScore
-from canirunit.compare.normalize import (
+from whatcanmycomputerrun.compare.models import Confidence, PerformanceScore
+from whatcanmycomputerrun.compare.normalize import (
     GENERIC_IGPU,
     igpu_from_cpu,
     normalize_cpu,
     normalize_gpu,
 )
-from canirunit.llm.client import LLMClient, LLMError
-from canirunit.sources.cache import TTLCache
+from whatcanmycomputerrun.llm.client import LLMClient, LLMError
+from whatcanmycomputerrun.sources.cache import TTLCache
 
 GPU_BENCHMARK = "PassMark G3D Mark"
 CPU_BENCHMARK = "PassMark CPU Mark"

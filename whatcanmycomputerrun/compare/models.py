@@ -5,8 +5,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, computed_field
 
-from canirunit.parsing.schemas import GameDetails
-from canirunit.settings.models import SettingsRecommendation
+from whatcanmycomputerrun.parsing.schemas import GameDetails
+from whatcanmycomputerrun.settings.models import SettingsRecommendation
 
 
 class Verdict(StrEnum):

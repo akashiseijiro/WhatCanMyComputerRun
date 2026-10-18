@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from canirunit.hardware.base import GpuKind, HardwareProfile
+from whatcanmycomputerrun.hardware.base import GpuKind, HardwareProfile
 
 
 @dataclass(frozen=True)

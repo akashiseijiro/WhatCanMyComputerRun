@@ -10,27 +10,27 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from canirunit import __version__
-from canirunit.compare.engine import build_report
-from canirunit.compare.models import Report
-from canirunit.compare.resolver import ClaudeResolver, PerformanceResolver
-from canirunit.config import Settings, get_settings
-from canirunit.hardware.base import HardwareDetector, HardwareProfile
-from canirunit.hardware.catalog import (
+from whatcanmycomputerrun import __version__
+from whatcanmycomputerrun.compare.engine import build_report
+from whatcanmycomputerrun.compare.models import Report
+from whatcanmycomputerrun.compare.resolver import ClaudeResolver, PerformanceResolver
+from whatcanmycomputerrun.config import Settings, get_settings
+from whatcanmycomputerrun.hardware.base import HardwareDetector, HardwareProfile
+from whatcanmycomputerrun.hardware.catalog import (
     CatalogError,
     ManualSelection,
     build_manual_profile,
     load_catalog,
 )
-from canirunit.llm.client import LLMClient, LLMError
-from canirunit.parsing.schemas import GameDetails, SearchResult
-from canirunit.resources import resource_dir
-from canirunit.settings.llm_tips import GameTipsProvider
-from canirunit.settings.models import GameTip
-from canirunit.settings.rules import recommend_settings
-from canirunit.sources.cache import TTLCache
-from canirunit.sources.service import GameService
-from canirunit.sources.steam import GameNotFound, SteamError, SteamRateLimited
+from whatcanmycomputerrun.llm.client import LLMClient, LLMError
+from whatcanmycomputerrun.parsing.schemas import GameDetails, SearchResult
+from whatcanmycomputerrun.resources import resource_dir
+from whatcanmycomputerrun.settings.llm_tips import GameTipsProvider
+from whatcanmycomputerrun.settings.models import GameTip
+from whatcanmycomputerrun.settings.rules import recommend_settings
+from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.service import GameService
+from whatcanmycomputerrun.sources.steam import GameNotFound, SteamError, SteamRateLimited
 
 
 class TipsResponse(BaseModel):
@@ -65,9 +65,9 @@ def create_app(
         if resolver is not None:
             return resolver
         if "resolver" not in service_holder_r:
-            cache = TTLCache(settings.cache_dir, settings.canirunit_cache_ttl_hours)
+            cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
             service_holder_r["resolver"] = ClaudeResolver(
-                LLMClient(settings), settings.canirunit_resolver_model, cache
+                LLMClient(settings), settings.whatcanmycomputerrun_resolver_model, cache
             )
         return service_holder_r["resolver"]
 
@@ -148,8 +148,8 @@ def create_app(
         gpu = hw.primary_gpu
         provider = GameTipsProvider(
             LLMClient(settings),
-            settings.canirunit_tips_model,
-            TTLCache(settings.cache_dir, settings.canirunit_cache_ttl_hours),
+            settings.whatcanmycomputerrun_tips_model,
+            TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours),
         )
         items, warning = await provider.tips(
             appid, game.name, rec, hw.device_type.value, gpu.name if gpu else "unknown"

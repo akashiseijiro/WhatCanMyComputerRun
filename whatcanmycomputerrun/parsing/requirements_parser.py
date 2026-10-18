@@ -8,7 +8,7 @@ from typing import Any
 
 from bs4 import BeautifulSoup
 
-from canirunit.parsing.schemas import Requirements
+from whatcanmycomputerrun.parsing.schemas import Requirements
 
 CORE_FIELDS = ("cpu", "gpu", "ram_gb")
 

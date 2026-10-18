@@ -6,22 +6,28 @@ import respx
 from fastapi.testclient import TestClient
 from test_engine import FIX, SCORES
 
-from canirunit.api.app import create_app
-from canirunit.compare.engine import build_report
-from canirunit.compare.models import Verdict
-from canirunit.compare.normalize import normalize_cpu, normalize_gpu
-from canirunit.compare.resolver import StaticResolver
-from canirunit.config import Settings
-from canirunit.hardware.base import DeviceType, GpuInfo, GpuKind, HardwareProfile, MediaType
-from canirunit.hardware.catalog import (
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.compare.engine import build_report
+from whatcanmycomputerrun.compare.models import Verdict
+from whatcanmycomputerrun.compare.normalize import normalize_cpu, normalize_gpu
+from whatcanmycomputerrun.compare.resolver import StaticResolver
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.hardware.base import (
+    DeviceType,
+    GpuInfo,
+    GpuKind,
+    HardwareProfile,
+    MediaType,
+)
+from whatcanmycomputerrun.hardware.catalog import (
     CatalogError,
     ManualSelection,
     build_manual_profile,
     load_catalog,
 )
-from canirunit.hardware.handhelds import HANDHELD_VRAM, apply_handheld_assumptions
-from canirunit.hardware.mock import MockDetector
-from canirunit.sources.steam import DETAILS_URL
+from whatcanmycomputerrun.hardware.handhelds import HANDHELD_VRAM, apply_handheld_assumptions
+from whatcanmycomputerrun.hardware.mock import MockDetector
+from whatcanmycomputerrun.sources.steam import DETAILS_URL
 
 CAT = load_catalog()
 
@@ -138,7 +144,7 @@ def test_assumption_never_lowers_a_larger_allocation_or_touches_discrete():
 
 
 async def test_ram_addback_uses_detected_reserve_not_assumed():
-    from canirunit.compare.engine import _effective_ram
+    from whatcanmycomputerrun.compare.engine import _effective_ram
 
     hw = MockDetector("ally_z1e").detect()  # 16 GB reported, 4 GB reserved (detected)
     total, note = _effective_ram(hw)
@@ -157,7 +163,7 @@ async def test_ram_addback_uses_detected_reserve_not_assumed():
 async def test_ally_vram_row_and_tip_reflect_assumption():
     from test_engine import cyberpunk
 
-    from canirunit.settings.rules import recommend_settings
+    from whatcanmycomputerrun.settings.rules import recommend_settings
 
     hw = MockDetector("ally_z1e").detect()
     rep = await build_report(hw, cyberpunk(), StaticResolver(SCORES))
@@ -172,7 +178,7 @@ async def test_ally_vram_row_and_tip_reflect_assumption():
 def test_manual_endpoints_and_report(tmp_path):
     data = json.loads((FIX / "appdetails_1091500.json").read_text())
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
-    st = Settings(anthropic_api_key="", canirunit_cache_dir=str(tmp_path))
+    st = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("ally_z1e"), st, resolver=StaticResolver(SCORES))
     body = sel().model_dump(mode="json")
     with TestClient(app) as client:

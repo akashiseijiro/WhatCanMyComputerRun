@@ -6,15 +6,15 @@ import pytest
 import respx
 from fastapi.testclient import TestClient
 
-from canirunit.api.app import create_app
-from canirunit.compare.engine import build_report, tier_verdict
-from canirunit.compare.models import Confidence, Recommendation, Verdict
-from canirunit.compare.resolver import StaticResolver
-from canirunit.config import Settings
-from canirunit.hardware.mock import MockDetector
-from canirunit.parsing.requirements_parser import parse_pc_requirements
-from canirunit.parsing.schemas import GameDetails, Requirements, RequirementsSet
-from canirunit.sources.steam import DETAILS_URL, parse_app_data
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.compare.engine import build_report, tier_verdict
+from whatcanmycomputerrun.compare.models import Confidence, Recommendation, Verdict
+from whatcanmycomputerrun.compare.resolver import StaticResolver
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.hardware.mock import MockDetector
+from whatcanmycomputerrun.parsing.requirements_parser import parse_pc_requirements
+from whatcanmycomputerrun.parsing.schemas import GameDetails, Requirements, RequirementsSet
+from whatcanmycomputerrun.sources.steam import DETAILS_URL, parse_app_data
 
 FIX = Path(__file__).parent / "fixtures" / "steam"
 
@@ -197,7 +197,7 @@ def test_tier_verdict(mine, mn, rec, expected):
 def test_report_endpoint(tmp_path):
     data = json.loads((FIX / "appdetails_1091500.json").read_text())
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
-    settings = Settings(anthropic_api_key="", canirunit_cache_dir=str(tmp_path))
+    settings = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("desktop_rtx3060"), settings, resolver=StaticResolver(SCORES))
     with TestClient(app) as client:
         r = client.get("/api/report/1091500")

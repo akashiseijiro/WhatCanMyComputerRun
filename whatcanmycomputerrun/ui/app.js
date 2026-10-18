@@ -332,7 +332,7 @@ function sourcesCard(rep) {
 
 
 // ---------- manual hardware selection ----------
-const MANUAL_KEY = "canirunit.manual";
+const MANUAL_KEY = "whatcanmycomputerrun.manual";
 const DEVICE_LABELS = { desktop: "🖥️ Desktop PC", laptop: "💻 Laptop", handheld: "🎮 Handheld" };
 
 function partPicker(label, items, visible, optionLabel) {

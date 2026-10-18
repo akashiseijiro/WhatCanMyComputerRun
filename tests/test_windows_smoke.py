@@ -9,7 +9,7 @@ pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="Windows only")
 
 
 def test_real_detection_smoke():
-    from canirunit.hardware.windows import WindowsDetector
+    from whatcanmycomputerrun.hardware.windows import WindowsDetector
 
     det = WindowsDetector()
     hw = det.detect()
@@ -25,7 +25,7 @@ def test_real_detection_smoke():
 
 
 def test_collectors_do_not_raise():
-    from canirunit.hardware.windows import read_dxgi_adapters, read_registry_gpus
+    from whatcanmycomputerrun.hardware.windows import read_dxgi_adapters, read_registry_gpus
 
     assert isinstance(read_registry_gpus(), list)
     assert isinstance(read_dxgi_adapters(), list)

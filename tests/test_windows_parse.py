@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from canirunit.hardware.base import DeviceType, GpuKind, MediaType
-from canirunit.hardware.windows_parse import (
+from whatcanmycomputerrun.hardware.base import DeviceType, GpuKind, MediaType
+from whatcanmycomputerrun.hardware.windows_parse import (
     build_profile,
     classify_gpu_kind,
     detect_device_type,

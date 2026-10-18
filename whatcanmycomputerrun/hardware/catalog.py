@@ -13,7 +13,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-from canirunit.hardware.base import (
+from whatcanmycomputerrun.hardware.base import (
     CpuInfo,
     DeviceType,
     DisplayInfo,
@@ -26,7 +26,7 @@ from canirunit.hardware.base import (
     OsInfo,
     RamInfo,
 )
-from canirunit.hardware.handhelds import apply_handheld_assumptions
+from whatcanmycomputerrun.hardware.handhelds import apply_handheld_assumptions
 
 CATALOG_PATH = Path(__file__).parent / "catalog.json"
 

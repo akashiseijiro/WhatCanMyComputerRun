@@ -10,9 +10,9 @@ import webbrowser
 
 import uvicorn
 
-from canirunit.api.app import create_app
-from canirunit.hardware.base import get_detector
-from canirunit.hardware.mock import available_profiles
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.hardware.base import get_detector
+from whatcanmycomputerrun.hardware.mock import available_profiles
 
 
 def _free_port() -> int:

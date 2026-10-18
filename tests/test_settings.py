@@ -5,25 +5,30 @@ import respx
 from fastapi.testclient import TestClient
 from test_engine import FIX, SCORES, cyberpunk
 
-from canirunit.api.app import create_app
-from canirunit.compare.engine import build_report
-from canirunit.compare.models import Confidence
-from canirunit.compare.resolver import StaticResolver
-from canirunit.config import Settings
-from canirunit.hardware.base import GpuInfo, GpuVendor
-from canirunit.hardware.handhelds import power_profile
-from canirunit.hardware.mock import MockDetector
-from canirunit.llm.client import LLMClient, LLMRateLimited
-from canirunit.settings.llm_tips import GameTipsProvider
-from canirunit.settings.models import GameTip, Preset, SettingsRecommendation, UpscaleMode
-from canirunit.settings.rules import (
+from whatcanmycomputerrun.api.app import create_app
+from whatcanmycomputerrun.compare.engine import build_report
+from whatcanmycomputerrun.compare.models import Confidence
+from whatcanmycomputerrun.compare.resolver import StaticResolver
+from whatcanmycomputerrun.config import Settings
+from whatcanmycomputerrun.hardware.base import GpuInfo, GpuVendor
+from whatcanmycomputerrun.hardware.handhelds import power_profile
+from whatcanmycomputerrun.hardware.mock import MockDetector
+from whatcanmycomputerrun.llm.client import LLMClient, LLMRateLimited
+from whatcanmycomputerrun.settings.llm_tips import GameTipsProvider
+from whatcanmycomputerrun.settings.models import (
+    GameTip,
+    Preset,
+    SettingsRecommendation,
+    UpscaleMode,
+)
+from whatcanmycomputerrun.settings.rules import (
     frame_generation,
     interp_fps,
     recommend_settings,
     upscaler_technology,
 )
-from canirunit.sources.cache import TTLCache
-from canirunit.sources.steam import DETAILS_URL
+from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.steam import DETAILS_URL
 
 
 async def settings_for(profile, scores=SCORES, game=None):
@@ -64,7 +69,7 @@ async def test_ally_gets_fsr_handheld_advice_and_low_settings():
 
 
 async def test_easy_game_on_ally_uses_low_power_and_native():
-    from canirunit.parsing.schemas import GameDetails, Requirements, RequirementsSet
+    from whatcanmycomputerrun.parsing.schemas import GameDetails, Requirements, RequirementsSet
 
     game = GameDetails(
         appid=1,
@@ -143,7 +148,7 @@ def test_power_profiles_extensible_and_generic_fallback():
 def test_report_endpoint_includes_settings(tmp_path):
     data = json.loads((FIX / "appdetails_1091500.json").read_text())
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
-    st = Settings(anthropic_api_key="", canirunit_cache_dir=str(tmp_path))
+    st = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("ally_z1e"), st, resolver=StaticResolver(SCORES))
     with TestClient(app) as client:
         body = client.get("/api/report/1091500").json()
