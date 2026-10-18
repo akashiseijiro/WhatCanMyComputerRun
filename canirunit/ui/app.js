@@ -237,7 +237,7 @@ function renderReport(rep, appid) {
         h("a", { href: g.store_url, target: "_blank", rel: "noopener noreferrer" }, "Steam store page"))),
     h("div", { class: `verdictbar ${rep.recommendation}` },
       h("p", { class: "headline" }, rep.headline),
-      h("div", { class: "muted" }, `Confidence: ${rep.confidence}` + (rep.bottleneck ? ` · limited by ${rep.bottleneck.toUpperCase()}` : "") +
+      h("div", { class: "muted" }, `Confidence: ${rep.confidence}` + (rep.bottleneck && rep.recommendation !== "INSUFFICIENT_DATA" ? ` · limited by ${rep.bottleneck.toUpperCase()}` : "") +
         (hw ? ` · for your ${hw.handheld_name || hw.device_type}` : "")),
       rep.reasons.length ? h("ul", null, rep.reasons.map((r) => h("li", null, r))) : null),
     rep.warnings.length ? h("div", { class: "warnbox", role: "status" }, h("ul", null, rep.warnings.map((w) => h("li", null, w)))) : null,

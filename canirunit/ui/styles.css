@@ -121,7 +121,7 @@ table.cmp { width: 100%; border-collapse: collapse; }
 .cmp th, .cmp td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
 .cmp th { color: var(--muted); font-weight: 600; font-size: .9rem; }
 .cmp .note { display: block; color: var(--muted); font-size: .85rem; margin-top: .2rem; }
-.vtag { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; font-size: .9rem; margin-top: .2rem; }
+.vtag { display: flex; width: fit-content; align-items: center; gap: .35rem; font-weight: 700; font-size: .9rem; margin-top: .2rem; }
 .vtag.BELOW_MIN { color: var(--bad); }
 .vtag.MEETS_MIN { color: var(--warn); }
 .vtag.MEETS_RECOMMENDED { color: var(--good); }
