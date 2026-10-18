@@ -121,12 +121,12 @@ function renderSystem() {
       h("dt", null, "Name"), h("dd", null, g.name),
       h("dt", null, "Type"), h("dd", null, g.kind === "integrated" ? "Integrated" : "Discrete"),
       h("dt", null, g.vram_shared ? "Memory" : "VRAM"),
-      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_assumed ? ` (assumed; detected ${g.vram_detected_mb ? GB(g.vram_detected_mb) : "unknown"}, adjustable in software)` : g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
+      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_assumed ? ` (assumed; ${g.vram_source === "manual" ? "usually" : "detected"} ${g.vram_detected_mb ? GB(g.vram_detected_mb) : "unknown"} by default, adjustable in software)` : g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
       h("dt", null, "Driver"), h("dd", null, g.driver_version || "Unknown")))) :
     [h("div", { class: "card" }, h("h2", null, "GPU"), h("p", { class: "muted" }, "Not detected"))];
 
   const drives = hw.storage.length ? hw.storage.map((d) =>
-    h("div", null, `${d.letter} ${d.free_gb ?? "?"} GB free of ${d.total_gb ?? "?"} GB`,
+    h("div", null, `${d.letter} ${d.free_gb ?? "?"} GB free${d.total_gb ? ` of ${d.total_gb} GB` : ""}`,
       d.media_type !== "unknown" ? ` (${d.media_type.toUpperCase()})` : "")) : [h("span", { class: "muted" }, "Not detected")];
 
   fill(app, 

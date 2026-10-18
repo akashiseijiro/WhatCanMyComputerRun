@@ -193,7 +193,8 @@ def _vram_tip(report: Report, hw: HardwareProfile) -> str | None:
         det = f"{gpu.vram_detected_mb / 1024:g} GB" if gpu.vram_detected_mb else "an unknown amount"
         return (
             f"These results assume {gpu.vram_mb / 1024:g} GB of graphics memory{cap}. "
-            f"It is currently {det}: set it in {where} (this leaves less RAM for Windows)."
+            f"It is {'usually' if gpu.vram_source == 'manual' else 'currently'} {det}: "
+            f"set it in {where} (this leaves less RAM for Windows)."
         )
     row = _row(report, "vram")
     if not (row and row.specified and row.verdict in (Verdict.BELOW_MIN, Verdict.MEETS_MIN)):

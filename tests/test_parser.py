@@ -53,9 +53,13 @@ def test_plain_br_format_without_list():
 
 
 def test_missing_fields_flag_llm_fallback():
-    t = parse_tier("<ul><li><strong>OS:</strong> Windows 10</li><li><strong>Memory:</strong> 8 GB RAM</li></ul>")
+    t = parse_tier(
+        "<ul><li><strong>OS:</strong> Windows 10</li><li><strong>Memory:</strong> 8 GB RAM</li></ul>"
+    )
     assert set(t.missing) == {"cpu", "gpu"}
-    assert parse_pc_requirements({"minimum": "<ul><li><strong>OS:</strong> Windows</li></ul>"}).needs_llm
+    assert parse_pc_requirements(
+        {"minimum": "<ul><li><strong>OS:</strong> Windows</li></ul>"}
+    ).needs_llm
 
 
 def test_combined_min_and_recommended_blob_is_split():
@@ -71,7 +75,10 @@ def test_combined_min_and_recommended_blob_is_split():
     ("raw", "expected"),
     [
         ("GTX 1060 / RX 580", ["GTX 1060", "RX 580"]),
-        ("Intel Core i5-8400 or AMD Ryzen 3 3300X or equivalent", ["Intel Core i5-8400", "AMD Ryzen 3 3300X"]),
+        (
+            "Intel Core i5-8400 or AMD Ryzen 3 3300X or equivalent",
+            ["Intel Core i5-8400", "AMD Ryzen 3 3300X"],
+        ),
         ("Intel Core i5 (or equivalent)", ["Intel Core i5"]),
         ("NVIDIA GTX 970, AMD Radeon R9 290", ["NVIDIA GTX 970", "AMD Radeon R9 290"]),
         ("AMD Ryzen 5 3600/3600X", ["AMD Ryzen 5 3600/3600X"]),
@@ -85,7 +92,14 @@ def test_split_alternatives(raw, expected):
 
 @pytest.mark.parametrize(
     ("raw", "gb"),
-    [("12 GB RAM", 12), ("2048 MB RAM", 2), ("1 TB", 1024), ("8GB", 8), ("lots", None), ("4,5 GB", 4.5)],
+    [
+        ("12 GB RAM", 12),
+        ("2048 MB RAM", 2),
+        ("1 TB", 1024),
+        ("8GB", 8),
+        ("lots", None),
+        ("4,5 GB", 4.5),
+    ],
 )
 def test_parse_size(raw, gb):
     assert parse_size_gb(raw) == gb

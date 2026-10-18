@@ -292,12 +292,13 @@ def _vram_row(hw: HardwareProfile, mn: Requirements | None, rec: Requirements | 
         row.note = " ".join(x for x in (row.note, "Shared memory with system RAM.") if x)
     if gpu.vram_assumed:
         det = f"{gpu.vram_detected_mb / 1024:g} GB" if gpu.vram_detected_mb else "unknown"
+        when = "usually" if gpu.vram_source == "manual" else "currently"
         where = "Armoury Crate" if hw.handheld_name and "ROG" in hw.handheld_name else "your BIOS"
         row.note = " ".join(
             x
             for x in (
                 row.note,
-                f"Assumes you set graphics memory to {mine:g} GB in {where} (currently {det}).",
+                f"Assumes you set graphics memory to {mine:g} GB in {where} ({when} {det}).",
             )
             if x
         )

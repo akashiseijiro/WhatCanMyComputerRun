@@ -71,9 +71,7 @@ def read_registry_gpus() -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
     for control_set in ("ControlSet001", "CurrentControlSet"):
         try:
-            base = winreg.OpenKey(
-                winreg.HKEY_LOCAL_MACHINE, GPU_CLASS_KEY.format(cs=control_set)
-            )
+            base = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, GPU_CLASS_KEY.format(cs=control_set))
         except OSError:
             continue
         with base:

@@ -247,7 +247,8 @@ def parse_storage(raw: dict[str, Any], warnings: list[str]) -> list[DriveInfo]:
                 letter=letter,
                 free_gb=round(free / 1024**3, 1) if free is not None else None,
                 total_gb=round(size / 1024**3, 1) if size is not None else None,
-                media_type=media.get(disk_no, MediaType.UNKNOWN) if disk_no is not None
+                media_type=media.get(disk_no, MediaType.UNKNOWN)
+                if disk_no is not None
                 else MediaType.UNKNOWN,
             )
         )
@@ -289,8 +290,10 @@ def detect_device_type(
     handheld = match_handheld(manufacturer, model)
     if handheld:
         return DeviceType.HANDHELD, handheld
-    if LAPTOP_CHASSIS & set(chassis_types) or pc_system_type in (2, 8) or (
-        has_battery and not chassis_types
+    if (
+        LAPTOP_CHASSIS & set(chassis_types)
+        or pc_system_type in (2, 8)
+        or (has_battery and not chassis_types)
     ):
         return DeviceType.LAPTOP, None
     return DeviceType.DESKTOP, None

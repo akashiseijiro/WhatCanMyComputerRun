@@ -43,7 +43,9 @@ async def steam(cache):
 
 @respx.mock
 async def test_search_parses_and_caches(steam):
-    route = respx.get(SEARCH_URL).mock(return_value=httpx.Response(200, json=fx("search_cyberpunk.json")))
+    route = respx.get(SEARCH_URL).mock(
+        return_value=httpx.Response(200, json=fx("search_cyberpunk.json"))
+    )
     results = await steam.search("Cyberpunk")
     assert results[0].appid == 1091500 and results[0].name == "Cyberpunk 2077"
     assert results[0].image and results[0].price == "59.99 USD"
@@ -54,7 +56,9 @@ async def test_search_parses_and_caches(steam):
 
 @respx.mock
 async def test_app_details(steam):
-    respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=fx("appdetails_1091500.json")))
+    respx.get(DETAILS_URL).mock(
+        return_value=httpx.Response(200, json=fx("appdetails_1091500.json"))
+    )
     game, raw = await steam.app_details(1091500)
     assert game.name == "Cyberpunk 2077" and game.release_date == "Dec 9, 2020"
     assert game.price and game.price.final_cents == 5999 and game.price.formatted == "$59.99"
@@ -81,7 +85,9 @@ async def test_unknown_app(steam):
 )
 async def test_error_mapping(steam, response, exc):
     route = respx.get(SEARCH_URL)
-    route.mock(side_effect=response) if isinstance(response, Exception) else route.mock(return_value=response)
+    route.mock(side_effect=response) if isinstance(response, Exception) else route.mock(
+        return_value=response
+    )
     with pytest.raises(exc):
         await steam.search("x")
 
@@ -113,7 +119,9 @@ class StubMessages:
 
 def stub_llm(result=None, error=None):
     msgs = StubMessages(result, error)
-    return LLMClient(Settings(anthropic_api_key=""), client=type("C", (), {"messages": msgs})()), msgs
+    return LLMClient(
+        Settings(anthropic_api_key=""), client=type("C", (), {"messages": msgs})()
+    ), msgs
 
 
 GAPPY = {
@@ -180,7 +188,9 @@ async def test_no_pc_requirements_marks_missing(steam):
 def test_api_routes_and_errors(tmp_path):
     settings = Settings(anthropic_api_key="", canirunit_cache_dir=str(tmp_path / "c"))
     respx.get(SEARCH_URL).mock(return_value=httpx.Response(200, json=fx("search_cyberpunk.json")))
-    respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=fx("appdetails_1245620.json")))
+    respx.get(DETAILS_URL).mock(
+        return_value=httpx.Response(200, json=fx("appdetails_1245620.json"))
+    )
     app = create_app(MockDetector("ally_z1e"), settings)
     with TestClient(app) as client:
         assert client.get("/api/search", params={"q": ""}).status_code == 422

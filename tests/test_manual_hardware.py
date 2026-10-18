@@ -101,6 +101,7 @@ def test_handheld_preset_sets_device_and_assumes_vram():
     assert hw.device_type == DeviceType.HANDHELD and hw.handheld_name == "ASUS ROG Ally"
     gpu = hw.primary_gpu
     assert gpu.vram_mb == 6144 and gpu.vram_assumed and gpu.vram_detected_mb == 4096
+    assert gpu.vram_source == "manual"  # so notes say "usually 4 GB", not "detected"
 
 
 def test_unknown_ids_rejected():
