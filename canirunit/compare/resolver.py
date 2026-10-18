@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Literal, Protocol
 
@@ -20,6 +21,22 @@ from canirunit.sources.cache import TTLCache
 GPU_BENCHMARK = "PassMark G3D Mark"
 CPU_BENCHMARK = "PassMark CPU Mark"
 SCORE_CACHE_TTL_HOURS = 24 * 30
+SCORE_BOUNDS = {"gpu": (200.0, 80000.0), "cpu": (500.0, 150000.0)}
+IGPU_NAME = re.compile(
+    r"radeon \d{3}m\b|radeon graphics|\buhd\b|\biris\b|(?<!rx )vega (?!56\b|64\b)\d{1,2}\b|intel hd|\bxe graphics",
+    re.I,
+)
+IGPU_MAX_SCORE = 9000.0
+
+
+def plausible(kind: str, normalized: str, score: float | None) -> bool:
+    """Reject numbers no real part could have (the model sometimes hallucinates scale)."""
+    if score is None:
+        return False
+    lo, hi = SCORE_BOUNDS[kind]
+    if not lo <= score <= hi:
+        return False
+    return not (kind == "gpu" and IGPU_NAME.search(normalized) and score > IGPU_MAX_SCORE)
 
 
 @dataclass(frozen=True)
@@ -96,6 +113,14 @@ SYSTEM = f"""You convert PC component names into relative performance scores.
 Scales (use exactly these, so scores are comparable across calls):
 - GPUs: {GPU_BENCHMARK} (the "average G3D Mark" shown on videocardbenchmark.net).
 - CPUs: {CPU_BENCHMARK} (the "average CPU Mark" shown on cpubenchmark.net).
+Calibration anchors (approximate averages; keep your answers consistent with them):
+- GPU G3D: RTX 4090 ~38000, RTX 3060 ~17000, RTX 2060 SUPER ~16000, RX 5700 XT ~17000,
+  GTX 1060 6GB ~10000, RX 580 ~9500, Arc A380 ~6000, Arc A770 ~15000, GTX 1050 Ti ~6000,
+  Radeon 780M (integrated) ~3500, Radeon 680M ~2500, Intel UHD 620 ~1000, GT 1030 ~2500.
+- CPU Mark: Ryzen 9 7950X3D ~62000, Ryzen 7 7800X3D ~35000, Core i7-12700 ~30000,
+  Ryzen 5 5600X ~22000, Ryzen Z1 Extreme ~20000, Ryzen 5 1600 ~12000, Core i7-6700 ~9000,
+  Core i3-1115G4 ~7000.
+- Integrated GPUs are far slower than discrete cards; an iGPU never scores above ~9000.
 Rules:
 - Mobile/laptop variants are different parts from desktop ones (RTX 3060 Laptop vs RTX 3060). Use the variant named.
 - For integrated GPUs, a "hint" gives the CPU the GPU is built into; use it to identify the exact iGPU (e.g. generic "AMD Radeon Graphics" in a Ryzen Z1 Extreme is the Radeon 780M).
@@ -113,7 +138,7 @@ class ClaudeResolver:
         self.cache = cache
 
     def _cache_key(self, q: ComponentQuery) -> str:
-        return f"perf:v1:{self.model}:{q.key}"
+        return f"perf:v2:{self.model}:{q.key}"
 
     async def resolve(self, queries: list[ComponentQuery]) -> ResolveResult:
         out = ResolveResult()
@@ -164,7 +189,7 @@ class ClaudeResolver:
                 continue
             q = items[r.id]
             bench = GPU_BENCHMARK if q.kind == "gpu" else CPU_BENCHMARK
-            score = r.score if r.score is not None and r.score > 0 else None
+            score = r.score if plausible(q.kind, q.normalized, r.score) else None
             result = PerformanceScore(
                 score=score,
                 benchmark=bench,

@@ -129,3 +129,26 @@ async def test_static_resolver_is_pluggable():
     )
     assert res.get(ComponentQuery("gpu", "NVIDIA GeForce GTX 1060")).score == 10000
     assert res.get(ComponentQuery("gpu", "Unknown")) is None
+
+
+def test_plausibility_guard_rejects_hallucinated_scores():
+    from canirunit.compare.resolver import plausible
+
+    assert not plausible("gpu", "radeon 780m", 27896)  # an iGPU can't beat an RTX 3060
+    assert plausible("gpu", "radeon 780m", 3500)
+    assert plausible("gpu", "radeon rx vega 56", 13500)  # discrete Vega is not an iGPU
+    assert not plausible("gpu", "radeon vega 8 graphics", 13500)
+    assert not plausible("gpu", "geforce rtx 3060", 2_000_000)
+    assert not plausible("cpu", "ryzen 5 5600x", 3)
+    assert not plausible("gpu", "geforce rtx 3060", None)
+
+
+async def test_implausible_score_is_treated_as_unresolved(tmp_path):
+    batch = LLMScoreBatch(
+        results=[LLMComponentScore(id=0, score=27896, confidence=Confidence.HIGH)]
+    )
+    r, _ = make(tmp_path, batch)
+    q = ComponentQuery("gpu", "AMD Radeon Graphics", hint="AMD Ryzen Z1 Extreme")
+    res = await r.resolve([q])
+    assert res.get(q) is None
+    assert not list(tmp_path.glob("*.json"))  # and it was not cached

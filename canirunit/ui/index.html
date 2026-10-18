@@ -3,16 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
   <title>CanIRunIt</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <main>
-    <h1>CanIRunIt</h1>
-    <p id="status">Loading hardware…</p>
-    <pre id="hw"></pre>
-    <button id="rescan" type="button">Re-scan</button>
-  </main>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="top">
+    <div class="brand">CanIRunIt</div>
+    <nav aria-label="Main">
+      <a id="nav-system" href="#system" class="tab">My System</a>
+      <a id="nav-search" href="#search" class="tab">Search</a>
+      <a id="nav-report" href="#report" class="tab" hidden>Report</a>
+    </nav>
+  </header>
+  <div id="notice" role="status" aria-live="polite"></div>
+  <main id="app" tabindex="-1"></main>
   <script src="/static/app.js"></script>
 </body>
 </html>

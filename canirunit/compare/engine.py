@@ -30,7 +30,7 @@ RAM_BORDER = 0.92  # Windows reports e.g. 15.3 GB for a 16 GB kit
 VRAM_BORDER = 0.9
 EXCEED_MULT = 1.5
 NO_REC_MULT = 2.0
-HOPELESS_RATIO = 0.6
+HOPELESS_RATIO = 0.5
 
 ROW_PRIORITY = ["gpu", "cpu", "ram", "vram", "storage", "os", "directx"]
 

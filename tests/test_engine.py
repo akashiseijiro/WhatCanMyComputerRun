@@ -80,12 +80,12 @@ async def test_rtx3060_desktop():
 
 
 async def test_ally_gpu_is_hopelessly_below_for_cyberpunk():
-    rep = await report("ally_z1e")
+    rep = await report("ally_z1e", {**SCORES, "gpu:radeon 780m": 2700})  # 45% of the minimum
     gpu = row(rep, "gpu")
     assert gpu.verdict == Verdict.BELOW_MIN
     assert "Compared against the weakest listed option: Arc A380" in gpu.note
-    assert gpu.your_score == 3300 and gpu.min_score == 6000  # 780M resolved via the Z1 Extreme hint
-    assert rep.recommendation == Recommendation.DONT_BUY  # 55% of the minimum, under the 60% bar
+    assert gpu.your_score == 2700 and gpu.min_score == 6000  # 780M resolved via the Z1 Extreme hint
+    assert rep.recommendation == Recommendation.DONT_BUY  # 45% of the minimum, under the 50% bar
     assert rep.bottleneck == "gpu"
     assert "weakest" not in rep.headline
 
