@@ -1,5 +1,5 @@
 [project]
-name = "canirunit"
+name = "whatcanmycomputerrun"
 version = "0.1.0"
 description = "Game compatibility checker for Windows PCs and handhelds"
 readme = "README.md"

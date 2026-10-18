@@ -1,4 +1,4 @@
-# CanIRunIt
+# WhatCanMyComputerRun
 
 Game compatibility checker for Windows PCs and handhelds (ROG Ally etc.). Work in progress; full setup and build instructions arrive in milestone 8.
 

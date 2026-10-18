@@ -83,7 +83,7 @@ def test_api_hardware_and_rescan():
     body = client.get("/api/hardware").json()
     assert body["device_type"] == "handheld"
     assert client.post("/api/hardware/rescan").status_code == 200
-    assert "CanIRunIt" in client.get("/").text
+    assert "WhatCanMyComputerRun" in client.get("/").text
 
 
 def test_api_reports_detection_failure_cleanly():

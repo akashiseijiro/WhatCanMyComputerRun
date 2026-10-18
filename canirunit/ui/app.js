@@ -28,7 +28,7 @@ function fill(el, ...nodes) {
 const state = { hw: null, report: null, tips: null, token: 0, health: null };
 
 const FRIENDLY = {
-  offline: ["Can't reach the app", "The CanIRunIt background service isn't responding. Close and reopen the app."],
+  offline: ["Can't reach the app", "The WhatCanMyComputerRun background service isn't responding. Close and reopen the app."],
   timeout: ["Taking too long", "The request timed out. Check your internet connection and try again."],
   steam_unavailable: ["Steam can't be reached", "You may be offline, or the Steam store is down. Check your connection and try again."],
   steam_rate_limited: ["Steam is rate limiting requests", "Wait a minute, then try again."],
@@ -448,7 +448,7 @@ async function showManual() {
 function reportText() {
   const r = state.report;
   if (!r) return "";
-  const lines = [`CanIRunIt: ${r.game.name}`, `Verdict: ${r.headline} (confidence: ${r.confidence})`];
+  const lines = [`WhatCanMyComputerRun: ${r.game.name}`, `Verdict: ${r.headline} (confidence: ${r.confidence})`];
   if (state.hw) lines.push(`System: ${deviceLabel(state.hw)}`);
   r.reasons.forEach((x) => lines.push(`- ${x}`));
   lines.push("", "Component | Your PC | Minimum | Recommended | Result");

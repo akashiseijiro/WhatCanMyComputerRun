@@ -22,7 +22,9 @@ def _free_port() -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="canirunit", description="Can my PC/handheld run this game?")
+    p = argparse.ArgumentParser(
+        prog="whatcanmycomputerrun", description="Can my PC/handheld run this game?"
+    )
     p.add_argument(
         "--mock-hardware",
         metavar="PROFILE",
@@ -65,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
     thread.start()
     while not server.started:
         time.sleep(0.05)
-    print(f"CanIRunIt running at {url}")
+    print(f"WhatCanMyComputerRun running at {url}")
 
     if args.no_ui:
         thread.join()
@@ -74,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
         try:
             import webview  # Windows (WebView2); optional elsewhere
 
-            webview.create_window("CanIRunIt", url, width=1280, height=800)
+            webview.create_window("WhatCanMyComputerRun", url, width=1280, height=800)
             webview.start()
             server.should_exit = True
             return 0

@@ -13,7 +13,7 @@ def app_data_dir() -> Path:
         base = Path.home() / "Library" / "Application Support"
     else:
         base = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
-    return base / "CanIRunIt"
+    return base / "WhatCanMyComputerRun"
 
 
 class Settings(BaseSettings):

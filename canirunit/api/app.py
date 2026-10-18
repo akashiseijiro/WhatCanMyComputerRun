@@ -71,7 +71,7 @@ def create_app(
             )
         return service_holder_r["resolver"]
 
-    app = FastAPI(title="CanIRunIt", version=__version__, lifespan=lifespan)
+    app = FastAPI(title="WhatCanMyComputerRun", version=__version__, lifespan=lifespan)
     state: dict[str, HardwareProfile] = {}
 
     @app.exception_handler(SteamError)
