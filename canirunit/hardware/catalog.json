@@ -1,0 +1,2682 @@
+{
+ "cpus": [
+  {
+   "id": "cpu-amd-ryzen-3-3100",
+   "name": "AMD Ryzen 3 3100",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-3-3300x",
+   "name": "AMD Ryzen 3 3300X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-5-3600",
+   "name": "AMD Ryzen 5 3600",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-5-3600x",
+   "name": "AMD Ryzen 5 3600X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-7-3700x",
+   "name": "AMD Ryzen 7 3700X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-7-3800x",
+   "name": "AMD Ryzen 7 3800X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-9-3900x",
+   "name": "AMD Ryzen 9 3900X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-9-3950x",
+   "name": "AMD Ryzen 9 3950X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 3000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5500",
+   "name": "AMD Ryzen 5 5500",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5600",
+   "name": "AMD Ryzen 5 5600",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5600x",
+   "name": "AMD Ryzen 5 5600X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5600g",
+   "name": "AMD Ryzen 5 5600G",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5700x",
+   "name": "AMD Ryzen 7 5700X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5700g",
+   "name": "AMD Ryzen 7 5700G",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5800x",
+   "name": "AMD Ryzen 7 5800X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5800x3d",
+   "name": "AMD Ryzen 7 5800X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-9-5900x",
+   "name": "AMD Ryzen 9 5900X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-9-5950x",
+   "name": "AMD Ryzen 9 5950X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 5000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-5-7600",
+   "name": "AMD Ryzen 5 7600",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-5-7600x",
+   "name": "AMD Ryzen 5 7600X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7700",
+   "name": "AMD Ryzen 7 7700",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7700x",
+   "name": "AMD Ryzen 7 7700X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7800x3d",
+   "name": "AMD Ryzen 7 7800X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7900",
+   "name": "AMD Ryzen 9 7900",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7900x",
+   "name": "AMD Ryzen 9 7900X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7900x3d",
+   "name": "AMD Ryzen 9 7900X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7950x",
+   "name": "AMD Ryzen 9 7950X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7950x3d",
+   "name": "AMD Ryzen 9 7950X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 7000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-5-8600g",
+   "name": "AMD Ryzen 5 8600G",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-7-8700g",
+   "name": "AMD Ryzen 7 8700G",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-5-9600x",
+   "name": "AMD Ryzen 5 9600X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 6,
+   "threads": 12,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-7-9700x",
+   "name": "AMD Ryzen 7 9700X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-7-9800x3d",
+   "name": "AMD Ryzen 7 9800X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-9-9900x",
+   "name": "AMD Ryzen 9 9900X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 12,
+   "threads": 24,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-9-9950x",
+   "name": "AMD Ryzen 9 9950X",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-9-9950x3d",
+   "name": "AMD Ryzen 9 9950X3D",
+   "vendor": "AMD",
+   "segment": "desktop",
+   "family": "Ryzen 8000G / 9000",
+   "cores": 16,
+   "threads": 32,
+   "year": 2025
+  },
+  {
+   "id": "cpu-intel-core-i3-9100f",
+   "name": "Intel Core i3-9100F",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 9th gen",
+   "cores": 4,
+   "threads": 4,
+   "year": 2019
+  },
+  {
+   "id": "cpu-intel-core-i5-9400f",
+   "name": "Intel Core i5-9400F",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 9th gen",
+   "cores": 6,
+   "threads": 6,
+   "year": 2019
+  },
+  {
+   "id": "cpu-intel-core-i3-10100",
+   "name": "Intel Core i3-10100",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 10th gen",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i5-10400",
+   "name": "Intel Core i5-10400",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 10th gen",
+   "cores": 6,
+   "threads": 12,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i5-10600k",
+   "name": "Intel Core i5-10600K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 10th gen",
+   "cores": 6,
+   "threads": 12,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i7-10700k",
+   "name": "Intel Core i7-10700K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 10th gen",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i9-10900k",
+   "name": "Intel Core i9-10900K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 10th gen",
+   "cores": 10,
+   "threads": 20,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i5-11400",
+   "name": "Intel Core i5-11400",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 11th gen",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i5-11600k",
+   "name": "Intel Core i5-11600K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 11th gen",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i7-11700k",
+   "name": "Intel Core i7-11700K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 11th gen",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i9-11900k",
+   "name": "Intel Core i9-11900K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 11th gen",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i3-12100",
+   "name": "Intel Core i3-12100",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 12th gen",
+   "cores": 4,
+   "threads": 8,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-12400",
+   "name": "Intel Core i5-12400",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 12th gen",
+   "cores": 6,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-12600k",
+   "name": "Intel Core i5-12600K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 12th gen",
+   "cores": 10,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i7-12700k",
+   "name": "Intel Core i7-12700K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 12th gen",
+   "cores": 12,
+   "threads": 20,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i9-12900k",
+   "name": "Intel Core i9-12900K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 12th gen",
+   "cores": 16,
+   "threads": 24,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i5-13400",
+   "name": "Intel Core i5-13400",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 13th gen",
+   "cores": 10,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i5-13600k",
+   "name": "Intel Core i5-13600K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 13th gen",
+   "cores": 14,
+   "threads": 20,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i7-13700k",
+   "name": "Intel Core i7-13700K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 13th gen",
+   "cores": 16,
+   "threads": 24,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i9-13900k",
+   "name": "Intel Core i9-13900K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 13th gen",
+   "cores": 24,
+   "threads": 32,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-14400",
+   "name": "Intel Core i5-14400",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 14th gen",
+   "cores": 10,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-i5-14600k",
+   "name": "Intel Core i5-14600K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 14th gen",
+   "cores": 14,
+   "threads": 20,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i7-14700k",
+   "name": "Intel Core i7-14700K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 14th gen",
+   "cores": 20,
+   "threads": 28,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i9-14900k",
+   "name": "Intel Core i9-14900K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel 14th gen",
+   "cores": 24,
+   "threads": 32,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-ultra-5-245k",
+   "name": "Intel Core Ultra 5 245K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel Core Ultra 200S",
+   "cores": 14,
+   "threads": 14,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-7-265k",
+   "name": "Intel Core Ultra 7 265K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel Core Ultra 200S",
+   "cores": 20,
+   "threads": 20,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-9-285k",
+   "name": "Intel Core Ultra 9 285K",
+   "vendor": "Intel",
+   "segment": "desktop",
+   "family": "Intel Core Ultra 200S",
+   "cores": 24,
+   "threads": 24,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-5-3500u",
+   "name": "AMD Ryzen 5 3500U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-7-3700u",
+   "name": "AMD Ryzen 7 3700U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2019
+  },
+  {
+   "id": "cpu-amd-ryzen-5-4600h",
+   "name": "AMD Ryzen 5 4600H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-7-4800h",
+   "name": "AMD Ryzen 7 4800H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-7-4800u",
+   "name": "AMD Ryzen 7 4800U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5500u",
+   "name": "AMD Ryzen 5 5500U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-5-5600h",
+   "name": "AMD Ryzen 5 5600H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5700u",
+   "name": "AMD Ryzen 7 5700U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5800h",
+   "name": "AMD Ryzen 7 5800H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-7-5800u",
+   "name": "AMD Ryzen 7 5800U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-9-5900hx",
+   "name": "AMD Ryzen 9 5900HX",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 3000-5000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-amd-ryzen-5-6600h",
+   "name": "AMD Ryzen 5 6600H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-7-6800h",
+   "name": "AMD Ryzen 7 6800H",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-7-6800u",
+   "name": "AMD Ryzen 7 6800U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-9-6900hx",
+   "name": "AMD Ryzen 9 6900HX",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-amd-ryzen-5-7535hs",
+   "name": "AMD Ryzen 5 7535HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-5-7640u",
+   "name": "AMD Ryzen 5 7640U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7735hs",
+   "name": "AMD Ryzen 7 7735HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7840hs",
+   "name": "AMD Ryzen 7 7840HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-7-7840u",
+   "name": "AMD Ryzen 7 7840U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7940hs",
+   "name": "AMD Ryzen 9 7940HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-9-7945hx",
+   "name": "AMD Ryzen 9 7945HX",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 16,
+   "threads": 32,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-7-8845hs",
+   "name": "AMD Ryzen 7 8845HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-7-8840u",
+   "name": "AMD Ryzen 7 8840U",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-9-8945hs",
+   "name": "AMD Ryzen 9 8945HS",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen 6000-8000 mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-ai-7-350",
+   "name": "AMD Ryzen AI 7 350",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen AI",
+   "cores": 8,
+   "threads": 16,
+   "year": 2025
+  },
+  {
+   "id": "cpu-amd-ryzen-ai-9-365",
+   "name": "AMD Ryzen AI 9 365",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen AI",
+   "cores": 10,
+   "threads": 20,
+   "year": 2024
+  },
+  {
+   "id": "cpu-amd-ryzen-ai-9-hx-370",
+   "name": "AMD Ryzen AI 9 HX 370",
+   "vendor": "AMD",
+   "segment": "laptop",
+   "family": "Ryzen AI",
+   "cores": 12,
+   "threads": 24,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-i5-1035g1",
+   "name": "Intel Core i5-1035G1",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2019
+  },
+  {
+   "id": "cpu-intel-core-i7-1065g7",
+   "name": "Intel Core i7-1065G7",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2019
+  },
+  {
+   "id": "cpu-intel-core-i5-10300h",
+   "name": "Intel Core i5-10300H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i7-10750h",
+   "name": "Intel Core i7-10750H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i7-10870h",
+   "name": "Intel Core i7-10870H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i9-10980hk",
+   "name": "Intel Core i9-10980HK",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i3-1115g4",
+   "name": "Intel Core i3-1115G4",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 2,
+   "threads": 4,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i5-1135g7",
+   "name": "Intel Core i5-1135G7",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i7-1165g7",
+   "name": "Intel Core i7-1165G7",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 4,
+   "threads": 8,
+   "year": 2020
+  },
+  {
+   "id": "cpu-intel-core-i5-11400h",
+   "name": "Intel Core i5-11400H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 6,
+   "threads": 12,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i7-11800h",
+   "name": "Intel Core i7-11800H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i9-11900h",
+   "name": "Intel Core i9-11900H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 10th-11th gen mobile",
+   "cores": 8,
+   "threads": 16,
+   "year": 2021
+  },
+  {
+   "id": "cpu-intel-core-i5-1235u",
+   "name": "Intel Core i5-1235U",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 10,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i7-1255u",
+   "name": "Intel Core i7-1255U",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 10,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-12450h",
+   "name": "Intel Core i5-12450H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 8,
+   "threads": 12,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-12500h",
+   "name": "Intel Core i5-12500H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 12,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i7-12650h",
+   "name": "Intel Core i7-12650H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 10,
+   "threads": 16,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i7-12700h",
+   "name": "Intel Core i7-12700H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 14,
+   "threads": 20,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i9-12900h",
+   "name": "Intel Core i9-12900H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 14,
+   "threads": 20,
+   "year": 2022
+  },
+  {
+   "id": "cpu-intel-core-i5-13420h",
+   "name": "Intel Core i5-13420H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 8,
+   "threads": 12,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i5-13500h",
+   "name": "Intel Core i5-13500H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 12,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i7-13620h",
+   "name": "Intel Core i7-13620H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 10,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i7-13700h",
+   "name": "Intel Core i7-13700H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 14,
+   "threads": 20,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i9-13900h",
+   "name": "Intel Core i9-13900H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 14,
+   "threads": 20,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i7-13650hx",
+   "name": "Intel Core i7-13650HX",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 14,
+   "threads": 20,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i9-13980hx",
+   "name": "Intel Core i9-13980HX",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 24,
+   "threads": 32,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-i7-14700hx",
+   "name": "Intel Core i7-14700HX",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 20,
+   "threads": 28,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-i9-14900hx",
+   "name": "Intel Core i9-14900HX",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel 12th-14th gen mobile",
+   "cores": 24,
+   "threads": 32,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-5-125h",
+   "name": "Intel Core Ultra 5 125H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 14,
+   "threads": 18,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-ultra-7-155h",
+   "name": "Intel Core Ultra 7 155H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 16,
+   "threads": 22,
+   "year": 2023
+  },
+  {
+   "id": "cpu-intel-core-ultra-9-185h",
+   "name": "Intel Core Ultra 9 185H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 16,
+   "threads": 22,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-5-226v",
+   "name": "Intel Core Ultra 5 226V",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 8,
+   "threads": 8,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-7-258v",
+   "name": "Intel Core Ultra 7 258V",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 8,
+   "threads": 8,
+   "year": 2024
+  },
+  {
+   "id": "cpu-intel-core-ultra-7-255h",
+   "name": "Intel Core Ultra 7 255H",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 16,
+   "threads": 16,
+   "year": 2025
+  },
+  {
+   "id": "cpu-intel-core-ultra-9-275hx",
+   "name": "Intel Core Ultra 9 275HX",
+   "vendor": "Intel",
+   "segment": "laptop",
+   "family": "Intel Core Ultra mobile",
+   "cores": 24,
+   "threads": 24,
+   "year": 2025
+  },
+  {
+   "id": "cpu-amd-ryzen-z1",
+   "name": "AMD Ryzen Z1",
+   "vendor": "AMD",
+   "segment": "handheld",
+   "family": "Handheld APUs",
+   "cores": 6,
+   "threads": 12,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-z1-extreme",
+   "name": "AMD Ryzen Z1 Extreme",
+   "vendor": "AMD",
+   "segment": "handheld",
+   "family": "Handheld APUs",
+   "cores": 8,
+   "threads": 16,
+   "year": 2023
+  },
+  {
+   "id": "cpu-amd-ryzen-ai-z2-extreme",
+   "name": "AMD Ryzen AI Z2 Extreme",
+   "vendor": "AMD",
+   "segment": "handheld",
+   "family": "Handheld APUs",
+   "cores": 8,
+   "threads": 16,
+   "year": 2025
+  }
+ ],
+ "gpus": [
+  {
+   "id": "gpu-nvidia-geforce-gtx-1650-4gb",
+   "name": "NVIDIA GeForce GTX 1650",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 4,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1650-super-4gb",
+   "name": "NVIDIA GeForce GTX 1650 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 4,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1660-6gb",
+   "name": "NVIDIA GeForce GTX 1660",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1660-super-6gb",
+   "name": "NVIDIA GeForce GTX 1660 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1660-ti-6gb",
+   "name": "NVIDIA GeForce GTX 1660 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2060-6gb",
+   "name": "NVIDIA GeForce RTX 2060",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2060-super-8gb",
+   "name": "NVIDIA GeForce RTX 2060 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2070-super-8gb",
+   "name": "NVIDIA GeForce RTX 2070 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2080-super-8gb",
+   "name": "NVIDIA GeForce RTX 2080 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce GTX 16 / RTX 20",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3050-6gb",
+   "name": "NVIDIA GeForce RTX 3050",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 6,
+   "year": 2024
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3050-8gb",
+   "name": "NVIDIA GeForce RTX 3050",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3060-8gb",
+   "name": "NVIDIA GeForce RTX 3060",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3060-12gb",
+   "name": "NVIDIA GeForce RTX 3060",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 12,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3060-ti-8gb",
+   "name": "NVIDIA GeForce RTX 3060 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 8,
+   "year": 2020
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3070-8gb",
+   "name": "NVIDIA GeForce RTX 3070",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 8,
+   "year": 2020
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3070-ti-8gb",
+   "name": "NVIDIA GeForce RTX 3070 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3080-10gb",
+   "name": "NVIDIA GeForce RTX 3080",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 10,
+   "year": 2020
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3080-12gb",
+   "name": "NVIDIA GeForce RTX 3080",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 12,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3080-ti-12gb",
+   "name": "NVIDIA GeForce RTX 3080 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 12,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3090-24gb",
+   "name": "NVIDIA GeForce RTX 3090",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 24,
+   "year": 2020
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3090-ti-24gb",
+   "name": "NVIDIA GeForce RTX 3090 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 30",
+   "vram_gb": 24,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4060-8gb",
+   "name": "NVIDIA GeForce RTX 4060",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4060-ti-8gb",
+   "name": "NVIDIA GeForce RTX 4060 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4060-ti-16gb",
+   "name": "NVIDIA GeForce RTX 4060 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 16,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4070-12gb",
+   "name": "NVIDIA GeForce RTX 4070",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 12,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4070-super-12gb",
+   "name": "NVIDIA GeForce RTX 4070 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 12,
+   "year": 2024
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4070-ti-12gb",
+   "name": "NVIDIA GeForce RTX 4070 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 12,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4070-ti-super-16gb",
+   "name": "NVIDIA GeForce RTX 4070 Ti SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 16,
+   "year": 2024
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4080-16gb",
+   "name": "NVIDIA GeForce RTX 4080",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 16,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4080-super-16gb",
+   "name": "NVIDIA GeForce RTX 4080 SUPER",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 16,
+   "year": 2024
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4090-24gb",
+   "name": "NVIDIA GeForce RTX 4090",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 40",
+   "vram_gb": 24,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5050-8gb",
+   "name": "NVIDIA GeForce RTX 5050",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5060-8gb",
+   "name": "NVIDIA GeForce RTX 5060",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5060-ti-8gb",
+   "name": "NVIDIA GeForce RTX 5060 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5060-ti-16gb",
+   "name": "NVIDIA GeForce RTX 5060 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5070-12gb",
+   "name": "NVIDIA GeForce RTX 5070",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 12,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5070-ti-16gb",
+   "name": "NVIDIA GeForce RTX 5070 Ti",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5080-16gb",
+   "name": "NVIDIA GeForce RTX 5080",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5090-32gb",
+   "name": "NVIDIA GeForce RTX 5090",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "GeForce RTX 50",
+   "vram_gb": 32,
+   "year": 2025
+  },
+  {
+   "id": "gpu-amd-radeon-vii-16gb",
+   "name": "AMD Radeon VII",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 16,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-rx-5500-xt-4gb",
+   "name": "AMD Radeon RX 5500 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 4,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-rx-5500-xt-8gb",
+   "name": "AMD Radeon RX 5500 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-rx-5600-xt-6gb",
+   "name": "AMD Radeon RX 5600 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 6,
+   "year": 2020
+  },
+  {
+   "id": "gpu-amd-radeon-rx-5700-8gb",
+   "name": "AMD Radeon RX 5700",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-rx-5700-xt-8gb",
+   "name": "AMD Radeon RX 5700 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6400-4gb",
+   "name": "AMD Radeon RX 6400",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 4,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6500-xt-4gb",
+   "name": "AMD Radeon RX 6500 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 4,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6600-8gb",
+   "name": "AMD Radeon RX 6600",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6600-xt-8gb",
+   "name": "AMD Radeon RX 6600 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6650-xt-8gb",
+   "name": "AMD Radeon RX 6650 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6700-10gb",
+   "name": "AMD Radeon RX 6700",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 10,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6700-xt-12gb",
+   "name": "AMD Radeon RX 6700 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 12,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6750-xt-12gb",
+   "name": "AMD Radeon RX 6750 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 12,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6800-16gb",
+   "name": "AMD Radeon RX 6800",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 16,
+   "year": 2020
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6800-xt-16gb",
+   "name": "AMD Radeon RX 6800 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 16,
+   "year": 2020
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6900-xt-16gb",
+   "name": "AMD Radeon RX 6900 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 16,
+   "year": 2020
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6950-xt-16gb",
+   "name": "AMD Radeon RX 6950 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 5000 / 6000",
+   "vram_gb": 16,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7600-8gb",
+   "name": "AMD Radeon RX 7600",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7600-xt-16gb",
+   "name": "AMD Radeon RX 7600 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2024
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7700-xt-12gb",
+   "name": "AMD Radeon RX 7700 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 12,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7800-xt-16gb",
+   "name": "AMD Radeon RX 7800 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7900-gre-16gb",
+   "name": "AMD Radeon RX 7900 GRE",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2024
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7900-xt-20gb",
+   "name": "AMD Radeon RX 7900 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 20,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7900-xtx-24gb",
+   "name": "AMD Radeon RX 7900 XTX",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 24,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-rx-9060-xt-8gb",
+   "name": "AMD Radeon RX 9060 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-amd-radeon-rx-9060-xt-16gb",
+   "name": "AMD Radeon RX 9060 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-amd-radeon-rx-9070-16gb",
+   "name": "AMD Radeon RX 9070",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-amd-radeon-rx-9070-xt-16gb",
+   "name": "AMD Radeon RX 9070 XT",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Radeon RX 7000 / 9000",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-intel-arc-a310-4gb",
+   "name": "Intel Arc A310",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 4,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a380-6gb",
+   "name": "Intel Arc A380",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 6,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a580-8gb",
+   "name": "Intel Arc A580",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-intel-arc-a750-8gb",
+   "name": "Intel Arc A750",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a770-8gb",
+   "name": "Intel Arc A770",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a770-16gb",
+   "name": "Intel Arc A770",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 16,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-b570-10gb",
+   "name": "Intel Arc B570",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 10,
+   "year": 2025
+  },
+  {
+   "id": "gpu-intel-arc-b580-12gb",
+   "name": "Intel Arc B580",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "desktop",
+   "family": "Intel Arc",
+   "vram_gb": 12,
+   "year": 2024
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1650-laptop-gpu-4gb",
+   "name": "NVIDIA GeForce GTX 1650 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 4,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-gtx-1660-ti-laptop-gpu-6gb",
+   "name": "NVIDIA GeForce GTX 1660 Ti Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2060-laptop-gpu-6gb",
+   "name": "NVIDIA GeForce RTX 2060 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 6,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-2070-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 2070 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 8,
+   "year": 2019
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3050-laptop-gpu-4gb",
+   "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 4,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3050-ti-laptop-gpu-4gb",
+   "name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 4,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3060-laptop-gpu-6gb",
+   "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 6,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3070-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3070-ti-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 8,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3080-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 3080 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-3080-ti-laptop-gpu-16gb",
+   "name": "NVIDIA GeForce RTX 3080 Ti Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (GTX 16 / RTX 20 / RTX 30)",
+   "vram_gb": 16,
+   "year": 2022
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4050-laptop-gpu-6gb",
+   "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 6,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4060-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4070-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4080-laptop-gpu-12gb",
+   "name": "NVIDIA GeForce RTX 4080 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 12,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-4090-laptop-gpu-16gb",
+   "name": "NVIDIA GeForce RTX 4090 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 16,
+   "year": 2023
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5050-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5060-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5070-laptop-gpu-8gb",
+   "name": "NVIDIA GeForce RTX 5070 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 8,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5070-ti-laptop-gpu-12gb",
+   "name": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 12,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5080-laptop-gpu-16gb",
+   "name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 16,
+   "year": 2025
+  },
+  {
+   "id": "gpu-nvidia-geforce-rtx-5090-laptop-gpu-24gb",
+   "name": "NVIDIA GeForce RTX 5090 Laptop GPU",
+   "vendor": "nvidia",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "GeForce laptop (RTX 40 / RTX 50)",
+   "vram_gb": 24,
+   "year": 2025
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6600m-8gb",
+   "name": "AMD Radeon RX 6600M",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 8,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6700m-10gb",
+   "name": "AMD Radeon RX 6700M",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 10,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-6800m-12gb",
+   "name": "AMD Radeon RX 6800M",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 12,
+   "year": 2021
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7600m-8gb",
+   "name": "AMD Radeon RX 7600M",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7600s-8gb",
+   "name": "AMD Radeon RX 7600S",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7700s-8gb",
+   "name": "AMD Radeon RX 7700S",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 8,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-rx-7900m-16gb",
+   "name": "AMD Radeon RX 7900M",
+   "vendor": "amd",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 16,
+   "year": 2023
+  },
+  {
+   "id": "gpu-intel-arc-a370m-4gb",
+   "name": "Intel Arc A370M",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 4,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a730m-12gb",
+   "name": "Intel Arc A730M",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 12,
+   "year": 2022
+  },
+  {
+   "id": "gpu-intel-arc-a770m-16gb",
+   "name": "Intel Arc A770M",
+   "vendor": "intel",
+   "kind": "discrete",
+   "segment": "laptop",
+   "family": "Radeon / Arc laptop",
+   "vram_gb": 16,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-vega-8-graphics",
+   "name": "AMD Radeon Vega 8 Graphics",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-vega-11-graphics",
+   "name": "AMD Radeon Vega 11 Graphics",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2019
+  },
+  {
+   "id": "gpu-amd-radeon-610m",
+   "name": "AMD Radeon 610M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-660m",
+   "name": "AMD Radeon 660M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-680m",
+   "name": "AMD Radeon 680M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2022
+  },
+  {
+   "id": "gpu-amd-radeon-740m",
+   "name": "AMD Radeon 740M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-760m",
+   "name": "AMD Radeon 760M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-780m",
+   "name": "AMD Radeon 780M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2023
+  },
+  {
+   "id": "gpu-amd-radeon-880m",
+   "name": "AMD Radeon 880M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2024
+  },
+  {
+   "id": "gpu-amd-radeon-890m",
+   "name": "AMD Radeon 890M",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2024
+  },
+  {
+   "id": "gpu-amd-radeon-8060s",
+   "name": "AMD Radeon 8060S",
+   "vendor": "amd",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "AMD integrated graphics",
+   "vram_gb": 0.5,
+   "year": 2025
+  },
+  {
+   "id": "gpu-intel-uhd-graphics-620",
+   "name": "Intel UHD Graphics 620",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2019
+  },
+  {
+   "id": "gpu-intel-uhd-graphics-630",
+   "name": "Intel UHD Graphics 630",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2019
+  },
+  {
+   "id": "gpu-intel-uhd-graphics-730",
+   "name": "Intel UHD Graphics 730",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2021
+  },
+  {
+   "id": "gpu-intel-uhd-graphics-770",
+   "name": "Intel UHD Graphics 770",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2021
+  },
+  {
+   "id": "gpu-intel-iris-xe-graphics",
+   "name": "Intel Iris Xe Graphics",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2020
+  },
+  {
+   "id": "gpu-intel-arc-graphics",
+   "name": "Intel Arc Graphics",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2023
+  },
+  {
+   "id": "gpu-intel-arc-140v-graphics",
+   "name": "Intel Arc 140V Graphics",
+   "vendor": "intel",
+   "kind": "integrated",
+   "segment": "integrated",
+   "family": "Intel integrated graphics",
+   "vram_gb": 0.128,
+   "year": 2024
+  }
+ ],
+ "handhelds": [
+  {
+   "id": "handheld-rog-ally",
+   "name": "ASUS ROG Ally (RC71L)",
+   "handheld_name": "ASUS ROG Ally",
+   "manufacturer": "ASUSTeK COMPUTER INC.",
+   "model": "ROG Ally RC71L_RC71L",
+   "cpu": "cpu-amd-ryzen-z1-extreme",
+   "gpu": "gpu-amd-radeon-780m",
+   "ram_gb": 16,
+   "gpu_vram_mb": 4096,
+   "width": 1920,
+   "height": 1080,
+   "refresh_hz": 120
+  },
+  {
+   "id": "handheld-rog-ally-x",
+   "name": "ASUS ROG Ally X (RC72LA)",
+   "handheld_name": "ASUS ROG Ally X",
+   "manufacturer": "ASUSTeK COMPUTER INC.",
+   "model": "ROG Ally X RC72LA_RC72LA",
+   "cpu": "cpu-amd-ryzen-z1-extreme",
+   "gpu": "gpu-amd-radeon-780m",
+   "ram_gb": 24,
+   "gpu_vram_mb": 8192,
+   "width": 1920,
+   "height": 1080,
+   "refresh_hz": 120
+  },
+  {
+   "id": "handheld-legion-go",
+   "name": "Lenovo Legion Go",
+   "handheld_name": "Lenovo Legion Go",
+   "manufacturer": "LENOVO",
+   "model": "83E1",
+   "cpu": "cpu-amd-ryzen-z1-extreme",
+   "gpu": "gpu-amd-radeon-780m",
+   "ram_gb": 16,
+   "gpu_vram_mb": 4096,
+   "width": 2560,
+   "height": 1600,
+   "refresh_hz": 144
+  },
+  {
+   "id": "handheld-msi-claw",
+   "name": "MSI Claw (Core Ultra 7 155H)",
+   "handheld_name": "MSI Claw",
+   "manufacturer": "Micro-Star International Co., Ltd.",
+   "model": "Claw A1M",
+   "cpu": "cpu-intel-core-ultra-7-155h",
+   "gpu": "gpu-intel-arc-graphics",
+   "ram_gb": 16,
+   "gpu_vram_mb": null,
+   "width": 1920,
+   "height": 1080,
+   "refresh_hz": 120
+  }
+ ],
+ "ram_options_gb": [
+  4,
+  8,
+  12,
+  16,
+  24,
+  32,
+  48,
+  64,
+  96,
+  128
+ ],
+ "resolutions": [
+  [
+   1280,
+   720
+  ],
+  [
+   1280,
+   800
+  ],
+  [
+   1366,
+   768
+  ],
+  [
+   1600,
+   900
+  ],
+  [
+   1920,
+   1080
+  ],
+  [
+   1920,
+   1200
+  ],
+  [
+   2560,
+   1080
+  ],
+  [
+   2560,
+   1440
+  ],
+  [
+   2560,
+   1600
+  ],
+  [
+   3440,
+   1440
+  ],
+  [
+   3840,
+   2160
+  ]
+ ],
+ "refresh_options_hz": [
+  60,
+  75,
+  90,
+  120,
+  144,
+  165,
+  180,
+  240
+ ]
+}

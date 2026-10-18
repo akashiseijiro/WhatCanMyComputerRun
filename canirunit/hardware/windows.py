@@ -14,6 +14,7 @@ import uuid
 from typing import Any
 
 from canirunit.hardware.base import HardwareProfile
+from canirunit.hardware.handhelds import apply_handheld_assumptions
 from canirunit.hardware.windows_parse import build_profile
 
 COLLECT_SCRIPT = r"""
@@ -202,4 +203,5 @@ class WindowsDetector:
         self.last_raw = {"wmi": raw, "registry": registry, "dxgi": dxgi}
         profile = build_profile(raw, registry, dxgi)
         profile.warnings.extend(extra_warnings)
+        apply_handheld_assumptions(profile)
         return profile

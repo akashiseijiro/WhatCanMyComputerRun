@@ -93,8 +93,8 @@ async def test_ally_gpu_is_hopelessly_below_for_cyberpunk():
 async def test_ally_shared_vram_is_not_a_hard_fail():
     rep = await report("ally_z1e")
     vram = row(rep, "vram")
-    assert vram.verdict == Verdict.MEETS_MIN  # 4 GB allocation < 6 GB, but adjustable
-    assert "BIOS" in vram.note and "shared" in vram.yours
+    assert vram.verdict == Verdict.MEETS_MIN  # 6 GB assumed (software-adjustable; detected 4)
+    assert "Armoury Crate" in vram.note and "assumed" in vram.yours
     ram = row(rep, "ram")
     assert ram.verdict != Verdict.BELOW_MIN and "reserved" in ram.note
 

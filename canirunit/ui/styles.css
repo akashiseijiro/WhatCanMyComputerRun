@@ -140,3 +140,15 @@ table.cmp { width: 100%; border-collapse: collapse; }
   .cmp td { border: 0; padding: .2rem 0; }
   .cmp td::before { content: attr(data-label) ": "; color: var(--muted); font-weight: 600; }
 }
+
+/* Manual hardware form */
+.formgrid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.field label { color: var(--muted); font-weight: 600; font-size: .9rem; }
+select, .field input {
+  min-height: var(--tap); padding: 0 .8rem; font: inherit; color: var(--text); background: var(--panel-2);
+  border: 2px solid var(--line); border-radius: 12px; width: 100%;
+}
+select:focus-visible, .field input:focus-visible { border-color: var(--focus); }
+.check { display: flex; align-items: center; gap: .6rem; min-height: var(--tap); margin-top: .5rem; }
+.check input { width: 28px; height: 28px; accent-color: var(--accent); }

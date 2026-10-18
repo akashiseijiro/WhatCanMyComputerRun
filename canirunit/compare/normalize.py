@@ -24,12 +24,19 @@ def _clean(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip(" ,-/").lower()
 
 
+_LAPTOP_WORD = re.compile(r"laptop|notebook|mobile|max-q", re.I)
+
+
 def normalize_gpu(name: str) -> str:
+    """Canonical GPU name; laptop variants keep a " laptop" tag (different, slower parts)."""
     text = _TRADEMARKS.sub(" ", name)
     text = _GPU_NOISE.sub(" ", text)
     text = _MEMORY.sub(" ", text)
     text = _VENDORS.sub(" ", text)
-    return _clean(text)
+    norm = _clean(text)
+    if _LAPTOP_WORD.search(name) and not re.search(r"\b\d{3,4}m\b", norm):
+        norm += " laptop"
+    return norm
 
 
 def normalize_cpu(name: str) -> str:

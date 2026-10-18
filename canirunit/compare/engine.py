@@ -230,11 +230,14 @@ def _numeric_row(
 def _effective_ram(hw: HardwareProfile) -> tuple[float | None, str | None]:
     if not hw.ram or hw.ram.total_gb is None:
         return None, None
+    if hw.ram.installed_gb:  # exact physical RAM (manual selection): nothing to add back
+        return hw.ram.installed_gb, None
     gpu = hw.primary_gpu
-    if gpu and gpu.vram_shared and gpu.vram_mb and gpu.vram_mb >= 1024:
-        total = hw.ram.total_gb + gpu.vram_mb / 1024
+    reserved_mb = (gpu.vram_detected_mb or gpu.vram_mb) if gpu and gpu.vram_shared else None
+    if reserved_mb and reserved_mb >= 1024:
+        total = hw.ram.total_gb + reserved_mb / 1024
         return total, (
-            f"Windows reports {hw.ram.total_gb:g} GB because {gpu.vram_mb / 1024:g} GB is "
+            f"Windows reports {hw.ram.total_gb:g} GB because {reserved_mb / 1024:g} GB is "
             "reserved for the integrated GPU; the combined pool is counted here."
         )
     return hw.ram.total_gb, None
@@ -268,6 +271,8 @@ def _vram_row(hw: HardwareProfile, mn: Requirements | None, rec: Requirements | 
         )
     # Integrated GPU: "VRAM" is a BIOS-adjustable slice of system RAM, never a hard fail.
     yours = f"{mine:g} GB (shared with system RAM)"
+    if gpu.vram_assumed:
+        yours = f"{mine:g} GB (assumed; shared with system RAM)"
     row = _numeric_row(
         "vram", "VRAM", yours, mine, mn_v, rec_v, border=VRAM_BORDER, can_exceed=False
     )
@@ -285,6 +290,17 @@ def _vram_row(hw: HardwareProfile, mn: Requirements | None, rec: Requirements | 
             row.note = f"{tip} Your total RAM is too small to allocate {mn_v:g} GB comfortably."
     elif row.verdict != Verdict.UNKNOWN:
         row.note = " ".join(x for x in (row.note, "Shared memory with system RAM.") if x)
+    if gpu.vram_assumed:
+        det = f"{gpu.vram_detected_mb / 1024:g} GB" if gpu.vram_detected_mb else "unknown"
+        where = "Armoury Crate" if hw.handheld_name and "ROG" in hw.handheld_name else "your BIOS"
+        row.note = " ".join(
+            x
+            for x in (
+                row.note,
+                f"Assumes you set graphics memory to {mine:g} GB in {where} (currently {det}).",
+            )
+            if x
+        )
     return row
 
 

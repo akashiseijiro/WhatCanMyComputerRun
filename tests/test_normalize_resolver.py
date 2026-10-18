@@ -18,7 +18,7 @@ from canirunit.sources.cache import TTLCache
     ("raw", "expected"),
     [
         ("NVIDIA GeForce RTX 3060", "geforce rtx 3060"),
-        ("NVIDIA GeForce RTX 3060 Laptop GPU", "geforce rtx 3060"),
+        ("NVIDIA GeForce RTX 3060 Laptop GPU", "geforce rtx 3060 laptop"),
         ("GeForce GTX 1060 6GB", "geforce gtx 1060"),
         ("NVIDIA GEFORCE GTX 1060 3 GB", "geforce gtx 1060"),
         ("AMD Radeon RX 580 8GB", "radeon rx 580"),

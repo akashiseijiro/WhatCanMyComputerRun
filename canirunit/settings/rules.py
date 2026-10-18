@@ -14,7 +14,7 @@ from dataclasses import dataclass
 
 from canirunit.compare.models import Confidence, Report, RowResult, Verdict
 from canirunit.hardware.base import DeviceType, GpuInfo, GpuVendor, HardwareProfile
-from canirunit.hardware.handhelds import HandheldPower, PowerMode, power_profile
+from canirunit.hardware.handhelds import HANDHELD_VRAM, HandheldPower, PowerMode, power_profile
 from canirunit.settings.models import (
     FpsEstimate,
     FrameGenAdvice,
@@ -184,14 +184,22 @@ def _choose(
 
 def _vram_tip(report: Report, hw: HardwareProfile) -> str | None:
     gpu = hw.primary_gpu
-    row = _row(report, "vram")
-    if not (gpu and gpu.vram_shared and row and row.specified):
+    if not (gpu and gpu.vram_shared):
         return None
-    if row.verdict not in (Verdict.BELOW_MIN, Verdict.MEETS_MIN):
+    where = "Armoury Crate" if hw.handheld_name and "ROG" in hw.handheld_name else "your BIOS"
+    if gpu.vram_assumed and gpu.vram_mb:
+        spec = HANDHELD_VRAM.get(hw.handheld_name or "")
+        cap = f" (up to {spec.max_mb / 1024:g} GB is allowed)" if spec else ""
+        det = f"{gpu.vram_detected_mb / 1024:g} GB" if gpu.vram_detected_mb else "an unknown amount"
+        return (
+            f"These results assume {gpu.vram_mb / 1024:g} GB of graphics memory{cap}. "
+            f"It is currently {det}: set it in {where} (this leaves less RAM for Windows)."
+        )
+    row = _row(report, "vram")
+    if not (row and row.specified and row.verdict in (Verdict.BELOW_MIN, Verdict.MEETS_MIN)):
         return None
     m = re.search(r"[\d.]+", row.minimum or "")
     need = f" (the game asks for {m.group(0)} GB)" if m else ""
-    where = "Armoury Crate" if hw.handheld_name and "ROG" in hw.handheld_name else "your BIOS"
     return (
         f"Graphics memory is shared with system RAM and currently set to "
         f"{(gpu.vram_mb or 0) / 1024:g} GB{need}. If it stutters or textures look blurry, raise "

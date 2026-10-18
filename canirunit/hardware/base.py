@@ -47,11 +47,17 @@ class GpuInfo(BaseModel):
     # True for iGPUs: "VRAM" is just a slice of system RAM, adjustable in BIOS/Armoury Crate.
     vram_shared: bool = False
     driver_version: str | None = None
-    vram_source: str | None = None  # registry | dxgi | wmi | fixture
+    vram_source: str | None = None  # registry | dxgi | wmi | fixture | manual
+    # Set when the app assumes a software-adjustable allocation (see handhelds.HANDHELD_VRAM).
+    vram_assumed: bool = False
+    vram_detected_mb: int | None = None
 
 
 class RamInfo(BaseModel):
     total_gb: float | None = None
+    # Physical RAM when known exactly (manual selection). Windows reports less on machines whose
+    # iGPU reserves memory, so detected profiles leave this unset.
+    installed_gb: float | None = None
     speed_mhz: int | None = None
 
 

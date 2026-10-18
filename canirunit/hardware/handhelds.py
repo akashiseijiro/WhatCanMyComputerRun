@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from canirunit.hardware.base import GpuKind, HardwareProfile
+
 
 @dataclass(frozen=True)
 class HandheldSpec:
@@ -78,3 +80,27 @@ def power_profile(handheld_name: str | None) -> tuple[HandheldPower, bool]:
     if handheld_name and handheld_name in HANDHELD_POWER:
         return HANDHELD_POWER[handheld_name], True
     return GENERIC_HANDHELD_POWER, False
+
+
+@dataclass(frozen=True)
+class VramAssumption:
+    assumed_mb: int  # what reports assume the iGPU memory allocation is set to
+    max_mb: int  # the most the device allows
+
+
+# iGPU memory on these handhelds is a software setting, so we assume it is raised.
+HANDHELD_VRAM: dict[str, VramAssumption] = {
+    "ASUS ROG Ally": VramAssumption(assumed_mb=6144, max_mb=8192),
+}
+
+
+def apply_handheld_assumptions(hw: HardwareProfile) -> None:
+    """Raise the primary iGPU's memory to the assumed allocation, remembering the original."""
+    gpu = hw.primary_gpu
+    spec = HANDHELD_VRAM.get(hw.handheld_name or "")
+    if gpu is None or spec is None or gpu.kind != GpuKind.INTEGRATED or gpu.vram_assumed:
+        return
+    if gpu.vram_mb is None or gpu.vram_mb < spec.assumed_mb:
+        gpu.vram_detected_mb = gpu.vram_mb
+        gpu.vram_mb = spec.assumed_mb
+        gpu.vram_assumed = True

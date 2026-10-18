@@ -96,7 +96,10 @@ async function showSystem(rescan = false) {
     state.hw = await api(rescan ? "/api/hardware/rescan" : "/api/hardware", rescan ? { method: "POST" } : {});
   } catch (e) {
     if (my !== state.token) return;
-    fill(app, h("h1", { tabindex: "-1" }, "My System"), errorBox(e, () => showSystem(true)));
+    fill(app, h("h1", { tabindex: "-1" }, "My System"), errorBox(e, () => showSystem(true)),
+      h("div", { class: "card" }, h("h2", null, "Automatic detection didn't work?"),
+        h("p", null, "You can pick your CPU, GPU and other parts yourself."),
+        h("a", { class: "btn", href: "#manual" }, "Choose hardware manually")));
     return;
   }
   if (my !== state.token) return;
@@ -118,7 +121,7 @@ function renderSystem() {
       h("dt", null, "Name"), h("dd", null, g.name),
       h("dt", null, "Type"), h("dd", null, g.kind === "integrated" ? "Integrated" : "Discrete"),
       h("dt", null, g.vram_shared ? "Memory" : "VRAM"),
-      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
+      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_assumed ? ` (assumed; detected ${g.vram_detected_mb ? GB(g.vram_detected_mb) : "unknown"}, adjustable in software)` : g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
       h("dt", null, "Driver"), h("dd", null, g.driver_version || "Unknown")))) :
     [h("div", { class: "card" }, h("h2", null, "GPU"), h("p", { class: "muted" }, "Not detected"))];
 
@@ -130,8 +133,9 @@ function renderSystem() {
     h("h1", { tabindex: "-1" }, "My System"),
     h("div", { class: "row", style: "margin-bottom:1rem" },
       h("span", { class: `badge ${hw.device_type}` }, deviceLabel(hw)),
-      h("span", { class: "muted small" }, hw.source.startsWith("mock:") ? `Demo profile: ${hw.source.slice(5)}` : "Detected on this PC"),
-      h("button", { class: "btn secondary", type: "button", onclick: () => showSystem(true) }, "Re-scan"),
+      h("span", { class: "muted small" }, hw.source === "manual" ? "Manual selection" : hw.source.startsWith("mock:") ? `Demo profile: ${hw.source.slice(5)}` : "Detected on this PC"),
+      h("button", { class: "btn secondary", type: "button", onclick: () => showSystem(true) }, hw.source === "manual" ? "Re-scan (use detected hardware)" : "Re-scan"),
+      h("a", { class: "btn secondary", href: "#manual" }, "Choose hardware manually"),
       h("a", { class: "btn", href: "#search" }, "Check a game →")),
     hw.warnings.length ? h("div", { class: "warnbox", role: "status" },
       h("strong", null, "Some things couldn't be detected:"), h("ul", null, hw.warnings.map((w) => h("li", null, w)))) : null,
@@ -326,6 +330,120 @@ function sourcesCard(rep) {
       h("li", null, "Settings and FPS: rule-based estimate from those scores, not a measured benchmark.")));
 }
 
+
+// ---------- manual hardware selection ----------
+const MANUAL_KEY = "canirunit.manual";
+const DEVICE_LABELS = { desktop: "🖥️ Desktop PC", laptop: "💻 Laptop", handheld: "🎮 Handheld" };
+
+function partPicker(label, items, visible, optionLabel) {
+  const filter = h("input", { type: "search", placeholder: `Filter ${label}…`, "aria-label": `Filter ${label}`, autocomplete: "off" });
+  const select = h("select", { "aria-label": label, required: true });
+  const refresh = () => {
+    const q = filter.value.trim().toLowerCase(), cur = select.value;
+    const groups = new Map();
+    for (const it of items) {
+      if (!visible(it) || (q && !optionLabel(it).toLowerCase().includes(q))) continue;
+      if (!groups.has(it.family)) groups.set(it.family, []);
+      groups.get(it.family).push(it);
+    }
+    fill(select, groups.size ? [...groups].map(([fam, list]) =>
+      h("optgroup", { label: fam }, list.map((it) => h("option", { value: it.id }, optionLabel(it))))) :
+      h("option", { value: "", disabled: true }, "No matching parts"));
+    if (cur && [...select.options].some((o) => o.value === cur)) select.value = cur;
+  };
+  filter.addEventListener("input", refresh);
+  refresh();
+  return { filter, select, refresh,
+    el: h("div", { class: "field" }, h("label", null, label), filter, select) };
+}
+
+function simpleSelect(label, options, value) {
+  const select = h("select", { "aria-label": label },
+    options.map(([v, text]) => h("option", { value: String(v) }, text)));
+  if (value != null) select.value = String(value);
+  return { select, el: h("div", { class: "field" }, h("label", null, label), select) };
+}
+
+async function showManual() {
+  const my = ++state.token;
+  fill(app, h("h1", { tabindex: "-1" }, "Choose your hardware"), loading("Loading parts list…"));
+  focusHeading();
+  let cat;
+  try { cat = await api("/api/hardware/catalog"); } catch (e) {
+    if (my === state.token) fill(app, h("h1", { tabindex: "-1" }, "Choose your hardware"), errorBox(e, showManual));
+    return;
+  }
+  if (my !== state.token) return;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(MANUAL_KEY) || "{}"); } catch { /* ignore */ }
+
+  const device = simpleSelect("Device type", Object.entries(DEVICE_LABELS), saved.device_type || "desktop");
+  const handheld = simpleSelect("Handheld model", [["", "Other / choose parts myself"], ...cat.handhelds.map((x) => [x.id, x.name])], saved.handheld_id || "");
+  const showAll = h("input", { type: "checkbox", id: "showall" });
+  const kind = () => device.select.value;
+  const cpuVisible = (c) => showAll.checked || (kind() === "handheld" ? ["handheld", "laptop"].includes(c.segment) : c.segment === kind());
+  const gpuVisible = (g) => showAll.checked || (kind() === "desktop" ? ["desktop", "integrated"].includes(g.segment) : ["laptop", "integrated"].includes(g.segment));
+  const gpuLabel = (g) => `${g.name.replace(/ Laptop GPU$/, " (laptop)")} · ${g.kind === "integrated" ? "integrated" : g.vram_gb + " GB"} · ${g.year}`;
+  const cpu = partPicker("CPU", cat.cpus, cpuVisible, (c) => `${c.name} · ${c.cores}C/${c.threads}T · ${c.year}`);
+  const gpu = partPicker("GPU", cat.gpus, gpuVisible, gpuLabel);
+  const ram = simpleSelect("RAM", cat.ram_options_gb.map((n) => [n, `${n} GB`]), saved.ram_gb ?? 16);
+  const res = simpleSelect("Screen resolution", cat.resolutions.map(([w, hh]) => [`${w}x${hh}`, `${w} × ${hh}`]), saved.width ? `${saved.width}x${saved.height}` : "1920x1080");
+  const refresh = simpleSelect("Refresh rate", cat.refresh_options_hz.map((n) => [n, `${n} Hz`]), saved.refresh_hz ?? 60);
+  const storType = simpleSelect("Game drive type", [["ssd", "SSD"], ["hdd", "Hard drive (HDD)"]], saved.storage_type || "ssd");
+  const free = h("input", { type: "number", min: "1", max: "100000", step: "1", required: true, value: String(saved.storage_free_gb ?? 200), "aria-label": "Free space on the game drive in GB" });
+  const win = simpleSelect("Windows", [["11", "Windows 11"], ["10", "Windows 10"]], saved.windows || "11");
+
+  const restoreParts = () => {
+    cpu.refresh(); gpu.refresh();
+    if (saved.cpu_id && [...cpu.select.options].some((o) => o.value === saved.cpu_id)) cpu.select.value = saved.cpu_id;
+    if (saved.gpu_id && [...gpu.select.options].some((o) => o.value === saved.gpu_id)) gpu.select.value = saved.gpu_id;
+  };
+  const applyPreset = () => {
+    const p = cat.handhelds.find((x) => x.id === handheld.select.value);
+    if (!p) return;
+    showAll.checked = true; cpu.refresh(); gpu.refresh();
+    cpu.select.value = p.cpu; gpu.select.value = p.gpu;
+    ram.select.value = String(p.ram_gb); res.select.value = `${p.width}x${p.height}`; refresh.select.value = String(p.refresh_hz);
+  };
+  const syncVisibility = () => { handheldField.hidden = kind() !== "handheld"; };
+  const handheldField = handheld.el;
+  device.select.addEventListener("change", () => { syncVisibility(); if (kind() !== "handheld") handheld.select.value = ""; cpu.refresh(); gpu.refresh(); });
+  handheld.select.addEventListener("change", applyPreset);
+  showAll.addEventListener("change", () => { cpu.refresh(); gpu.refresh(); });
+  syncVisibility(); restoreParts();
+
+  const status = h("div", { role: "status", "aria-live": "polite" });
+  const form = h("form", { class: "manual", onsubmit: async (e) => {
+    e.preventDefault();
+    if (!cpu.select.value || !gpu.select.value) { fill(status, h("p", { class: "warnbox" }, "Pick a CPU and a GPU first.")); return; }
+    const [w, hh] = res.select.value.split("x").map(Number);
+    const body = {
+      device_type: kind(), handheld_id: kind() === "handheld" && handheld.select.value ? handheld.select.value : null,
+      cpu_id: cpu.select.value, gpu_id: gpu.select.value, ram_gb: Number(ram.select.value),
+      storage_free_gb: Number(free.value), storage_type: storType.select.value,
+      width: w, height: hh, refresh_hz: Number(refresh.select.value), windows: win.select.value,
+    };
+    submit.disabled = true; fill(status, loading("Applying…"));
+    try {
+      state.hw = await api("/api/hardware/manual", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      try { localStorage.setItem(MANUAL_KEY, JSON.stringify(body)); } catch { /* private mode etc. */ }
+      if (location.hash === "#system") route(); else location.hash = "#system";
+    } catch (err) {
+      fill(status, errorBox(err)); submit.disabled = false;
+    }
+  } });
+  const submit = h("button", { class: "btn", type: "submit" }, "Use this hardware");
+  fill(form,
+    h("p", { class: "muted" }, "Pick the parts in your machine (2019 and newer). This replaces automatic detection until you press Re-scan."),
+    h("div", { class: "formgrid" }, device.el, handheldField, cpu.el, gpu.el, ram.el, res.el, refresh.el,
+      h("div", { class: "field" }, h("label", null, "Free space on game drive (GB)"), free), storType.el, win.el),
+    h("label", { class: "check" }, showAll, " Show all parts (ignore device type)"),
+    h("div", { class: "row", style: "margin-top:1rem" }, submit, h("a", { class: "btn secondary", href: "#system" }, "Cancel")),
+    status);
+  fill(app, h("h1", { tabindex: "-1" }, "Choose your hardware"), h("div", { class: "card" }, form));
+  focusHeading();
+}
+
 // ---------- copy report ----------
 function reportText() {
   const r = state.report;
@@ -370,10 +488,12 @@ function focusHeading() {
 
 function route() {
   const [page, arg] = (location.hash || "#system").slice(1).split("/");
+  const navId = page === "manual" ? "system" : page;
   document.querySelectorAll(".tab").forEach((a) => {
-    if (a.id === `nav-${page}`) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    if (a.id === `nav-${navId}`) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   });
   if (page === "search") showSearch();
+  else if (page === "manual") showManual();
   else if (page === "report" && /^\d+$/.test(arg || "")) showReport(Number(arg));
   else if (page === "report") location.hash = "#search";
   else showSystem();

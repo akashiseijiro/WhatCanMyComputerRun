@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Any
 
 import httpx
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -15,6 +16,12 @@ from canirunit.compare.models import Report
 from canirunit.compare.resolver import ClaudeResolver, PerformanceResolver
 from canirunit.config import Settings, get_settings
 from canirunit.hardware.base import HardwareDetector, HardwareProfile
+from canirunit.hardware.catalog import (
+    CatalogError,
+    ManualSelection,
+    build_manual_profile,
+    load_catalog,
+)
 from canirunit.llm.client import LLMClient, LLMError
 from canirunit.parsing.schemas import GameDetails, SearchResult
 from canirunit.resources import resource_dir
@@ -102,6 +109,19 @@ def create_app(
     @app.post("/api/hardware/rescan")
     def rescan() -> HardwareProfile:
         return scan()
+
+    @app.get("/api/hardware/catalog")
+    def catalog() -> dict[str, Any]:
+        return load_catalog()
+
+    @app.post("/api/hardware/manual")
+    def manual_hardware(selection: ManualSelection) -> HardwareProfile:
+        try:
+            profile = build_manual_profile(selection)
+        except CatalogError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        state["hw"] = profile
+        return profile
 
     @app.get("/api/search")
     async def search(q: str = Query(min_length=1, max_length=100)) -> list[SearchResult]:

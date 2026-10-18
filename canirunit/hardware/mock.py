@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from canirunit.hardware.base import HardwareProfile
+from canirunit.hardware.handhelds import apply_handheld_assumptions
 
 PROFILES_DIR = Path(__file__).parent / "profiles"
 
@@ -28,4 +29,5 @@ class MockDetector:
             )
         hw = HardwareProfile.model_validate_json(path.read_text(encoding="utf-8"))
         hw.source = f"mock:{path.stem}"
+        apply_handheld_assumptions(hw)
         return hw
