@@ -135,7 +135,8 @@ def test_plausibility_guard_rejects_hallucinated_scores():
     from whatcanmycomputerrun.compare.resolver import plausible
 
     assert not plausible("gpu", "radeon 780m", 27896)  # an iGPU can't beat an RTX 3060
-    assert plausible("gpu", "radeon 780m", 3500)
+    assert plausible("gpu", "radeon 780m", 7500)
+    assert plausible("gpu", "radeon 890m", 9500)
     assert plausible("gpu", "radeon rx vega 56", 13500)  # discrete Vega is not an iGPU
     assert not plausible("gpu", "radeon vega 8 graphics", 13500)
     assert not plausible("gpu", "geforce rtx 3060", 2_000_000)

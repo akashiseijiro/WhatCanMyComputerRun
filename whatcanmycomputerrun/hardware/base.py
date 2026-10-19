@@ -4,7 +4,9 @@ import sys
 from enum import StrEnum
 from typing import Protocol
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
+
+from whatcanmycomputerrun.hardware.equivalents import Equivalents, lookup, memory_note
 
 
 class DeviceType(StrEnum):
@@ -94,6 +96,25 @@ class HardwareProfile(BaseModel):
     handheld_name: str | None = None
     warnings: list[str] = Field(default_factory=list)
     source: str = "detected"  # detected | mock:<name>
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def equivalents(self) -> Equivalents:
+        """What the CPU/GPU roughly equal in desktop and laptop terms (display only)."""
+        gpu = self.primary_gpu
+        cpu_name = self.cpu.model if self.cpu else None
+        memory = None
+        if gpu and gpu.vram_shared and gpu.vram_mb and self.ram:
+            ram = self.ram.installed_gb or (
+                (self.ram.total_gb or 0) + (gpu.vram_detected_mb or gpu.vram_mb) / 1024
+            )
+            if self.device_type == DeviceType.HANDHELD and ram:
+                memory = memory_note(ram, gpu.vram_mb / 1024)
+        return Equivalents(
+            cpu=lookup("cpu", cpu_name) if cpu_name else None,
+            gpu=lookup("gpu", gpu.name, cpu_name) if gpu else None,
+            memory=memory,
+        )
 
     @property
     def primary_gpu(self) -> GpuInfo | None:

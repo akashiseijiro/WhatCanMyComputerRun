@@ -146,9 +146,9 @@ def test_assumption_never_lowers_a_larger_allocation_or_touches_discrete():
 async def test_ram_addback_uses_detected_reserve_not_assumed():
     from whatcanmycomputerrun.compare.engine import _effective_ram
 
-    hw = MockDetector("ally_z1e").detect()  # 16 GB reported, 4 GB reserved (detected)
+    hw = MockDetector("ally_z1e").detect()  # 12 GB reported, 4 GB reserved (detected)
     total, note = _effective_ram(hw)
-    assert total == 20 and "4 GB is reserved" in note  # not 16 + 6
+    assert total == 16 and "Windows reports 12 GB because 4 GB" in note  # not 12 + 6
     manual = build_manual_profile(
         sel(
             handheld_id="handheld-rog-ally",
@@ -196,3 +196,41 @@ def test_manual_endpoints_and_report(tmp_path):
         assert client.post("/api/hardware/manual", json={**body, "ram_gb": 0}).status_code == 422
         back = client.post("/api/hardware/rescan").json()
         assert back["source"] == "mock:ally_z1e"  # re-scan returns to automatic detection
+
+
+def test_ally_parts_have_desktop_and_laptop_equivalents():
+    hw = MockDetector("ally_z1e").detect()
+    eq = hw.equivalents
+    # "AMD Radeon Graphics" is identified through the Z1 Extreme, then mapped (user-supplied pairing)
+    assert eq.gpu.desktop == "GeForce GTX 1650" and eq.gpu.laptop == "GeForce RTX 2050"
+    assert eq.gpu.basis == "user" and "desktop GeForce GTX 1650" in eq.gpu.summary
+    assert eq.cpu.desktop and eq.cpu.laptop
+    # handheld memory is one shared pool: 16 GB total, 6 GB assumed for graphics
+    assert "16 GB pool" in eq.memory and "about 10 GB of RAM" in eq.memory
+    assert hw.model_dump(mode="json")["equivalents"]["gpu"]["desktop"] == "GeForce GTX 1650"
+
+
+def test_equivalents_absent_for_unknown_parts_and_non_handheld_memory():
+    desk = MockDetector("desktop_rtx3060").detect().equivalents
+    assert desk.gpu is None and desk.memory is None  # not in the table: no made-up pairing
+    manual = build_manual_profile(
+        sel(
+            handheld_id="handheld-rog-ally",
+            cpu_id="cpu-amd-ryzen-z1-extreme",
+            gpu_id="gpu-amd-radeon-780m",
+            ram_gb=16,
+        )
+    )
+    assert manual.equivalents.gpu.desktop == "GeForce GTX 1650"
+    assert "16 GB pool" in manual.equivalents.memory  # exact installed RAM, no double-counting
+
+
+async def test_report_rows_mention_equivalents():
+    from test_engine import cyberpunk
+
+    hw = MockDetector("ally_z1e").detect()
+    rep = await build_report(hw, cyberpunk(), StaticResolver(SCORES))
+    gpu = next(r for r in rep.rows if r.key == "gpu")
+    assert "Roughly equal to a desktop GeForce GTX 1650 / laptop GeForce RTX 2050" in gpu.note
+    cpu = next(r for r in rep.rows if r.key == "cpu")
+    assert "Roughly equal to a desktop Ryzen 5 5600X" in cpu.note

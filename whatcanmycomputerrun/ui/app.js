@@ -94,6 +94,7 @@ const webHash = (name, appid) => `#web/${encodeURIComponent(name)}${appid ? `/${
 function webLookup(name, appid, label = "Search the web for requirements") {
   return h("a", { class: "btn secondary", href: webHash(name, appid) }, label);
 }
+const eqText = (e) => (e ? [e.desktop && `desktop ${e.desktop}`, e.laptop && `laptop ${e.laptop}`].filter(Boolean).join(" · ") : "");
 const GB = (mb) => `${(mb / 1024).toFixed(mb % 1024 ? 1 : 0)} GB`;
 
 // ---------- screens ----------
@@ -130,8 +131,9 @@ function renderSystem() {
       h("dt", null, "Name"), h("dd", null, g.name),
       h("dt", null, "Type"), h("dd", null, g.kind === "integrated" ? "Integrated" : "Discrete"),
       h("dt", null, g.vram_shared ? "Memory" : "VRAM"),
-      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_assumed ? ` (assumed; ${g.vram_source === "manual" ? "usually" : "detected"} ${g.vram_detected_mb ? GB(g.vram_detected_mb) : "unknown"} by default, adjustable in software)` : g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
-      h("dt", null, "Driver"), h("dd", null, g.driver_version || "Unknown")))) :
+      h("dd", null, g.vram_mb ? GB(g.vram_mb) + (g.vram_assumed ? ` (assumed; ${g.vram_source === "manual" ? "usually" : "currently"} ${g.vram_detected_mb ? GB(g.vram_detected_mb) : "unknown"}, adjustable in software)` : g.vram_shared ? " (shared with system RAM, adjustable)" : "") : "Not detected"),
+      h("dt", null, "Driver"), h("dd", null, g.driver_version || "Unknown"),
+      g === primary && eqText(hw.equivalents?.gpu) ? [h("dt", null, "Comparable to"), h("dd", null, eqText(hw.equivalents.gpu), hw.equivalents.gpu.basis === "estimate" ? h("span", { class: "muted small", style: "display:block" }, "Approximate comparison") : null)] : null))) :
     [h("div", { class: "card" }, h("h2", null, "GPU"), h("p", { class: "muted" }, "Not detected"))];
 
   const drives = hw.storage.length ? hw.storage.map((d) =>
@@ -152,11 +154,13 @@ function renderSystem() {
       h("div", { class: "card" }, h("h2", null, "CPU"), hw.cpu ? h("dl", { class: "kv" },
         h("dt", null, "Model"), h("dd", null, hw.cpu.model),
         h("dt", null, "Cores"), h("dd", null, hw.cpu.cores ? `${hw.cpu.cores} cores / ${hw.cpu.threads ?? "?"} threads` : "Unknown"),
-        h("dt", null, "Clock"), h("dd", null, hw.cpu.base_clock_mhz ? `${(hw.cpu.base_clock_mhz / 1000).toFixed(2)} GHz base` : "Unknown"))
+        h("dt", null, "Clock"), h("dd", null, hw.cpu.base_clock_mhz ? `${(hw.cpu.base_clock_mhz / 1000).toFixed(2)} GHz base` : "Unknown"),
+        eqText(hw.equivalents?.cpu) ? [h("dt", null, "Comparable to"), h("dd", null, eqText(hw.equivalents.cpu), h("span", { class: "muted small", style: "display:block" }, "Approximate comparison"))] : null)
         : h("p", { class: "muted" }, "Not detected")),
       gpuCards,
       h("div", { class: "card" }, h("h2", null, "Memory & storage"), h("dl", { class: "kv" },
-        h("dt", null, "RAM"), h("dd", null, hw.ram?.total_gb ? `${hw.ram.total_gb} GB${hw.ram.speed_mhz ? ` @ ${hw.ram.speed_mhz} MHz` : ""}` : "Not detected"),
+        h("dt", null, "RAM"), h("dd", null, hw.ram?.total_gb ? `${hw.ram.total_gb} GB${hw.ram.speed_mhz ? ` @ ${hw.ram.speed_mhz} MHz` : ""}` : "Not detected",
+          hw.equivalents?.memory ? h("span", { class: "muted small", style: "display:block" }, hw.equivalents.memory) : null),
         h("dt", null, "Drives"), h("dd", null, drives))),
       h("div", { class: "card" }, h("h2", null, "System"), h("dl", { class: "kv" },
         h("dt", null, "OS"), h("dd", null, hw.os?.name ? `${hw.os.name} (build ${hw.os.build ?? "?"})` : "Not detected"),

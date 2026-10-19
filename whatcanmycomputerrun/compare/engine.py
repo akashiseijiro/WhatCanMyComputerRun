@@ -535,6 +535,10 @@ async def build_report(
     others = [g for g in hw.gpus if g is not gpu]
     if others:
         gpu_note = "Also present: " + "; ".join(_gpu_display(g) for g in others) + "."
+    eq = hw.equivalents
+    if eq.gpu and eq.gpu.summary:
+        gpu_note = " ".join(x for x in (f"Roughly equal to a {eq.gpu.summary}.", gpu_note) if x)
+    cpu_eq_note = f"Roughly equal to a {eq.cpu.summary}." if eq.cpu and eq.cpu.summary else None
 
     ram_eff, ram_note = _effective_ram(hw)
     rows = [
@@ -556,6 +560,7 @@ async def build_report(
             mn,
             rec,
             result,
+            cpu_eq_note,
         ),
         _numeric_row(
             "ram",

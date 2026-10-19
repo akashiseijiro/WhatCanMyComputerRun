@@ -26,7 +26,7 @@ IGPU_NAME = re.compile(
     r"radeon \d{3}m\b|radeon graphics|\buhd\b|\biris\b|(?<!rx )vega (?!56\b|64\b)\d{1,2}\b|intel hd|\bxe graphics",
     re.I,
 )
-IGPU_MAX_SCORE = 9000.0
+IGPU_MAX_SCORE = 12000.0
 
 
 def plausible(kind: str, normalized: str, score: float | None) -> bool:
@@ -115,12 +115,16 @@ Scales (use exactly these, so scores are comparable across calls):
 - CPUs: {CPU_BENCHMARK} (the "average CPU Mark" shown on cpubenchmark.net).
 Calibration anchors (approximate averages; keep your answers consistent with them):
 - GPU G3D: RTX 4090 ~38000, RTX 3060 ~17000, RTX 2060 SUPER ~16000, RX 5700 XT ~17000,
-  GTX 1060 6GB ~10000, RX 580 ~9500, Arc A380 ~6000, Arc A770 ~15000, GTX 1050 Ti ~6000,
-  Radeon 780M (integrated) ~3500, Radeon 680M ~2500, Intel UHD 620 ~1000, GT 1030 ~2500.
+  GTX 1060 6GB ~10000, RX 580 ~9500, GTX 1650 ~7800, Arc A380 ~6000, GTX 1050 Ti ~6000,
+  GT 1030 ~2500.
+- Integrated GPUs (user-verified equivalences, treat as ground truth): Radeon 780M ~7500
+  (equal to a desktop GTX 1650 and a laptop RTX 2050 ~7500), Radeon 680M ~5500,
+  Radeon 890M ~9500, Radeon 760M ~5500, Radeon 740M ~3500, Radeon Vega 8 ~2000,
+  Intel Iris Xe ~2500, Intel UHD 620 ~1000.
 - CPU Mark: Ryzen 9 7950X3D ~62000, Ryzen 7 7800X3D ~35000, Core i7-12700 ~30000,
   Ryzen 5 5600X ~22000, Ryzen Z1 Extreme ~20000, Ryzen 5 1600 ~12000, Core i7-6700 ~9000,
   Core i3-1115G4 ~7000.
-- Integrated GPUs are far slower than discrete cards; an iGPU never scores above ~9000.
+- Integrated GPUs are slower than mid-range discrete cards; an iGPU never scores above ~12000.
 Rules:
 - Mobile/laptop variants are different parts from desktop ones (RTX 3060 Laptop vs RTX 3060). Use the variant named.
 - For integrated GPUs, a "hint" gives the CPU the GPU is built into; use it to identify the exact iGPU (e.g. generic "AMD Radeon Graphics" in a Ryzen Z1 Extreme is the Radeon 780M).
@@ -138,7 +142,7 @@ class ClaudeResolver:
         self.cache = cache
 
     def _cache_key(self, q: ComponentQuery) -> str:
-        return f"perf:v2:{self.model}:{q.key}"
+        return f"perf:v3:{self.model}:{q.key}"
 
     async def resolve(self, queries: list[ComponentQuery]) -> ResolveResult:
         out = ResolveResult()
