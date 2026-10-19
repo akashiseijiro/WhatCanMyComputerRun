@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import contextlib
+
 import httpx
 
 from whatcanmycomputerrun.config import Settings
@@ -11,22 +13,33 @@ from whatcanmycomputerrun.parsing.requirements_parser import (
 )
 from whatcanmycomputerrun.parsing.schemas import GameDetails, RequirementsSet, SearchResult
 from whatcanmycomputerrun.sources.cache import TTLCache
-from whatcanmycomputerrun.sources.steam import SteamClient
+from whatcanmycomputerrun.sources.steam import GameNotFound, SteamClient
+from whatcanmycomputerrun.sources.web_fallback import (
+    WebRequirementsFinder,
+    WebRequirementsNotFound,
+)
 
 
 class GameService:
     """Steam lookup + requirement parsing (deterministic first, LLM for gaps)."""
 
-    def __init__(self, steam: SteamClient, llm_parser: LLMRequirementsParser | None) -> None:
+    def __init__(
+        self,
+        steam: SteamClient,
+        llm_parser: LLMRequirementsParser | None,
+        web: WebRequirementsFinder | None = None,
+    ) -> None:
         self.steam = steam
         self.llm_parser = llm_parser
+        self.web = web
 
     @classmethod
     def create(cls, settings: Settings, http: httpx.AsyncClient) -> GameService:
         cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
         llm = LLMClient(settings)
         parser = LLMRequirementsParser(llm, settings.whatcanmycomputerrun_parser_model)
-        return cls(SteamClient(http, cache), parser)
+        finder = WebRequirementsFinder(llm, settings.whatcanmycomputerrun_search_model, cache)
+        return cls(SteamClient(http, cache), parser, finder)
 
     async def search(self, term: str) -> list[SearchResult]:
         return await self.steam.search(term)
@@ -64,3 +77,41 @@ class GameService:
         req.minimum, req.recommended = mn, rec
         req.parse_method = "mixed"
         return req
+
+    async def web_game(self, name: str, appid: int | None = None) -> GameDetails:
+        """Requirements for a game found by web search (not on Steam, or Steam lists none).
+
+        With an appid, the Steam store details (image, price, release date) are kept.
+        """
+        if self.web is None:
+            raise WebRequirementsNotFound("Web lookup is not configured.")
+        details = GameDetails(name=name.strip())
+        if appid:
+            with contextlib.suppress(GameNotFound):
+                details, _ = await self.steam.app_details(appid)
+        found = await self.web.find(details.name)
+        parsed, urls = found.parsed, found.urls
+        req = RequirementsSet(
+            minimum=parsed.minimum.requirements if parsed.minimum else None,
+            recommended=parsed.recommended.requirements if parsed.recommended else None,
+            source="web_search",
+            parse_method="llm",
+            source_urls=urls,
+            warnings=[
+                "Requirements came from an AI web search, not a store listing. "
+                "Double-check them on the publisher's official page."
+            ],
+        )
+        if found.unofficial or not urls:
+            req.warnings.append(
+                "Only unofficial or unidentified sources were found, so these numbers are less "
+                "trustworthy."
+                if urls
+                else "No source pages were reported, so these numbers can't be checked."
+            )
+        if parsed.needs_llm:
+            req = await self._fill_with_llm(parsed, req)
+            req.parse_method = "llm"
+        details.requirements = req
+        details.requirements_status = "ok"
+        return details

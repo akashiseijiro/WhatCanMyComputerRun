@@ -43,11 +43,11 @@ class SearchResult(BaseModel):
 
 
 class GameDetails(BaseModel):
-    appid: int
+    appid: int = 0  # 0 = not a Steam game (found via web search)
     name: str
     type: str = "game"
     header_image: str | None = None
-    store_url: str
+    store_url: str = ""
     is_free: bool = False
     price: Price | None = None
     release_date: str | None = None

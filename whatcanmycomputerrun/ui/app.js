@@ -33,6 +33,7 @@ const FRIENDLY = {
   steam_unavailable: ["Steam can't be reached", "You may be offline, or the Steam store is down. Check your connection and try again."],
   steam_rate_limited: ["Steam is rate limiting requests", "Wait a minute, then try again."],
   game_not_found: ["No store data for this game", "Steam has no store page data for it. Try another result."],
+  web_not_found: ["No official requirements found", "The web search couldn't find PC requirements for this game. Check the name, or look on the publisher's site."],
   llm_unavailable: ["AI features unavailable", "Add your ANTHROPIC_API_KEY to the .env file next to the app, then restart it."],
   llm_rate_limited: ["The AI service is busy", "It is rate limiting requests. Wait a minute and try again."],
 };
@@ -85,6 +86,14 @@ const VERDICT = {
   EXCEEDS_RECOMMENDED: ["🚀", "Exceeds recommended"],
   UNKNOWN: ["❔", "Unknown"],
 };
+// Only http(s) links from the network are ever turned into hrefs.
+function safeUrl(u) {
+  try { const x = new URL(u); return x.protocol === "https:" || x.protocol === "http:" ? x.href : null; } catch { return null; }
+}
+const webHash = (name, appid) => `#web/${encodeURIComponent(name)}${appid ? `/${appid}` : ""}`;
+function webLookup(name, appid, label = "Search the web for requirements") {
+  return h("a", { class: "btn secondary", href: webHash(name, appid) }, label);
+}
 const GB = (mb) => `${(mb / 1024).toFixed(mb % 1024 ? 1 : 0)} GB`;
 
 // ---------- screens ----------
@@ -185,13 +194,16 @@ async function runSearch(term, box, btn) {
     if (my !== state.token) return;
     if (!items.length) {
       fill(box, h("div", { class: "card" }, h("p", null, `No Steam results for “${term}”.`),
-        h("p", { class: "muted small" }, "Check the spelling, or try a shorter name. Games not on Steam aren't supported yet.")));
+        h("p", { class: "muted small" }, "Check the spelling, or try a shorter name. If the game isn't on Steam, we can look for its requirements on the web."),
+        webLookup(term, 0, `Search the web for “${term}”`)));
     } else {
       fill(box, h("ul", { class: "results" }, items.map((g) => h("li", null,
         h("button", { class: "result", type: "button", onclick: () => { location.hash = `#report/${g.appid}`; } },
           g.image ? h("img", { src: g.image, alt: "", loading: "lazy" }) : null,
           h("span", { class: "name" }, g.name),
-          g.price ? h("span", { class: "price" }, g.price) : null)))));
+          g.price ? h("span", { class: "price" }, g.price) : null)))),
+        h("div", { class: "card", style: "margin-top:1rem" }, h("p", { class: "muted" }, "Not the game you wanted, or not on Steam?"),
+          webLookup(term, 0, `Search the web for “${term}”`)));
     }
   } catch (e) {
     if (my === state.token) fill(box, errorBox(e, () => runSearch(term, box, btn)));
@@ -221,6 +233,27 @@ async function showReport(appid) {
   }
 }
 
+async function showWebReport(name, appid) {
+  const my = ++state.token;
+  state.report = null; state.tips = null;
+  const nav = document.getElementById("nav-report");
+  nav.hidden = false; nav.href = webHash(name, appid);
+  fill(app, h("h1", { tabindex: "-1" }, "Report"),
+    loading(`Searching the web for “${name}” requirements…`, "An AI web search looks for the official PC requirements. This can take up to a minute."));
+  focusHeading();
+  try {
+    const rep = await api(`/api/web-report?name=${encodeURIComponent(name)}${appid ? `&appid=${appid}` : ""}`);
+    if (my !== state.token) return;
+    state.report = rep;
+    renderReport(rep, rep.game.appid || 0);
+  } catch (e) {
+    if (my !== state.token) return;
+    fill(app, h("h1", { tabindex: "-1" }, "Report"), errorBox(e, () => showWebReport(name, appid)),
+      h("a", { class: "btn secondary", href: "#search" }, "← Back to search"));
+    focusHeading();
+  }
+}
+
 function renderReport(rep, appid) {
   const g = rep.game;
   const price = g.is_free ? "Free" : g.price ? g.price.formatted || `${(g.price.final_cents / 100).toFixed(2)} ${g.price.currency}` : "No price listed";
@@ -237,8 +270,9 @@ function renderReport(rep, appid) {
       h("div", null,
         h("h1", { tabindex: "-1" }, g.name),
         h("div", null, `${price}${discount}`),
+        g.appid ? null : h("div", { class: "muted" }, "Not on Steam. Requirements found by web search."),
         h("div", { class: "muted" }, g.release_date ? `${g.coming_soon ? "Releases" : "Released"}: ${g.release_date}` : null),
-        h("a", { href: g.store_url, target: "_blank", rel: "noopener noreferrer" }, "Steam store page"))),
+        g.store_url && safeUrl(g.store_url) ? h("a", { href: safeUrl(g.store_url), target: "_blank", rel: "noopener noreferrer" }, "Steam store page") : null)),
     h("div", { class: `verdictbar ${rep.recommendation}` },
       h("p", { class: "headline" }, rep.headline),
       h("div", { class: "muted" }, `Confidence: ${rep.confidence}` + (rep.bottleneck && rep.recommendation !== "INSUFFICIENT_DATA" ? ` · limited by ${rep.bottleneck.toUpperCase()}` : "") +
@@ -247,13 +281,14 @@ function renderReport(rep, appid) {
     rep.warnings.length ? h("div", { class: "warnbox", role: "status" }, h("ul", null, rep.warnings.map((w) => h("li", null, w)))) : null,
     comparisonTable(rep),
     settingsCard(rep.settings),
-    tipsCard(appid),
+    appid ? tipsCard(appid) : null,
     sourcesCard(rep));
   focusHeading();
 }
 
 function comparisonTable(rep) {
-  if (!rep.rows.length) return h("div", { class: "card" }, h("h2", null, "Requirements"), h("p", null, "No system requirements could be found for this game."));
+  if (!rep.rows.length) return h("div", { class: "card" }, h("h2", null, "Requirements"), h("p", null, "No system requirements could be found for this game."),
+    rep.game.requirements_status === "missing" || !rep.game.requirements ? webLookup(rep.game.name, rep.game.appid) : null);
   const rows = rep.rows.map((r) => {
     const [icon, label] = VERDICT[r.verdict];
     return h("tr", { class: r.specified ? "" : "dim" },
@@ -321,15 +356,19 @@ function tipsCard(appid) {
 function sourcesCard(rep) {
   const g = rep.game, req = g.requirements;
   const bench = rep.rows.find((r) => r.benchmark)?.benchmark;
+  const web = req?.source === "web_search";
+  const links = (req?.source_urls || []).map(safeUrl).filter(Boolean);
+  const link = (u) => h("li", null, h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, u));
   return h("div", { class: "card" }, h("h2", null, "Data sources"),
     h("ul", null,
-      h("li", null, "Requirements: ", h("a", { href: g.store_url, target: "_blank", rel: "noopener noreferrer" }, "Steam store page"),
-        req ? ` (read ${req.parse_method === "deterministic" ? "directly" : "with AI assistance"})` : ""),
-      ...(req?.source_urls || []).map((u) => h("li", null, h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, u))),
+      web
+        ? h("li", null, "Requirements: found by an AI web search (not a store listing). Check them on the publisher's official page.",
+            links.length ? h("ul", null, links.map(link)) : h("div", { class: "muted small" }, "No source pages were reported."))
+        : h("li", null, "Requirements: ", g.store_url && safeUrl(g.store_url) ? h("a", { href: safeUrl(g.store_url), target: "_blank", rel: "noopener noreferrer" }, "Steam store page") : "Steam",
+            req ? ` (read ${req.parse_method === "deterministic" ? "directly" : "with AI assistance"})` : ""),
       bench ? h("li", null, `CPU/GPU comparison: AI-estimated relative scores on the ${bench} scale (approximate).`) : null,
       h("li", null, "Settings and FPS: rule-based estimate from those scores, not a measured benchmark.")));
 }
-
 
 // ---------- manual hardware selection ----------
 const MANUAL_KEY = "whatcanmycomputerrun.manual";
@@ -459,7 +498,8 @@ function reportText() {
     if (s.handheld) lines.push(`Handheld: ${s.handheld.power_mode} ${s.handheld.watts} W, cap ${s.handheld.fps_cap}/${s.handheld.battery_fps_cap} FPS (plugged/battery)`);
   }
   if (state.tips?.length) { lines.push("", "AI tips (unverified):"); state.tips.forEach((t) => lines.push(`- ${t.setting}: ${t.advice}`)); }
-  lines.push("", `Steam: ${r.game.store_url}`);
+  const urls = r.game.requirements?.source === "web_search" ? (r.game.requirements.source_urls || []).map(safeUrl).filter(Boolean) : [];
+  lines.push("", r.game.store_url ? `Steam: ${r.game.store_url}` : "Requirements found by AI web search (verify on the official page):", ...urls);
   return lines.join("\n");
 }
 
@@ -487,14 +527,15 @@ function focusHeading() {
 }
 
 function route() {
-  const [page, arg] = (location.hash || "#system").slice(1).split("/");
-  const navId = page === "manual" ? "system" : page;
+  const [page, arg, arg2] = (location.hash || "#system").slice(1).split("/");
+  const navId = page === "manual" ? "system" : page === "web" ? "report" : page;
   document.querySelectorAll(".tab").forEach((a) => {
     if (a.id === `nav-${navId}`) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   });
   if (page === "search") showSearch();
   else if (page === "manual") showManual();
   else if (page === "report" && /^\d+$/.test(arg || "")) showReport(Number(arg));
+  else if (page === "web" && arg) showWebReport(decodeURIComponent(arg), /^\d+$/.test(arg2 || "") ? Number(arg2) : 0);
   else if (page === "report") location.hash = "#search";
   else showSystem();
 }

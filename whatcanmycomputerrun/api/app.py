@@ -31,6 +31,7 @@ from whatcanmycomputerrun.settings.rules import recommend_settings
 from whatcanmycomputerrun.sources.cache import TTLCache
 from whatcanmycomputerrun.sources.service import GameService
 from whatcanmycomputerrun.sources.steam import GameNotFound, SteamError, SteamRateLimited
+from whatcanmycomputerrun.sources.web_fallback import WebRequirementsNotFound
 
 
 class TipsResponse(BaseModel):
@@ -85,6 +86,10 @@ def create_app(
         )
         return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=status)
 
+    @app.exception_handler(WebRequirementsNotFound)
+    async def web_not_found(_: Request, exc: WebRequirementsNotFound) -> JSONResponse:
+        return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=404)
+
     @app.exception_handler(LLMError)
     async def llm_error(_: Request, exc: LLMError) -> JSONResponse:
         status = 429 if exc.code == "llm_rate_limited" else 503
@@ -135,6 +140,16 @@ def create_app(
     async def report(appid: int) -> Report:
         hw = state.get("hw") or scan()
         game = await get_games().game(appid)
+        rep = await build_report(hw, game, get_resolver())
+        rep.settings = recommend_settings(hw, rep)
+        return rep
+
+    @app.get("/api/web-report")
+    async def web_report(
+        name: str = Query(min_length=1, max_length=100), appid: int | None = None
+    ) -> Report:
+        hw = state.get("hw") or scan()
+        game = await get_games().web_game(name, appid)
         rep = await build_report(hw, game, get_resolver())
         rep.settings = recommend_settings(hw, rep)
         return rep
