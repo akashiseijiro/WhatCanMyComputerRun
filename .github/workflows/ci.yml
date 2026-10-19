@@ -19,3 +19,49 @@ jobs:
       - run: uv run ruff check .
       - run: uv run mypy
       - run: uv run pytest -v -s
+
+  build-exe:
+    # Builds the real Windows .exe, smoke-tests it, and uploads it as a downloadable artifact.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv python install 3.12
+      - name: Build (PyInstaller, one-folder)
+        shell: pwsh
+        run: ./build/build.ps1
+      - name: Smoke test the built exe (bundled UI, catalog and demo profiles)
+        shell: pwsh
+        run: |
+          $exe = Join-Path $PWD "dist\WhatCanMyComputerRun\WhatCanMyComputerRun.exe"
+          & $exe --mock-hardware ally_z1e --dump-hardware | Out-Null
+          if ($LASTEXITCODE -ne 0) { throw "--dump-hardware failed ($LASTEXITCODE)" }
+          $p = Start-Process $exe -ArgumentList "--mock-hardware","ally_z1e","--no-ui","--port","8765" `
+            -PassThru -RedirectStandardOutput out.log -RedirectStandardError err.log
+          try {
+            $up = $false
+            for ($i = 0; $i -lt 40; $i++) {
+              Start-Sleep -Seconds 1
+              try { Invoke-RestMethod http://127.0.0.1:8765/api/health | Out-Null; $up = $true; break } catch {}
+            }
+            if (-not $up) { Get-Content out.log, err.log; throw "server did not start" }
+            $cat = Invoke-RestMethod http://127.0.0.1:8765/api/hardware/catalog
+            if ($cat.cpus.Count -lt 100) { throw "hardware catalog missing from the bundle" }
+            $hw = Invoke-RestMethod http://127.0.0.1:8765/api/hardware
+            if ($hw.device_type -ne "handheld") { throw "demo profile missing from the bundle" }
+            $page = Invoke-WebRequest http://127.0.0.1:8765/ -UseBasicParsing
+            if ($page.Content -notmatch "WhatCanMyComputerRun") { throw "UI missing from the bundle" }
+            $js = Invoke-WebRequest http://127.0.0.1:8765/static/app.js -UseBasicParsing
+            if ($js.StatusCode -ne 200) { throw "app.js missing from the bundle" }
+          } finally {
+            Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WhatCanMyComputerRun-windows
+          path: dist/WhatCanMyComputerRun
+      - name: Real hardware detection with the built exe (a CI VM has no GPU; informational)
+        shell: pwsh
+        run: |
+          & "dist\WhatCanMyComputerRun\WhatCanMyComputerRun.exe" --dump-hardware
+          if ($LASTEXITCODE -ne 0) { throw "real detection crashed ($LASTEXITCODE)" }

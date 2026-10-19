@@ -16,8 +16,17 @@ def app_data_dir() -> Path:
     return base / "WhatCanMyComputerRun"
 
 
+def env_files() -> tuple[str, ...]:
+    """Where .env may live. Later entries win: app-data folder < next to the .exe < current dir."""
+    files = [app_data_dir() / ".env"]
+    if getattr(sys, "frozen", False):  # PyInstaller build
+        files.append(Path(sys.executable).parent / ".env")
+    files.append(Path(".env"))
+    return tuple(str(f) for f in files)
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_prefix="", extra="ignore")
+    model_config = SettingsConfigDict(env_file=env_files(), env_prefix="", extra="ignore")
 
     anthropic_api_key: str = ""
     whatcanmycomputerrun_parser_model: str = "claude-haiku-4-5"

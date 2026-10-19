@@ -60,13 +60,24 @@ def main(argv: list[str] | None = None) -> int:
 
     port = args.port or _free_port()
     url = f"http://127.0.0.1:{port}"
+    # A windowed (no-console) build has no stderr; uvicorn's default log setup would crash on it.
+    log_config = None if sys.stderr is None else uvicorn.config.LOGGING_CONFIG
     server = uvicorn.Server(
-        uvicorn.Config(create_app(detector), host="127.0.0.1", port=port, log_level="warning")
+        uvicorn.Config(
+            create_app(detector),
+            host="127.0.0.1",
+            port=port,
+            log_level="warning",
+            log_config=log_config,
+        )
     )
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
-    while not server.started:
+    while not server.started and thread.is_alive():
         time.sleep(0.05)
+    if not server.started:
+        print(f"error: the local server could not start on port {port}.", file=sys.stderr)
+        return 1
     print(f"WhatCanMyComputerRun running at {url}")
 
     if args.no_ui:
@@ -80,8 +91,8 @@ def main(argv: list[str] | None = None) -> int:
             webview.start()
             server.should_exit = True
             return 0
-        except ImportError:
-            print("pywebview not available; opening default browser instead.")
+        except Exception as exc:  # missing pywebview or WebView2 runtime: use the browser
+            print(f"Native window unavailable ({exc}); opening the default browser instead.")
     webbrowser.open(url)
     try:
         thread.join()
