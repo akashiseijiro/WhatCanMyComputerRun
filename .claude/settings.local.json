@@ -8,7 +8,9 @@
       "Skill(claude-api)",
       "Bash(git add *)",
       "Bash(git -c user.name=dev -c user.email=kurokoaomine741@gmail.com commit -qm \"Milestone 3: Steam search/details, requirements parser, TTL cache, LLM parsing fallback\")",
-      "Bash(git -c user.name=dev -c user.email=kurokoaomine741@gmail.com commit -qm 'Milestone 5: rule-based settings engine \\(preset, upscaler, frame gen, FPS band, handheld power\\), LLM tips, SSD-preferring storage row *)"
+      "Bash(git -c user.name=dev -c user.email=kurokoaomine741@gmail.com commit -qm 'Milestone 5: rule-based settings engine \\(preset, upscaler, frame gen, FPS band, handheld power\\), LLM tips, SSD-preferring storage row *)",
+      "Bash(curl -s -m 5 localhost:57048/api/health)",
+      "Bash(pkill -f \"whatcanmycomputerrun.main\")"
     ]
   }
 }

@@ -114,16 +114,24 @@ Scales (use exactly these, so scores are comparable across calls):
 - GPUs: {GPU_BENCHMARK} (the "average G3D Mark" shown on videocardbenchmark.net).
 - CPUs: {CPU_BENCHMARK} (the "average CPU Mark" shown on cpubenchmark.net).
 Calibration anchors (approximate averages; keep your answers consistent with them):
-- GPU G3D: RTX 4090 ~38000, RTX 3060 ~17000, RTX 2060 SUPER ~16000, RX 5700 XT ~17000,
-  GTX 1060 6GB ~10000, RX 580 ~9500, GTX 1650 ~7800, Arc A380 ~6000, GTX 1050 Ti ~6000,
-  GT 1030 ~2500.
+- GPU G3D, newer: RTX 4090 ~38000, RTX 3060 ~17000, RTX 2060 SUPER ~16000, RX 5700 XT ~17000,
+  GTX 1660 ~11000, GTX 1060 6GB ~10000, RX 580 ~9500, RX 480 ~9000, RX 570 ~8300, GTX 1650 ~7800,
+  Arc A380 ~6000, GTX 1050 Ti ~6000, GTX 1050 ~5000, GT 1030 ~2500.
+- GPU G3D, older (games often list these as minimum specs; they are MUCH slower than a GTX 1060):
+  GTX 980 ~9500, GTX 970 ~8500, GTX 960 ~5000, GTX 950 ~4300, GTX 780 ~5200, GTX 770 ~4500,
+  GTX 760 ~3700, GTX 750 Ti ~3800, GTX 660 ~3000, GTX 650 ~1500, Radeon R9 290 ~6500,
+  R9 380 ~5000, R9 270 ~4600, R7 370 ~4500, R7 260X ~3500, R7 250 ~1300, RX 560 ~4000,
+  RX 470 ~7600, RX 460 ~4400.
 - Integrated GPUs (user-verified equivalences, treat as ground truth): Radeon 780M ~7500
   (equal to a desktop GTX 1650 and a laptop RTX 2050 ~7500), Radeon 680M ~5500,
   Radeon 890M ~9500, Radeon 760M ~5500, Radeon 740M ~3500, Radeon Vega 8 ~2000,
   Intel Iris Xe ~2500, Intel UHD 620 ~1000.
-- CPU Mark: Ryzen 9 7950X3D ~62000, Ryzen 7 7800X3D ~35000, Core i7-12700 ~30000,
-  Ryzen 5 5600X ~22000, Ryzen Z1 Extreme ~20000, Ryzen 5 1600 ~12000, Core i7-6700 ~9000,
-  Core i3-1115G4 ~7000.
+- CPU Mark, newer: Ryzen 9 7950X3D ~62000, Ryzen 7 7800X3D ~35000, Core i7-12700 ~30000,
+  Ryzen 5 5600X ~22000, Ryzen Z1 Extreme ~20000, Core i3-1115G4 ~7000, Ryzen 5 1600 ~12000,
+  Core i5-8400 ~9500, Core i7-6700 ~9000, Ryzen 3 1200 ~6000.
+- CPU Mark, older (often listed as minimum specs): Core i7-4790K ~10000, Core i7-4770 ~8000,
+  Core i5-6600K ~7000, Core i5-4690K ~6500, Core i5-4430 ~5200, Core i5-3470 ~4800,
+  Core i5-2500K ~4800, AMD FX-8350 ~6500, FX-6300 ~4800, Core i3-540 ~1800.
 - Integrated GPUs are slower than mid-range discrete cards; an iGPU never scores above ~12000.
 Rules:
 - Mobile/laptop variants are different parts from desktop ones (RTX 3060 Laptop vs RTX 3060). Use the variant named.
@@ -142,7 +150,7 @@ class ClaudeResolver:
         self.cache = cache
 
     def _cache_key(self, q: ComponentQuery) -> str:
-        return f"perf:v3:{self.model}:{q.key}"
+        return f"perf:v4:{self.model}:{q.key}"
 
     async def resolve(self, queries: list[ComponentQuery]) -> ResolveResult:
         out = ResolveResult()

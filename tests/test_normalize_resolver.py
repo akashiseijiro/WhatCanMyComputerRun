@@ -153,3 +153,19 @@ async def test_implausible_score_is_treated_as_unresolved(tmp_path):
     res = await r.resolve([q])
     assert res.get(q) is None
     assert not list(tmp_path.glob("*.json"))  # and it was not cached
+
+
+def test_prompt_anchors_cover_old_minimum_spec_parts_and_keep_order():
+    """Games list old cards (GTX 960, R7 370) as minimums; they must sit far below GTX 1650/1060."""
+    import re
+
+    from whatcanmycomputerrun.compare.resolver import SYSTEM
+
+    def anchor(name):
+        m = re.search(re.escape(name) + r" ~(\d+)", SYSTEM)
+        assert m, f"missing anchor for {name}"
+        return int(m.group(1))
+
+    assert anchor("R7 370") < anchor("GTX 960") < anchor("GTX 1650") < anchor("GTX 1060 6GB")
+    assert anchor("Radeon 780M") >= anchor("GTX 960")  # an Ally beats the old minimum spec
+    assert anchor("FX-6300") < anchor("Core i5-6600K") < anchor("Ryzen 5 1600")
