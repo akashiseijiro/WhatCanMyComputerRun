@@ -42,7 +42,7 @@ SCORES = {
 
 
 def cyberpunk() -> GameDetails:
-    d = json.loads((FIX / "appdetails_1091500.json").read_text())["1091500"]["data"]
+    d = json.loads((FIX / "appdetails_1091500.json").read_text(encoding="utf-8"))["1091500"]["data"]
     game = parse_app_data(1091500, d)
     p = parse_pc_requirements(d["pc_requirements"])
     game.requirements = RequirementsSet(
@@ -195,7 +195,7 @@ def test_tier_verdict(mine, mn, rec, expected):
 
 @respx.mock
 def test_report_endpoint(tmp_path):
-    data = json.loads((FIX / "appdetails_1091500.json").read_text())
+    data = json.loads((FIX / "appdetails_1091500.json").read_text(encoding="utf-8"))
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
     settings = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("desktop_rtx3060"), settings, resolver=StaticResolver(SCORES))

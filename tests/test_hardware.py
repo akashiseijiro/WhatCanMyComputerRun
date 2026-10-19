@@ -66,7 +66,7 @@ def test_windows_module_not_imported_at_module_level():
     for path in root.rglob("*.py"):
         if path.name == "windows.py":
             continue
-        for node in ast.parse(path.read_text()).body:
+        for node in ast.parse(path.read_text(encoding="utf-8")).body:
             names = []
             if isinstance(node, ast.Import):
                 names = [a.name for a in node.names]

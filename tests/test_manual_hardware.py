@@ -176,7 +176,7 @@ async def test_ally_vram_row_and_tip_reflect_assumption():
 
 @respx.mock
 def test_manual_endpoints_and_report(tmp_path):
-    data = json.loads((FIX / "appdetails_1091500.json").read_text())
+    data = json.loads((FIX / "appdetails_1091500.json").read_text(encoding="utf-8"))
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
     st = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("ally_z1e"), st, resolver=StaticResolver(SCORES))

@@ -27,7 +27,7 @@ FIX = Path(__file__).parent / "fixtures" / "steam"
 
 
 def fx(name):
-    return json.loads((FIX / name).read_text())
+    return json.loads((FIX / name).read_text(encoding="utf-8"))
 
 
 @pytest.fixture
@@ -100,7 +100,7 @@ def test_cache_ttl_and_corruption(tmp_path):
     t[0] += 3601
     assert c.get("k") is None
     c.set("k", 1)
-    next(tmp_path.glob("*.json")).write_text("{broken")
+    next(tmp_path.glob("*.json")).write_text("{broken", encoding="utf-8")
     assert c.get("k") is None
     c.set("k2", 2)
     assert c.clear() >= 1 and c.get("k2") is None

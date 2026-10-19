@@ -15,7 +15,7 @@ FIX = Path(__file__).parent / "fixtures" / "windows_raw"
 
 
 def load(name):
-    d = json.loads((FIX / f"{name}.json").read_text())
+    d = json.loads((FIX / f"{name}.json").read_text(encoding="utf-8"))
     return build_profile(d["wmi"], d["registry"], d["dxgi"])
 
 
@@ -54,13 +54,13 @@ def test_ci_vm_degrades_gracefully():
 
 
 def test_dxgi_used_when_registry_missing():
-    d = json.loads((FIX / "ally.json").read_text())
+    d = json.loads((FIX / "ally.json").read_text(encoding="utf-8"))
     hw = build_profile(d["wmi"], [], d["dxgi"])
     assert hw.gpus[0].vram_mb == 4096 and hw.gpus[0].vram_source == "dxgi"
 
 
 def test_wmi_fallback_warns_when_capped():
-    d = json.loads((FIX / "desktop_dual_gpu.json").read_text())
+    d = json.loads((FIX / "desktop_dual_gpu.json").read_text(encoding="utf-8"))
     hw = build_profile(d["wmi"], [], [])
     rtx = next(g for g in hw.gpus if "RTX" in g.name)
     assert rtx.vram_source == "wmi" and rtx.vram_mb == 4095

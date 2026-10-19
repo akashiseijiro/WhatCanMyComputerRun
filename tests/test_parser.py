@@ -15,7 +15,7 @@ FIX = Path(__file__).parent / "fixtures" / "steam"
 
 
 def pc_req(appid):
-    d = json.loads((FIX / f"appdetails_{appid}.json").read_text())
+    d = json.loads((FIX / f"appdetails_{appid}.json").read_text(encoding="utf-8"))
     return d[str(appid)]["data"]["pc_requirements"]
 
 

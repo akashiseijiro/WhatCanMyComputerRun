@@ -146,7 +146,7 @@ def test_power_profiles_extensible_and_generic_fallback():
 
 @respx.mock
 def test_report_endpoint_includes_settings(tmp_path):
-    data = json.loads((FIX / "appdetails_1091500.json").read_text())
+    data = json.loads((FIX / "appdetails_1091500.json").read_text(encoding="utf-8"))
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
     st = Settings(anthropic_api_key="", whatcanmycomputerrun_cache_dir=str(tmp_path))
     app = create_app(MockDetector("ally_z1e"), st, resolver=StaticResolver(SCORES))

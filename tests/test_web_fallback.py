@@ -211,7 +211,7 @@ async def test_service_warns_when_no_sources_reported(tmp_path):
 
 @respx.mock
 async def test_service_keeps_steam_details_when_appid_given(tmp_path):
-    data = json.loads((FIX / "appdetails_1091500.json").read_text())
+    data = json.loads((FIX / "appdetails_1091500.json").read_text(encoding="utf-8"))
     data["1091500"]["data"]["pc_requirements"] = []  # Steam lists none; web fills in
     respx.get(DETAILS_URL).mock(return_value=httpx.Response(200, json=data))
     svc, http = await service(tmp_path, resp([text(ANSWER, ["https://pub.example/req"])]))
