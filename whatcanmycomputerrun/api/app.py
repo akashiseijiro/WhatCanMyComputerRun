@@ -14,6 +14,7 @@ from whatcanmycomputerrun import __version__
 from whatcanmycomputerrun.compare.engine import build_report
 from whatcanmycomputerrun.compare.models import Report
 from whatcanmycomputerrun.compare.resolver import ClaudeResolver, PerformanceResolver
+from whatcanmycomputerrun.compare.static_scores import StaticTableResolver
 from whatcanmycomputerrun.config import Settings, get_settings
 from whatcanmycomputerrun.hardware.base import HardwareDetector, HardwareProfile
 from whatcanmycomputerrun.hardware.catalog import (
@@ -67,8 +68,10 @@ def create_app(
             return resolver
         if "resolver" not in service_holder_r:
             cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
-            service_holder_r["resolver"] = ClaudeResolver(
-                LLMClient(settings), settings.whatcanmycomputerrun_resolver_model, cache
+            service_holder_r["resolver"] = StaticTableResolver(
+                ClaudeResolver(
+                    LLMClient(settings), settings.whatcanmycomputerrun_resolver_model, cache
+                )
             )
         return service_holder_r["resolver"]
 
