@@ -117,6 +117,12 @@ Calibration anchors (approximate averages; keep your answers consistent with the
 - GPU G3D, newer: RTX 4090 ~38000, RTX 3060 ~17000, RTX 2060 SUPER ~16000, RX 5700 XT ~17000,
   GTX 1660 ~11000, GTX 1060 6GB ~10000, RX 580 ~9500, RX 480 ~9000, RX 570 ~8300, GTX 1650 ~7800,
   Arc A380 ~6000, GTX 1050 Ti ~6000, GTX 1050 ~5000, GT 1030 ~2500.
+- GPU G3D, laptop (dedicated mobile parts; about 70-85% of the same-named desktop card, and the
+  laptop RTX 3060 is clearly FASTER than a desktop GTX 1660 or RX 5500 XT): RTX 4070 Laptop ~20000,
+  RTX 4060 Laptop ~16000, RTX 3080 Laptop ~17500, RTX 3070 Laptop ~15500, RTX 3060 Laptop ~13000,
+  RTX 3050 Ti Laptop ~9500, RTX 3050 Laptop ~8500, RTX 2060 Laptop ~11500, GTX 1660 Ti Laptop ~10000,
+  GTX 1650 Laptop ~7000. Other newer desktop cards: RTX 2060 ~13500, RX 5500 XT ~10000,
+  RX 6600 ~14500, GTX 1660 SUPER ~13000.
 - GPU G3D, older (games often list these as minimum specs; they are MUCH slower than a GTX 1060):
   GTX 980 ~9500, GTX 970 ~8500, GTX 960 ~5000, GTX 950 ~4300, GTX 780 ~5200, GTX 770 ~4500,
   GTX 760 ~3700, GTX 750 Ti ~3800, GTX 660 ~3000, GTX 650 ~1500, Radeon R9 290 ~6500,
@@ -150,7 +156,7 @@ class ClaudeResolver:
         self.cache = cache
 
     def _cache_key(self, q: ComponentQuery) -> str:
-        return f"perf:v4:{self.model}:{q.key}"
+        return f"perf:v5:{self.model}:{q.key}"
 
     async def resolve(self, queries: list[ComponentQuery]) -> ResolveResult:
         out = ResolveResult()

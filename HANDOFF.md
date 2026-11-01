@@ -229,7 +229,7 @@ from the app-data folder, next to the `.exe`, then the current folder (later win
   (`compare/resolver.py` `SYSTEM`) and a plausibility guard rejects impossible numbers (for
   example an iGPU above 12000). Unscoreable parts become `UNKNOWN`, never a pass. Anchors are
   approximate estimates by the developer; parts without anchors are still guessed.
-- **Cache keys are versioned** (`perf:v4:...`). Bump the version whenever scoring prompts change.
+- **Cache keys are versioned** (`perf:v5:...`). Bump the version whenever scoring prompts change.
 - **Requirements with alternatives are compared against the weakest listed option.**
 - **Verdict constants** (top of `compare/engine.py`): score margin 5%, RAM 8%, VRAM 10%, "exceeds"
   at 1.5x, "Don't buy" if GPU/CPU is under 50% of the minimum or the OS is below minimum.
