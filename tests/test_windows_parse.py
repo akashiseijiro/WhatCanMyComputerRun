@@ -109,3 +109,17 @@ def test_gpu_kind(name, kind):
 )
 def test_device_type(man, model, chassis, pcst, battery, expected):
     assert detect_device_type(man, model, chassis, pcst, battery)[0] == expected
+
+
+def test_real_laptop_dgpu_igpu_ram_and_vram():
+    # Real --dump-hardware output from an ASUS TUF Gaming F15 (RTX 3060 Laptop + Intel UHD).
+    hw = load("laptop_rtx3060")
+    assert hw.device_type == DeviceType.LAPTOP and not hw.warnings
+    assert len(hw.gpus) == 2
+    gpu = hw.primary_gpu
+    assert gpu and "RTX 3060" in gpu.name and gpu.kind == GpuKind.DISCRETE
+    assert gpu.vram_mb == 6144 and gpu.vram_source == "registry"  # WMI caps at 4 GB
+    assert hw.cpu and (hw.cpu.cores, hw.cpu.threads) == (8, 16)
+    assert hw.ram and hw.ram.total_gb == pytest.approx(15.7, abs=0.1)
+    assert [d.media_type for d in hw.storage] == [MediaType.SSD, MediaType.SSD]
+    assert hw.display and (hw.display.width, hw.display.height) == (1920, 1080)

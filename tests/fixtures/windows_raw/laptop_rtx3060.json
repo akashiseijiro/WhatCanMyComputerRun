@@ -1,0 +1,135 @@
+{
+ "wmi": {
+  "cpu": {
+   "Name": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+   "NumberOfCores": 8,
+   "NumberOfLogicalProcessors": 16,
+   "MaxClockSpeed": 2304
+  },
+  "gpu": [
+   {
+    "Name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "AdapterCompatibility": "NVIDIA",
+    "DriverVersion": "32.0.16.2101",
+    "AdapterRAM": 4293918720,
+    "PNPDeviceID": "PCI\\VEN_10DE&DEV_2520&SUBSYS_16F21043&REV_A1\\4&F03C69C&0&0008",
+    "CurrentHorizontalResolution": 1920,
+    "CurrentVerticalResolution": 1080,
+    "CurrentRefreshRate": 60
+   },
+   {
+    "Name": "Intel(R) UHD Graphics",
+    "AdapterCompatibility": "Intel Corporation",
+    "DriverVersion": "31.0.101.5333",
+    "AdapterRAM": 134217728,
+    "PNPDeviceID": "PCI\\VEN_8086&DEV_9A60&SUBSYS_16F21043&REV_01\\3&11583659&0&10",
+    "CurrentHorizontalResolution": 1920,
+    "CurrentVerticalResolution": 1080,
+    "CurrentRefreshRate": 60
+   }
+  ],
+  "ram_modules": [
+   {
+    "Capacity": 8589934592,
+    "Speed": 3200,
+    "ConfiguredClockSpeed": 3200
+   },
+   {
+    "Capacity": 8589934592,
+    "Speed": 3200,
+    "ConfiguredClockSpeed": 3200
+   }
+  ],
+  "computer_system": {
+   "Manufacturer": "ASUSTeK COMPUTER INC.",
+   "Model": "ASUS TUF Gaming F15 FX506HM_FX506HM",
+   "TotalPhysicalMemory": 16889036800,
+   "PCSystemType": 2
+  },
+  "os": {
+   "Caption": "Microsoft Windows 11 Home Single Language",
+   "Version": "10.0.26300",
+   "BuildNumber": "26300"
+  },
+  "enclosure": {
+   "ChassisTypes": [
+    10
+   ]
+  },
+  "battery": {
+   "Name": "A32-K55"
+  },
+  "logical_disks": [
+   {
+    "DeviceID": "C:",
+    "Size": 489497628672,
+    "FreeSpace": 291447128064
+   },
+   {
+    "DeviceID": "D:",
+    "Size": 500090007552,
+    "FreeSpace": 358466564096
+   }
+  ],
+  "partitions": [
+   {
+    "DriveLetter": "C",
+    "DiskNumber": 0
+   },
+   {
+    "DriveLetter": "D",
+    "DiskNumber": 1
+   }
+  ],
+  "physical_disks": [
+   {
+    "DeviceId": 1,
+    "MediaType": "SSD",
+    "BusType": "NVMe"
+   },
+   {
+    "DeviceId": 0,
+    "MediaType": "SSD",
+    "BusType": "NVMe"
+   }
+  ]
+ },
+ "registry": [
+  {
+   "driver_desc": "NVIDIA GeForce RTX 3060 Laptop GPU",
+   "matching_device_id": "pci\\ven_10de&dev_2520&subsys_16f21043",
+   "memory_bytes": 6442450944
+  },
+  {
+   "driver_desc": "Intel(R) UHD Graphics",
+   "matching_device_id": "PCI\\VEN_8086&DEV_9A60&SUBSYS_16F21043",
+   "memory_bytes": 134217728
+  }
+ ],
+ "dxgi": [
+  {
+   "name": "Intel(R) UHD Graphics",
+   "vendor_id": 32902,
+   "device_id": 39520,
+   "dedicated_bytes": 134217728,
+   "shared_bytes": 8444518400,
+   "software": false
+  },
+  {
+   "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+   "vendor_id": 4318,
+   "device_id": 9504,
+   "dedicated_bytes": 6285164544,
+   "shared_bytes": 8444518400,
+   "software": false
+  },
+  {
+   "name": "Microsoft Basic Render Driver",
+   "vendor_id": 5140,
+   "device_id": 140,
+   "dedicated_bytes": 0,
+   "shared_bytes": 8444518400,
+   "software": true
+  }
+ ]
+}
