@@ -31,12 +31,19 @@ a = Analysis(
     excludes=["tkinter", "pytest", "mypy", "ruff"],
 )
 pyz = PYZ(a.pure)
-exe = EXE(
-    pyz,
-    a.scripts,
-    [],
-    exclude_binaries=True,
-    name="WhatCanMyComputerRun",
-    console=os.environ.get("WCMCR_NOCONSOLE") != "1",
-)
-coll = COLLECT(exe, a.binaries, a.datas, name="WhatCanMyComputerRun")
+console = os.environ.get("WCMCR_NOCONSOLE") != "1"
+if os.environ.get("WCMCR_ONEFILE") == "1":
+    # One self-contained .exe to hand to people (unpacks to a temp folder on each start).
+    exe = EXE(
+        pyz, a.scripts, a.binaries, a.datas, [], name="WhatCanMyComputerRun", console=console
+    )
+else:
+    exe = EXE(
+        pyz,
+        a.scripts,
+        [],
+        exclude_binaries=True,
+        name="WhatCanMyComputerRun",
+        console=console,
+    )
+    coll = COLLECT(exe, a.binaries, a.datas, name="WhatCanMyComputerRun")

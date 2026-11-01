@@ -1,9 +1,11 @@
 # Build the Windows .exe (one-folder). Run from anywhere:  powershell -File build\build.ps1
 # Add -NoConsole for a build without a console window (only once everything works).
-param([switch]$NoConsole, [switch]$EmbedKeyFromDotenv)
+param([switch]$NoConsole, [switch]$EmbedKeyFromDotenv, [switch]$OneFile)
 $ErrorActionPreference = "Stop"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 if ($NoConsole) { $env:WCMCR_NOCONSOLE = "1" }
+# -OneFile: build one self-contained dist\WhatCanMyComputerRun.exe to hand to people.
+if ($OneFile) { $env:WCMCR_ONEFILE = "1" }
 uv sync --python 3.12
 
 # Release build: bake a Gemini key into the exe so users need no setup. The key comes from the
@@ -26,5 +28,9 @@ try {
 } finally {
     if (Test-Path $embedded) { Remove-Item $embedded -Force }
 }
-Write-Host "Built: dist\WhatCanMyComputerRun\WhatCanMyComputerRun.exe"
+if ($OneFile) {
+    Write-Host "Built: dist\WhatCanMyComputerRun.exe (single file)"
+} else {
+    Write-Host "Built: dist\WhatCanMyComputerRun\WhatCanMyComputerRun.exe"
+}
 if (-not $key) { Write-Host "No key embedded: put a .env next to the .exe (copy .env.example, add a key)." }
