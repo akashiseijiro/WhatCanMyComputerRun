@@ -21,7 +21,7 @@ class Requirements(BaseModel):
 class RequirementsSet(BaseModel):
     minimum: Requirements | None = None
     recommended: Requirements | None = None
-    source: Literal["steam", "web_search"] = "steam"
+    source: Literal["steam", "web_search", "user_provided"] = "steam"
     parse_method: Literal["deterministic", "llm", "mixed"] = "deterministic"
     source_urls: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)

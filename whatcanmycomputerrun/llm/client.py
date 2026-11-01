@@ -50,10 +50,27 @@ class LLMClient:
     def __init__(self, settings: Settings, client: Any | None = None) -> None:
         self.settings = settings
         self._client = client
+        self._gemini_backend: Any | None = None
+
+    @property
+    def provider(self) -> str:
+        # An injected client is always an Anthropic-shaped one (tests).
+        return "anthropic" if self._client is not None else self.settings.provider
 
     @property
     def available(self) -> bool:
-        return self._client is not None or self.settings.has_api_key
+        return self._client is not None or self.settings.llm_available
+
+    def _gemini(self) -> Any:
+        from whatcanmycomputerrun.llm.gemini import GeminiBackend  # circular at import time
+
+        if self._gemini_backend is None:
+            if not self.settings.gemini_key:
+                raise LLMUnavailable("GEMINI_API_KEY is not set. Add it to your .env file.")
+            self._gemini_backend = GeminiBackend(
+                self.settings.gemini_key, self.settings.whatcanmycomputerrun_gemini_model
+            )
+        return self._gemini_backend
 
     def _get(self) -> Any:
         if self._client is None:
@@ -68,6 +85,11 @@ class LLMClient:
         self, *, model: str, system: str, user: str, schema: type[T], max_tokens: int = 2048
     ) -> T:
         """Ask for output matching a Pydantic schema (validated by the SDK)."""
+        if self.provider == "gemini":
+            result: T = await self._gemini().parse(
+                system=system, user=user, schema=schema, max_tokens=max_tokens
+            )
+            return result
         client = self._get()
         with _translate_errors():
             response = await client.messages.parse(
@@ -91,6 +113,11 @@ class LLMClient:
 
         Source URLs prefer the pages the answer actually cited; only http(s) URLs are kept.
         """
+        if self.provider == "gemini":
+            answer: tuple[str, list[str]] = await self._gemini().web_search(
+                system=system, user=user, max_tokens=max_tokens
+            )
+            return answer
         client = self._get()
         tools = [{"type": WEB_SEARCH_TOOL, "name": "web_search", "max_uses": max_uses}]
         messages: list[dict[str, Any]] = [{"role": "user", "content": user}]

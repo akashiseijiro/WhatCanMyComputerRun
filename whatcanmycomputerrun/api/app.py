@@ -8,7 +8,7 @@ import httpx
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from whatcanmycomputerrun import __version__
 from whatcanmycomputerrun.compare.engine import build_report
@@ -30,6 +30,7 @@ from whatcanmycomputerrun.settings.llm_tips import GameTipsProvider
 from whatcanmycomputerrun.settings.models import GameTip
 from whatcanmycomputerrun.settings.rules import recommend_settings
 from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.custom_requirements import CustomRequirementsError
 from whatcanmycomputerrun.sources.service import GameService
 from whatcanmycomputerrun.sources.steam import GameNotFound, SteamError, SteamRateLimited
 from whatcanmycomputerrun.sources.web_fallback import WebRequirementsNotFound
@@ -38,6 +39,15 @@ from whatcanmycomputerrun.sources.web_fallback import WebRequirementsNotFound
 class TipsResponse(BaseModel):
     tips: list[GameTip]
     warning: str | None = None
+
+
+class CustomRequest(BaseModel):
+    """A non-Steam game with a link to its requirements page, or the requirements text."""
+
+    name: str = Field(min_length=1, max_length=100)
+    url: str | None = Field(default=None, max_length=500)
+    text: str | None = Field(default=None, max_length=20000)
+    appid: int | None = None
 
 
 def create_app(
@@ -69,9 +79,7 @@ def create_app(
         if "resolver" not in service_holder_r:
             cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
             service_holder_r["resolver"] = StaticTableResolver(
-                ClaudeResolver(
-                    LLMClient(settings), settings.whatcanmycomputerrun_resolver_model, cache
-                )
+                ClaudeResolver(LLMClient(settings), settings.resolver_model, cache)
             )
         return service_holder_r["resolver"]
 
@@ -93,6 +101,10 @@ def create_app(
     async def web_not_found(_: Request, exc: WebRequirementsNotFound) -> JSONResponse:
         return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=404)
 
+    @app.exception_handler(CustomRequirementsError)
+    async def custom_failed(_: Request, exc: CustomRequirementsError) -> JSONResponse:
+        return JSONResponse({"code": exc.code, "detail": str(exc)}, status_code=422)
+
     @app.exception_handler(LLMError)
     async def llm_error(_: Request, exc: LLMError) -> JSONResponse:
         status = 429 if exc.code == "llm_rate_limited" else 503
@@ -108,7 +120,7 @@ def create_app(
 
     @app.get("/api/health")
     def health() -> dict[str, object]:
-        return {"ok": True, "version": __version__, "has_api_key": settings.has_api_key}
+        return {"ok": True, "version": __version__, "has_api_key": settings.llm_available}
 
     @app.get("/api/hardware")
     def hardware() -> HardwareProfile:
@@ -157,6 +169,16 @@ def create_app(
         rep.settings = recommend_settings(hw, rep)
         return rep
 
+    @app.post("/api/custom-report")
+    async def custom_report(body: CustomRequest) -> Report:
+        hw = state.get("hw") or scan()
+        game = await get_games().custom_game(
+            body.name, url=body.url, text=body.text, appid=body.appid
+        )
+        rep = await build_report(hw, game, get_resolver())
+        rep.settings = recommend_settings(hw, rep)
+        return rep
+
     @app.get("/api/tips/{appid}")
     async def tips(appid: int) -> TipsResponse:
         hw = state.get("hw") or scan()
@@ -166,7 +188,7 @@ def create_app(
         gpu = hw.primary_gpu
         provider = GameTipsProvider(
             LLMClient(settings),
-            settings.whatcanmycomputerrun_tips_model,
+            settings.tips_model,
             TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours),
         )
         items, warning = await provider.tips(

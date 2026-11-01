@@ -152,3 +152,10 @@ select, .field input {
 select:focus-visible, .field input:focus-visible { border-color: var(--focus); }
 .check { display: flex; align-items: center; gap: .6rem; min-height: var(--tap); margin-top: .5rem; }
 .check input { width: 28px; height: 28px; accent-color: var(--accent); }
+
+/* Paste-requirements form */
+textarea {
+  min-height: calc(var(--tap) * 3); padding: .7rem .8rem; font: inherit; color: var(--text);
+  background: var(--panel-2); border: 2px solid var(--line); border-radius: 12px; width: 100%; resize: vertical;
+}
+textarea:focus-visible { border-color: var(--focus); }

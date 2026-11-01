@@ -5,7 +5,7 @@ import contextlib
 import httpx
 
 from whatcanmycomputerrun.config import Settings
-from whatcanmycomputerrun.llm.client import LLMClient, LLMError
+from whatcanmycomputerrun.llm.client import LLMClient, LLMError, LLMUnavailable
 from whatcanmycomputerrun.parsing.llm_parser import LLMRequirementsParser
 from whatcanmycomputerrun.parsing.requirements_parser import (
     ParsedPcRequirements,
@@ -13,6 +13,13 @@ from whatcanmycomputerrun.parsing.requirements_parser import (
 )
 from whatcanmycomputerrun.parsing.schemas import GameDetails, RequirementsSet, SearchResult
 from whatcanmycomputerrun.sources.cache import TTLCache
+from whatcanmycomputerrun.sources.custom_requirements import (
+    MAX_TEXT_CHARS,
+    CustomRequirementsError,
+    extract_requirements_text,
+    fetch_page,
+    looks_like_requirements,
+)
 from whatcanmycomputerrun.sources.steam import GameNotFound, SteamClient
 from whatcanmycomputerrun.sources.web_fallback import (
     WebRequirementsFinder,
@@ -28,18 +35,20 @@ class GameService:
         steam: SteamClient,
         llm_parser: LLMRequirementsParser | None,
         web: WebRequirementsFinder | None = None,
+        http: httpx.AsyncClient | None = None,
     ) -> None:
         self.steam = steam
         self.llm_parser = llm_parser
         self.web = web
+        self.http = http
 
     @classmethod
     def create(cls, settings: Settings, http: httpx.AsyncClient) -> GameService:
         cache = TTLCache(settings.cache_dir, settings.whatcanmycomputerrun_cache_ttl_hours)
         llm = LLMClient(settings)
-        parser = LLMRequirementsParser(llm, settings.whatcanmycomputerrun_parser_model)
-        finder = WebRequirementsFinder(llm, settings.whatcanmycomputerrun_search_model, cache)
-        return cls(SteamClient(http, cache), parser, finder)
+        parser = LLMRequirementsParser(llm, settings.parser_model)
+        finder = WebRequirementsFinder(llm, settings.search_model, cache)
+        return cls(SteamClient(http, cache), parser, finder, http)
 
     async def search(self, term: str) -> list[SearchResult]:
         return await self.steam.search(term)
@@ -77,6 +86,64 @@ class GameService:
         req.minimum, req.recommended = mn, rec
         req.parse_method = "mixed"
         return req
+
+    async def custom_game(
+        self,
+        name: str,
+        *,
+        url: str | None = None,
+        text: str | None = None,
+        appid: int | None = None,
+    ) -> GameDetails:
+        """Requirements from a page the user linked to, or text they pasted.
+
+        Needs only the plain LLM parser (no web-search tool), so it works on a free AI key.
+        """
+        if self.llm_parser is None or not self.llm_parser.llm.available:
+            raise LLMUnavailable("Reading requirements needs an AI key (see your .env file).")
+        source_urls: list[str] = []
+        if url and url.strip():
+            if self.http is None:
+                raise CustomRequirementsError("Fetching links is not configured.")
+            page = extract_requirements_text(await fetch_page(self.http, url))
+            if not looks_like_requirements(page):
+                raise CustomRequirementsError(
+                    "That page doesn't seem to list system requirements (some sites load them "
+                    "with JavaScript). Open the page, copy the requirements and paste them."
+                )
+            text, source_urls = page, [url.strip()]
+        elif text and text.strip():
+            text = text.strip()[:MAX_TEXT_CHARS]
+        else:
+            raise CustomRequirementsError("Paste the requirements text or a link to the page.")
+
+        details = GameDetails(name=name.strip())
+        if appid:
+            with contextlib.suppress(GameNotFound):
+                details, _ = await self.steam.app_details(appid)
+        try:
+            mn, rec = await self.llm_parser.parse_text(details.name, text)
+        except LLMError as exc:
+            raise CustomRequirementsError(f"Could not read the requirements: {exc}") from exc
+        if mn is None and rec is None:
+            raise CustomRequirementsError(
+                "No system requirements were found in that text. Include the Minimum and "
+                "Recommended lines (processor, graphics, memory, storage)."
+            )
+        what = "a page you linked to" if source_urls else "text you pasted"
+        details.requirements = RequirementsSet(
+            minimum=mn,
+            recommended=rec,
+            source="user_provided",
+            parse_method="llm",
+            source_urls=source_urls,
+            warnings=[
+                f"Requirements were read by AI from {what}, not from a store listing. "
+                "Check the result against the original."
+            ],
+        )
+        details.requirements_status = "ok"
+        return details
 
     async def web_game(self, name: str, appid: int | None = None) -> GameDetails:
         """Requirements for a game found by web search (not on Steam, or Steam lists none).

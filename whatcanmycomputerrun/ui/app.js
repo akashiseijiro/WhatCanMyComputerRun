@@ -34,7 +34,8 @@ const FRIENDLY = {
   steam_rate_limited: ["Steam is rate limiting requests", "Wait a minute, then try again."],
   game_not_found: ["No store data for this game", "Steam has no store page data for it. Try another result."],
   web_not_found: ["No official requirements found", "The web search couldn't find PC requirements for this game. Check the name, or look on the publisher's site."],
-  llm_unavailable: ["AI features unavailable", "Add your ANTHROPIC_API_KEY to the .env file next to the app, then restart it."],
+  llm_unavailable: ["AI feature unavailable", "This needs an AI key (ANTHROPIC_API_KEY or GEMINI_API_KEY in the .env file next to the app), and web search needs a paid one."],
+  custom_requirements_failed: ["Couldn't read those requirements", "Check the link, or copy the requirements from the game's page and paste the text."],
   llm_rate_limited: ["The AI service is busy", "It is rate limiting requests. Wait a minute and try again."],
 };
 
@@ -91,8 +92,11 @@ function safeUrl(u) {
   try { const x = new URL(u); return x.protocol === "https:" || x.protocol === "http:" ? x.href : null; } catch { return null; }
 }
 const webHash = (name, appid) => `#web/${encodeURIComponent(name)}${appid ? `/${appid}` : ""}`;
+const customHash = (name) => `#custom/${encodeURIComponent(name)}`;
 function webLookup(name, appid, label = "Search the web for requirements") {
-  return h("a", { class: "btn secondary", href: webHash(name, appid) }, label);
+  return h("div", { class: "row" },
+    h("a", { class: "btn", href: customHash(name) }, "Paste a link or the requirements"),
+    h("a", { class: "btn secondary", href: webHash(name, appid) }, label));
 }
 const eqText = (e) => (e ? [e.desktop && `desktop ${e.desktop}`, e.laptop && `laptop ${e.laptop}`].filter(Boolean).join(" · ") : "");
 const GB = (mb) => `${(mb / 1024).toFixed(mb % 1024 ? 1 : 0)} GB`;
@@ -253,9 +257,57 @@ async function showWebReport(name, appid) {
   } catch (e) {
     if (my !== state.token) return;
     fill(app, h("h1", { tabindex: "-1" }, "Report"), errorBox(e, () => showWebReport(name, appid)),
-      h("a", { class: "btn secondary", href: "#search" }, "← Back to search"));
+      h("div", { class: "row" },
+        h("a", { class: "btn", href: customHash(name) }, "Paste a link or the requirements instead"),
+        h("a", { class: "btn secondary", href: "#search" }, "← Back to search")));
     focusHeading();
   }
+}
+
+function showCustom(name) {
+  ++state.token;
+  state.report = null; state.tips = null;
+  const nav = document.getElementById("nav-report");
+  nav.hidden = false; nav.href = customHash(name);
+  const nameIn = h("input", { type: "text", id: "c-name", value: name, maxlength: "100", required: true, autocomplete: "off" });
+  const urlIn = h("input", { type: "url", id: "c-url", placeholder: "https://… (store or publisher page)", maxlength: "500", autocomplete: "off" });
+  const textIn = h("textarea", { id: "c-text", rows: "9", maxlength: "20000", placeholder: "Minimum:\nOS: Windows 10\nProcessor: …\nMemory: … GB RAM\nGraphics: …\n\nRecommended:\n…" });
+  const out = h("div", null);
+  const submit = h("button", { class: "btn", type: "submit" }, "Check my PC");
+  const form = h("form", { class: "card", novalidate: true },
+    h("p", { class: "muted" }, "For a game that isn't on Steam, give us its requirements. Paste a link to its page, or copy the requirements from the page and paste them below."),
+    h("div", { class: "field" }, h("label", { for: "c-name" }, "Game name"), nameIn),
+    h("div", { class: "field" }, h("label", { for: "c-url" }, "Link to the requirements page"), urlIn),
+    h("p", { class: "muted small" }, "or"),
+    h("div", { class: "field" }, h("label", { for: "c-text" }, "Pasted requirements"), textIn),
+    h("div", { class: "row", style: "margin-top:1rem" }, submit, h("a", { class: "btn secondary", href: "#search" }, "← Back to search")));
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const gameName = nameIn.value.trim(), url = urlIn.value.trim(), text = textIn.value.trim();
+    if (!gameName || (!url && !text)) {
+      fill(out, h("div", { class: "alert", role: "alert" }, h("p", null, "Enter the game name and either a link or the requirements text.")));
+      return;
+    }
+    const my = ++state.token;
+    submit.disabled = true;
+    fill(out, loading("Reading the requirements…", url ? "Downloading the page and reading it. This can take up to a minute." : "This can take up to a minute."));
+    try {
+      const rep = await api("/api/custom-report", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: gameName, url: url || null, text: url ? null : text || null }),
+      });
+      if (my !== state.token) return;
+      state.report = rep;
+      renderReport(rep, 0);
+    } catch (e) {
+      if (my !== state.token) return;
+      fill(out, errorBox(e));
+    } finally {
+      submit.disabled = false;
+    }
+  });
+  fill(app, h("h1", { tabindex: "-1" }, "Add requirements"), form, out);
+  focusHeading();
 }
 
 function renderReport(rep, appid) {
@@ -274,7 +326,9 @@ function renderReport(rep, appid) {
       h("div", null,
         h("h1", { tabindex: "-1" }, g.name),
         h("div", null, `${price}${discount}`),
-        g.appid ? null : h("div", { class: "muted" }, "Not on Steam. Requirements found by web search."),
+        g.appid ? null : h("div", { class: "muted" }, g.requirements?.source === "user_provided"
+          ? "Not on Steam. Requirements read from text or a link you provided."
+          : "Not on Steam. Requirements found by web search."),
         h("div", { class: "muted" }, g.release_date ? `${g.coming_soon ? "Releases" : "Released"}: ${g.release_date}` : null),
         g.store_url && safeUrl(g.store_url) ? h("a", { href: safeUrl(g.store_url), target: "_blank", rel: "noopener noreferrer" }, "Steam store page") : null)),
     h("div", { class: `verdictbar ${rep.recommendation}` },
@@ -354,18 +408,22 @@ function tipsCard(appid) {
     }
     btn.disabled = false;
   } }, "Get game-specific tips (AI)");
-  return h("div", { class: "card" }, h("h2", null, "Game-specific tips"), h("p", { class: "muted small" }, "Optional. Uses the Anthropic API."), btn, body);
+  return h("div", { class: "card" }, h("h2", null, "Game-specific tips"), h("p", { class: "muted small" }, "Optional. Uses your AI provider (Anthropic or Gemini)."), btn, body);
 }
 
 function sourcesCard(rep) {
   const g = rep.game, req = g.requirements;
   const bench = rep.rows.find((r) => r.benchmark)?.benchmark;
   const web = req?.source === "web_search";
+  const user = req?.source === "user_provided";
   const links = (req?.source_urls || []).map(safeUrl).filter(Boolean);
   const link = (u) => h("li", null, h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, u));
   return h("div", { class: "card" }, h("h2", null, "Data sources"),
     h("ul", null,
-      web
+      user
+        ? h("li", null, links.length ? "Requirements: read by AI from the page you linked to. Check them against the original." : "Requirements: read by AI from the text you pasted. Check them against the original.",
+            links.length ? h("ul", null, links.map(link)) : null)
+      : web
         ? h("li", null, "Requirements: found by an AI web search (not a store listing). Check them on the publisher's official page.",
             links.length ? h("ul", null, links.map(link)) : h("div", { class: "muted small" }, "No source pages were reported."))
         : h("li", null, "Requirements: ", g.store_url && safeUrl(g.store_url) ? h("a", { href: safeUrl(g.store_url), target: "_blank", rel: "noopener noreferrer" }, "Steam store page") : "Steam",
@@ -502,8 +560,11 @@ function reportText() {
     if (s.handheld) lines.push(`Handheld: ${s.handheld.power_mode} ${s.handheld.watts} W, cap ${s.handheld.fps_cap}/${s.handheld.battery_fps_cap} FPS (plugged/battery)`);
   }
   if (state.tips?.length) { lines.push("", "AI tips (unverified):"); state.tips.forEach((t) => lines.push(`- ${t.setting}: ${t.advice}`)); }
-  const urls = r.game.requirements?.source === "web_search" ? (r.game.requirements.source_urls || []).map(safeUrl).filter(Boolean) : [];
-  lines.push("", r.game.store_url ? `Steam: ${r.game.store_url}` : "Requirements found by AI web search (verify on the official page):", ...urls);
+  const src = r.game.requirements?.source;
+  const urls = src === "web_search" || src === "user_provided" ? (r.game.requirements.source_urls || []).map(safeUrl).filter(Boolean) : [];
+  lines.push("", r.game.store_url ? `Steam: ${r.game.store_url}`
+    : src === "user_provided" ? "Requirements read by AI from text/a link provided by the user (verify against the original):"
+    : "Requirements found by AI web search (verify on the official page):", ...urls);
   return lines.join("\n");
 }
 
@@ -532,13 +593,14 @@ function focusHeading() {
 
 function route() {
   const [page, arg, arg2] = (location.hash || "#system").slice(1).split("/");
-  const navId = page === "manual" ? "system" : page === "web" ? "report" : page;
+  const navId = page === "manual" ? "system" : page === "web" || page === "custom" ? "report" : page;
   document.querySelectorAll(".tab").forEach((a) => {
     if (a.id === `nav-${navId}`) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   });
   if (page === "search") showSearch();
   else if (page === "manual") showManual();
   else if (page === "report" && /^\d+$/.test(arg || "")) showReport(Number(arg));
+  else if (page === "custom" && arg) showCustom(decodeURIComponent(arg));
   else if (page === "web" && arg) showWebReport(decodeURIComponent(arg), /^\d+$/.test(arg2 || "") ? Number(arg2) : 0);
   else if (page === "report") location.hash = "#search";
   else showSystem();
@@ -549,7 +611,7 @@ async function init() {
     state.health = await api("/api/health", {}, 8000);
     if (!state.health.has_api_key) {
       fill(document.getElementById("notice"), h("div", { class: "notice" }, h("div", { class: "box" },
-        "No ANTHROPIC_API_KEY found. Hardware and Steam requirements work, but CPU/GPU comparisons and tips need the key in your .env file.")));
+        "No AI key found (ANTHROPIC_API_KEY or GEMINI_API_KEY). Hardware and Steam requirements work, but comparisons for parts outside the built-in table, and tips, need a key in your .env file.")));
     }
   } catch { /* the first screen will show the real error */ }
   window.addEventListener("hashchange", route);

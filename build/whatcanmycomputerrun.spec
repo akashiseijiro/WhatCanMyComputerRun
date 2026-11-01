@@ -20,6 +20,8 @@ datas += collect_data_files("certifi")  # CA bundle for httpx / anthropic
 hiddenimports = collect_submodules("uvicorn")
 hiddenimports += ["whatcanmycomputerrun.hardware.windows", "winreg"]  # imported lazily
 hiddenimports += collect_submodules("webview")  # empty where pywebview is not installed
+if (PKG / "_embedded.py").exists():  # written by build.ps1 when GEMINI_API_KEY is set
+    hiddenimports += ["whatcanmycomputerrun._embedded"]
 
 a = Analysis(
     [str(ROOT / "build" / "entry.py")],
